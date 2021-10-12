@@ -1,0 +1,116 @@
+<c-range-interaction
+    :points="points"
+    :retries="retries"
+    :min-value="minValue"
+    :max-value="maxValue"
+    :min-label="minLabel"
+    :max-label="maxLabel"
+    :step="step"
+    :initial-value="initialValue"
+    :correct-min-value="_correctMinValue"
+    :correct-max-value="_correctMaxValue"
+    :correct-value="correctValue"
+    :correct-threshold="correctThreshold"
+    :unit="unit"
+    #default="{ $props, $data, evaluate, retry, solve, interact, isDisabled, isFeedbackVisible }"
+    ref="interaction"
+    @change="$emit('change', $event )"
+>
+
+    <m-interaction
+        :layout="layout"
+        :heading-layout="headingLayout"
+        :interaction-layout="interactionLayout"
+        :alignment="alignment"
+        :type="type"
+        :question="question"
+        :background-decoration="true"
+        :background-image="backgroundImage"
+        :background-position="backgroundPosition"
+        :spacing-margin-top="spacingMarginTop"
+        :spacing-padding-top="spacingPaddingTop"
+        :spacing-margin-bottom="spacingMarginBottom"
+        :spacing-padding-bottom="spacingPaddingBottom"
+        :class="blockClasses"
+        :is-feedback-visible="isFeedbackVisible"
+        :scroll="scroll"
+    >
+
+        <template #default="{ scrollTo }">
+            <div :class="[
+                element('interaction'),
+                spacingClass('padding', 'bottom', spacingPaddingBottom)
+            ]">
+
+                <div :class="element('slider-current')">
+                    <span :class="element('slider-current-value')" v-text="$data.value" />
+                    <span :class="element('slider-current-unit')" v-text="$props.unit" />
+                </div>
+
+                <div :class="element('slider')">
+                    <c-input-range
+                        :disabled="isDisabled.interactable"
+                        :min="$props.minValue"
+                        :max="$props.maxValue"
+                        :step="$props.step"
+                        v-model="$data.value"
+                        v-on:focus.native="interact"
+                    />
+
+                    <div :class="element('slider-label')">
+                        <span>{{ $props.minLabel }}</span>
+                        <span>{{ $props.maxLabel }}</span>
+                    </div>
+                </div>
+
+                <c-button
+                    :class="element('button')"
+                    :disabled="isDisabled.evaluate"
+                    :label="buttons.evaluate"
+                    @click.native="evaluate(); scrollTo('feedbacks')"
+                    @touchend.native.prevent="evaluate(); scrollTo('feedbacks')"
+                />
+
+            </div>
+        </template>
+
+        <template #feedbacks="{ scrollTo }">
+
+            <c-feedback
+                feedback-type="positive"
+                v-if="feedbacks && feedbacks.positive"
+                v-bind="feedbacks.positive"
+            />
+
+            <c-feedback
+                feedback-type="negative"
+                v-if="feedbacks && feedbacks.negative"
+                v-bind="feedbacks.negative"
+                #actions
+            >
+                <c-button
+                    :disabled="isDisabled.retry"
+                    :label="buttons.retry"
+                    @click.native="retry(); scrollTo('question')"
+                    @touchend.native.prevent="retry(); scrollTo('question')"
+                />
+                <c-button
+                    v-if="feedbacks && feedbacks.solution"
+                    :disabled="isDisabled.solve"
+                    :label="buttons.solution"
+                    @click.native="solve();"
+                    @touchend.native.prevent="solve();"
+                />
+            </c-feedback>
+
+            <c-feedback
+                feedback-type="solution"
+                v-if="feedbacks && feedbacks.solution"
+                v-bind="feedbacks.solution"
+            />
+
+        </template>
+
+    </m-interaction>
+
+</c-range-interaction>

@@ -1,0 +1,133 @@
+////
+///
+/// m-next-chapter
+///
+/// @group Modules
+///
+////
+
+.m-next-chapter {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    &__text {
+        @include grid-cell-position(1, 1);
+        @include grid-cell-size(12);
+        align-self: center;
+        margin-bottom: spacing('16');
+        font: font($default-font-family, 'regular', '12');
+        text-align: center;
+
+        p, span {
+            font: inherit;
+        }
+
+        @include above('s') {
+            @include grid-cell-position(3, 1);
+            @include grid-cell-size(8);
+            margin-bottom: spacing('27');
+            font: font($default-font-family, 'regular', '16');
+        }
+        @include above('xl') {
+            @include grid-cell-position(4, 1);
+            @include grid-cell-size(6);
+            margin-bottom: 0;
+            font: font($default-font-family, 'regular', '19');
+            text-align: left;
+        }
+    }
+
+    &__button-overview {
+        @include grid-cell-position(1, 2);
+        @include grid-cell-size(12);
+        align-self: center;
+        > * {
+            display: flex;
+            margin-bottom: spacing('16');
+        }
+        @include above('xs') {
+            @include grid-cell-size(6);
+            > * {
+                margin-bottom: 0;
+            }
+        }
+        @include above('s') {
+            text-align: right;
+            > * {
+                display: inline-flex;
+                white-space: nowrap;
+            }
+        }
+        @include above('xl') {
+            text-align: left;
+            @include grid-cell-position(1, 1);
+            @include grid-cell-size(3);
+        }
+    }
+
+    &__button-next {
+        @include grid-cell-position(1, 3);
+        @include grid-cell-size(12);
+        align-self: center;
+        text-align: right;
+        > * {
+            display: flex;
+        }
+        @include above('xs') {
+            @include grid-cell-position(7, 2);
+            @include grid-cell-size(6);
+        }
+        @include above('s') {
+            text-align: left;
+            > * {
+                display: inline-flex;
+                white-space: nowrap;
+            }
+        }
+        @include above('xl') {
+            text-align: right;
+            @include grid-cell-position(10, 1);
+            @include grid-cell-size(3);
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &--only-back {
+
+        #{$module}__text {
+            @include above('xl') {
+                margin-bottom: spacing('27');
+                text-align: center;
+            }
+        }
+
+        #{$module}__button-overview {
+            @include grid-cell-position(1, 2);
+            @include grid-cell-size(12);
+            align-self: center;
+            > * {
+                margin-bottom: 0;
+            }
+            @include above('xs') {
+                @include grid-cell-size(12);
+            }
+            @include above('s') {
+                text-align: center;
+            }
+            @include above('xl') {
+                @include grid-cell-size(12);
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-next-chapter) {
+        @include m-next-chapter;
+    }
+    // #endregion
+
+}

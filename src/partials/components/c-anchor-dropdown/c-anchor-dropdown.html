@@ -1,0 +1,53 @@
+<div :class="blockClasses">
+
+    <button type="button" :class="element('toggle')" @click="toggleDropdown">
+
+            <span :class="element('toggle-mobile')">
+                <span :class="element('toggle-mobile-icon')">
+                    <c-icon v-if="open" :iconSetPrefix="false" name="playlistClose" viewBox="0 0 16 13" />
+                    <c-icon v-else="open" :iconSetPrefix="false" name="playlistOpen" viewBox="0 0 16 13" />
+                </span>
+            </span>
+
+        <span :class="element('toggle-desktop')">
+                <span v-if="title" :class="element('toggle-headline')">{{ title }}</span>
+                <c-timebox :readingTime="readingTime" :completed="completed" />
+                <c-icon :class="element('toggle-arrow-icon')" name="arrowDropDown" />
+            </span>
+
+    </button>
+
+    <transition name="dropdown">
+        <div v-show="open" :class="element('wrapper')">
+
+            <nav :class="element('content')">
+
+                <div v-if="title" :class="element('content-header')">
+                    <span :class="element('content-headline')">{{ title }}</span>
+                    <c-timebox :readingTime="readingTime" :completed="completed" />
+                </div>
+
+                <div :class="element('content-list')">
+                    <ul :class="element('list')">
+                        <li v-for="(anchor, index) in anchors" :key="index" @click="toggleDropdown">
+
+                            <c-scrollto :target="'#' + anchor.id" :class="element('item')">
+                                <c-image v-if="anchor.image" v-bind="anchor.image" :class="element('item-image')" />
+                                <span v-if="anchor.text" :class="element('item-text')">
+                                    <span v-if="anchor.text.overline" :class="element('item-overline')">{{ anchor.text.overline }}</span>
+                                    <span v-if="anchor.text.headline" :class="element('item-headline')">{{ anchor.text.headline }}</span>
+                                </span>
+                            </c-scrollto>
+
+                        </li>
+                    </ul>
+                </div>
+
+                <slot />
+
+            </nav>
+
+        </div>
+    </transition>
+
+</div>

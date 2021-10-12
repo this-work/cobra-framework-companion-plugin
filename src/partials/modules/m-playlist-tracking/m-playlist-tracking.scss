@@ -1,0 +1,28 @@
+////
+///
+/// m-playlist-tracking
+///
+/// @group Modules
+///
+////
+
+.m-playlist-tracking {
+    // #region [Block]
+    // #endregion
+
+    // #region [Element]
+    &__button {
+        text-align: center;
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-playlist-tracking) {
+        @include m-playlist-tracking;
+    }
+    // #endregion
+
+}

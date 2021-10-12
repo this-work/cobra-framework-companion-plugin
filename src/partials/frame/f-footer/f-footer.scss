@@ -1,0 +1,78 @@
+////
+///
+/// f-footer
+///
+/// @group Frame
+///
+////
+
+$f-footer-responsive-spacing: 'xsmall' !default;
+$f-footer-font: font($default-font-family, 'regular', '14') !default;
+$f-footer-list-align-desktop: flex-end !default;
+$f-footer-list-entry-margin-left: spacing('27') !default;
+
+.f-footer {
+    // #region [Block]
+    @include color-theme('footer');
+    @include responsive-spacing($f-footer-responsive-spacing, padding-top padding-bottom);
+    @include below('s') {
+        padding-bottom: spacing('115');
+    }
+    // #endregion
+
+    // #region [Element]
+
+    &__text {
+        font: $f-footer-font;
+        text-align: center;
+        span {
+            font: inherit;
+        }
+        @include above('s') {
+            text-align: left;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: spacing('20');
+        padding-left: 0;
+        align-items: center;
+        justify-content: center;
+        @include above('s') {
+            margin-top: 0;
+            justify-content: $f-footer-list-align-desktop;
+        }
+    }
+
+    &__list-entry {
+        list-style: none;
+        font: $f-footer-font;
+        white-space: nowrap;
+        span {
+            font: inherit;
+            white-space: inherit;
+        }
+        & + & {
+            margin-left: $f-footer-list-entry-margin-left;
+        }
+    }
+
+    a {
+        transition: transition-fade-in(all);
+        text-decoration: none;
+        @include color-theme('link');
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-footer) {
+        @include f-footer;
+    }
+    // #endregion
+
+}

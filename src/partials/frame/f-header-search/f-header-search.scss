@@ -1,0 +1,312 @@
+////
+///
+/// f-header-search
+///
+/// @group Frame
+///
+////
+
+$f-header-search-vertical-padding-mobile: spacing('10') !default;
+$f-header-search-vertical-padding-desktop: spacing('20') !default;
+
+$f-header-search-field-padding: spacing('6') spacing('20') !default;
+$f-header-search-field-border-radius: unitize(25px) !default;
+
+$f-header-search-button-spacing: spacing('6') !default;
+$f-header-search-button-icon-size: unitize(24px) !default;
+$f-header-search-button-icon-opacity: .33 !default;
+$f-header-search-button-icon-opacity-hover: .66 !default;
+
+$f-header-search-input-vertical-padding: unitize(5px) !default;
+
+$f-header-search-tag-margin-right: spacing('6') !default;
+$f-header-search-tag-padding: unitize(5px) unitize(12px) !default;
+$f-header-search-tag-border-radius: unitize(25px) !default;
+$f-header-search-tag-font: font($default-font-family, 'regular', '16', 25px) !default;
+$f-header-search-tag-height: unitize(35px) !default;
+
+$f-header-tags-spacing: spacing('10') !default;
+
+$f-header-toggle-expanded-tags-space: 85px !default;
+$f-header-toggle-expanded-tags-bottom: unitize(5px) !default;
+
+$f-header-toggle-expanded-tags-opacity: .5 !default;
+$f-header-toggle-expanded-tags-icon-opacity: .33 !default;
+
+@mixin tag-badge-pill {
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    max-width: 100%;
+    height: $f-header-search-tag-height;
+    margin-right: $f-header-search-tag-margin-right;
+    padding: $f-header-search-tag-padding;
+    overflow: hidden;
+    transition: transition-fade-in(all);
+    border-radius: $f-header-search-tag-border-radius;
+    font-size: 0;
+    white-space: nowrap;
+    span {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        font: $f-header-search-tag-font;
+        text-overflow: ellipsis;
+    }
+}
+
+.f-header-search {
+    // #region [Block]
+    $module: &;
+    position: relative;
+    z-index: zindex(100);
+    min-height: 100%;
+    padding: $f-header-search-vertical-padding-mobile 0;
+    @include above('s') {
+        padding: $f-header-search-vertical-padding-desktop 0;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 100vw;
+        margin-left: -50vw;
+        @include color-theme('background');
+        @include above('s') {
+            display: none;
+        }
+    }
+    // #endregion
+
+    // #region [Element]
+
+    &__field {
+        position: relative;
+        align-items: center;
+        padding: $f-header-search-field-padding;
+        border-radius: $f-header-search-field-border-radius;
+        @include color-theme('search-field');
+    }
+
+    &__button {
+        display: flex;
+        position: absolute;
+        z-index: zindex(200);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        flex-shrink: 0;
+        align-items: center;
+        padding: $f-header-search-button-spacing;
+        border: $f-header-search-button-spacing solid transparent;
+        border-radius: $f-header-search-field-border-radius;
+        cursor: pointer;
+        @include color-theme('search-button');
+
+        svg {
+            display: block;
+            width: $f-header-search-button-icon-size;
+            height: $f-header-search-button-icon-size;
+            transition: transition-fade-in(opacity);
+            opacity: $f-header-search-button-icon-opacity;
+        }
+
+        &:hover, &:active {
+            svg {
+                opacity: $f-header-search-button-icon-opacity-hover;
+            }
+        }
+
+    }
+
+    &__reset-placeholder {
+        right: 0;
+        left: auto;
+        background: inherit!important;
+        cursor: default;
+        &:hover, &:active {
+            svg {
+                opacity: $f-header-search-button-icon-opacity;
+            }
+        }
+    }
+
+    &__reset {
+        right: 0;
+        left: auto;
+    }
+
+    &__scrollbar {
+        width: 100%;
+        .simplebar-placeholder {
+            width: auto!important;
+        }
+    }
+
+    &__input {
+
+        input {
+            display: block;
+            width: 100%;
+            min-width: unitize(230px);
+            margin: 0;
+            padding: $f-header-search-input-vertical-padding 0 $f-header-search-input-vertical-padding;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: inherit;
+            font: $f-header-search-tag-font;
+        }
+    }
+
+    .tags-input {
+        display: flex;
+        align-items: center;
+
+        &-badge-pill {
+            @include tag-badge-pill;
+            padding-right: unitize(31px);
+            @include color-theme('selected-tag-pill');
+        }
+
+        &-remove {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: unitize(7px);
+            padding: unitize(8px);
+            overflow: hidden;
+            transform: translate( 0, -50%);
+            color: inherit;
+            cursor: pointer;
+            &:focus {
+                outline: none;
+            }
+
+            &:before, &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: unitize(-1px);
+                width: 75%;
+                height: 1.5px;
+                margin-top: unitize(-1px);
+                background: currentColor;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+            &:after {
+                transform: rotate(-45deg);
+            }
+
+        }
+
+        > span:first-child, > input:first-child {
+            margin-left: unitize(30px);
+        }
+
+    }
+
+    &__additionals {
+        margin-top: $f-header-tags-spacing / 2;
+        @include above('s') {
+            margin-bottom: $f-header-tags-spacing * -1;
+        }
+    }
+
+    &__tags {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        height: $f-header-search-tag-height + $f-header-tags-spacing / 2;
+        overflow: hidden;
+
+        &--expanded {
+            height: auto;
+            #{$module}__tags-container {
+                max-width: calc(100% - 110px);
+            }
+            #{$module}__toggle-expanded-tags {
+                &-icon {
+                    transform: rotate(180deg);
+                }
+                &-text {
+                    &:before {
+                        content: attr(data-less-text);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    &__tags-container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        max-width: calc(100% - #{$f-header-toggle-expanded-tags-space});
+    }
+
+    &__tags-badge-pill {
+        @include tag-badge-pill;
+        margin-top: $f-header-tags-spacing / 2;
+        cursor: pointer;
+        user-select: none;
+        @include color-theme('tag-pill');
+    }
+
+    &__toggle-expanded-tags {
+        display: flex;
+        position: absolute;
+        right: 0;
+        bottom: $f-header-toggle-expanded-tags-bottom;
+        border: none;
+        outline: none;
+        background: transparent;
+        white-space: nowrap;
+        cursor: pointer;
+
+        span {
+            position: relative;
+            font: $f-header-search-tag-font;
+            opacity: $f-header-toggle-expanded-tags-opacity;
+        }
+
+        &-icon {
+            width: unitize(24px);
+            height: unitize(24px);
+            margin-right: unitize(5px);
+            opacity: $f-header-toggle-expanded-tags-icon-opacity;
+            svg {
+                display: block;
+                width: inherit;
+                height: inherit;
+            }
+        }
+
+        &-text {
+            &:before {
+                content: attr(data-more-text);
+            }
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-header-search) {
+        @include f-header-search;
+    }
+    // #endregion
+
+}

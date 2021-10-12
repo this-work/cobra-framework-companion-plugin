@@ -1,0 +1,30 @@
+{
+  "name": "@this/cobra-framework-companion-plugin",
+  "version": "0.0.01",
+  "author": "THIS GmbH",
+  "repository": "https://bitbucket.org/this-work/this.cobra-framework/src/master/README.md",
+  "description": "Component framework plugin for companion for Nuxt 2 or Vue 2",
+  "keywords": [
+    "scss",
+    "vue",
+    "nuxt",
+    "cobra",
+    "js",
+    "html",
+    "companion",
+    "plugin",
+    "framework"
+  ],
+  "license": "MIT",
+  "files": [
+    "src",
+    "nuxt",
+    "vue"
+  ],
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}

@@ -1,0 +1,45 @@
+<transition name="transition-f-navigation">
+    <div v-if="visible" :class="[blockClasses, 'theme-dark']">
+
+        <nav :class="[element('wrapper'), 'slide-in']">
+
+            <c-spinner v-if="!navigation.hasOwnProperty('items')" :visible="true" />
+
+            <transition :name="'slide--' + direction">
+
+                <div :class="element('panel')" :key="level">
+
+                    <simplebar :class="element('scrollbar')" data-simplebar-auto-hide="false">
+
+                        <span :class="element('headline')">
+                            <c-button v-if="sublevel" @click.native="navigateLevelUp()" icon="arrowBack" :class="element('level-up')" appearance="icon" />
+                            <span v-html="navigation.title" />
+                            <c-button icon="close" @click.native="toggle(false)" :class="element('close')" appearance="icon" />
+                        </span>
+
+                        <ul :class="element('list')">
+                            <li :class="element('list-entry')" v-for="(item, index) in navigation.items">
+                                <div :class="element('list-entry-content')">
+
+                                    <c-link :url="item.slug" :externalUrl="item.externalUrl" :class="element('label')">
+                                        <c-image v-if="item.image" v-bind="item.image" objectFit="cover" :aspectRatios="{0: '1:1'}" :skeleton="false" :class="element('label-image')" />
+                                        <c-icon v-else name="dashboard" :class="element('label-image')" />
+                                        <span :class="element('label-text')" v-html="item.title" />
+                                    </c-link>
+
+                                    <c-button icon="arrowForward" v-if="item.hasOwnProperty('items')" @click.native="navigateLevelDown(index)" :class="element('level-down')" appearance="icon" />
+                                </div>
+                            </li>
+                        </ul>
+
+                    </simplebar>
+
+                </div>
+
+            </transition>
+
+        </nav>
+
+    </div>
+
+</transition>

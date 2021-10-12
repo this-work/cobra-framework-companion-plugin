@@ -1,0 +1,52 @@
+////
+///
+/// c-form-login
+///
+/// @group Components
+///
+////
+
+$c-form-login-input-margin: spacing('44') 0 0 0 !default;
+$c-form-login-forgot-font: font($default-font-family, 'regular', '12') !default;
+$c-form-login-forgot-color-theme: 'copytext' !default;
+$c-form-login-submit-margin: spacing('27') 0 0 0 !default;
+
+.c-form-login {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    &__input.c-input-text {
+        margin: 0 0 0 0;
+        & + #{$module}__input{
+            margin: $c-form-login-input-margin;
+        }
+    }
+
+    &__forgot {
+        text-align: right;
+        a {
+            font: $c-form-login-forgot-font;
+            @include color-theme($c-form-login-forgot-color-theme)
+        }
+    }
+
+    &__submit {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: $c-form-login-submit-margin;
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-form-login) {
+        @include c-form-login;
+    }
+    // #endregion
+
+}

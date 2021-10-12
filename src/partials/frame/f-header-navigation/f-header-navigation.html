@@ -1,0 +1,82 @@
+<nav :class="blockClasses">
+
+    <transition-replace affectedElement=".f-header" affectedElementHeightSource=".module">
+
+        <component :is="headerType === 'default' ? 'ul' : 'div'" :class="element('wrapper')" :key="headerType">
+
+            <span  v-if="headerType === 'playlist' || headerType === 'basic'" :class="[element('item'), element('item--close')]">
+                <button
+                    :class="element('link')"
+                    @click="$store.commit('last-visited/goBack')"
+                >
+                    <span :class="element('icon')">
+                        <c-icon name="Close" aria-label="Schließen" />
+                    </span>
+                </button>
+            </span>
+
+            <template v-if="headerType === 'default'">
+
+                <li v-if="navigationTitle" :class="element('item')">
+                    <button @click.prevent="openNavigation()" :class="element('link')">
+                        <span :class="element('icon')">
+                            <c-icon name="menu" :aria-label="navigationTitle" />
+                        </span>
+                        <span :class="element('label')">
+                            {{ navigationTitle }}
+                        </span>
+                    </button>
+                </li>
+
+                <li :class="element('item')">
+                    <nuxt-link to="/" :class="element('link')">
+                        <span :class="element('icon')">
+                            <c-icon name="language" aria-label="Startseite" />
+                        </span>
+                        <span :class="element('label')">
+                            Startseite
+                        </span>
+                    </nuxt-link>
+                </li>
+
+                <li :class="element('item')">
+                    <button :class="element('link')">
+                        <span :class="element('icon')">
+                            <c-icon name="accountOutline" aria-label="Persönlich" />
+                        </span>
+                        <span :class="element('label')">
+                            Persönlich
+                        </span>
+                    </button>
+                </li>
+
+                <li :class="element('item')">
+                    <button @click="logout()" :class="element('link')">
+                        <span :class="element('icon')">
+                            <c-icon name="lock" aria-label="Ausloggen" />
+                        </span>
+                        <span :class="element('label')">
+                            Ausloggen
+                        </span>
+                    </button>
+                </li>
+
+                <li :class="[element('item'), element('item--search')]">
+                    <nuxt-link to="/search" :class="element('link')">
+                        <span :class="element('icon')">
+                            <c-icon name="search" aria-label="Suche" />
+                        </span>
+                    </nuxt-link>
+                </li>
+
+            </template>
+
+            <template v-else-if="headerType === 'playlist' && playlistNavigation && playlistNavigation.anchors">
+                <c-anchor-dropdown v-bind="playlistNavigation" />
+            </template>
+
+        </component>
+
+    </transition-replace>
+
+</nav>

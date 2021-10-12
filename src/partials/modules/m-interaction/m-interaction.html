@@ -1,0 +1,57 @@
+<module
+    :background-decoration="true"
+    :background-image="backgroundImage"
+    :background-position="backgroundPosition"
+    :class="blockClasses"
+>
+
+    <module-content
+         :class="[element('question')]"
+         ref="question"
+    >
+        <layout :layout="headingLayout.layout">
+            <template #[headingLayout.slot]>
+                <slot name="heading">
+                    <c-heading
+                        :alignment="alignment"
+                        :class="element('heading')"
+                        v-bind="question"
+                        headline-tag="h2"
+                        headline-type="h2"
+                        subline-tag="span"
+                        subline-type="copytext"
+                    />
+                </slot>
+            </template>
+        </layout>
+    </module-content>
+
+    <module-content
+        :class="[element('interaction')]"
+        ref="interaction"
+    >
+        <layout :layout="interactionLayout.layout">
+            <template #[interactionLayout.slot]>
+                <slot v-bind="slotProps" />
+            </template>
+        </layout>
+    </module-content>
+
+    <div
+        ref="feedbacks"
+        :class="[
+            element('answer'),
+            `module__${backgroundPosition}`,
+        ]"
+    >
+        <module-content>
+            <slot name="feedbacks" v-bind="slotProps" />
+        </module-content>
+    </div>
+
+
+</module>
+
+
+
+

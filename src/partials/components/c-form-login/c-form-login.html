@@ -1,0 +1,25 @@
+<component :is="tag" :class="blockClasses">
+
+    <c-message :error="!valid" :message="message" />
+
+    <form accept-charset="UTF-8" @submit.prevent="login">
+
+        <c-input-text :class="element('input')" :valid="valid" name="loginName" ref="loginName" type="text" :label="$t('c-form-login--username')" />
+
+        <c-input-text :class="element('input')" :valid="valid" name="password" ref="password" type="password" :label="$t('c-form-login--password')" />
+
+        <div :class="element('forgot')">
+            <nuxt-link to="/forgot-password">{{ $t('c-form-login--password-lost') }}</nuxt-link>
+        </div>
+
+        <div :class="element('submit')">
+
+            <!-- <c-input-checkbox name="remember" :label="$t('c-form-login--remember-me')" />-->
+
+            <c-button type="submit" :loading="loading" label="Login" />
+
+        </div>
+
+    </form>
+
+</component>

@@ -1,0 +1,31 @@
+<div>
+<portal-target name="beforeNextChapter" slim />
+<module :class="blockClasses"
+        :backgroundPosition="backgroundPosition"
+        :backgroundImage="backgroundImage"
+>
+
+    <module-page>
+
+        <module-content>
+
+            <layout :layout="layout">
+
+                <div :class="element('text')" v-if="text" v-html="text" />
+
+                <div :class="element('button-overview')" v-if="overview">
+                    <c-button icon="dashboard" tag="nuxt-link" iconPosition="left" size="big" appearance="secondary" :to="overview.slug" :label="overview.label" />
+                </div>
+
+                <div :class="element('button-next')" v-if="nextChapter">
+                    <c-button icon="arrowForward" tag="nuxt-link" size="big" :to="nextChapter.slug" :label="nextChapter.label" />
+                </div>
+
+            </layout>
+
+        </module-content>
+
+    </module-page>
+
+</module>
+</div>

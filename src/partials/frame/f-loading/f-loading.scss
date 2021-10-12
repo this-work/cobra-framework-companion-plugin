@@ -1,0 +1,26 @@
+////
+///
+/// f-loading
+///
+/// @group Modules
+///
+////
+
+.f-loading {
+    // #region [Block]
+    color: color('primary');
+    // #endregion
+
+    // #region [Element]
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-loading) {
+        @include f-loading;
+    }
+    // #endregion
+
+}

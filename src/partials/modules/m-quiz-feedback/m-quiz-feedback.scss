@@ -1,0 +1,64 @@
+////
+///
+/// m-quiz-feedback
+///
+/// @group Modules
+///
+////
+:global {
+
+    .m-quiz-feedback {
+        // #region [Block]
+        // #endregion
+
+        // #region [Element]
+        // #endregion
+
+        // #region [Modifier]
+        // #endregion
+
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        padding: spacing('44') 0;
+
+        .l-2-8-2__column-2 > * + * {
+            @include responsive-spacing( $properties: margin-top, $spacing-map: (default: '27', s: '44') );
+        }
+
+        &__heading {
+            @include below('s') {
+                margin-top: spacing('16');
+            }
+        }
+
+        &__text {
+            text-align: center;
+        }
+
+        &__button {
+            @include responsive-spacing( $properties: margin-top, $spacing-map: (default: '44', s: '71') );
+        }
+
+        &__progress-indicator {
+            width: 100%;
+        }
+
+        .l-2-8-2__column-2 {
+            text-align: center;
+        }
+
+        // #region [Overwrites]
+        @if mixin-exists(m-quiz-feedback) {
+            @include m-quiz-feedback;
+        }
+        // #endregion
+
+    }
+}
+
+:export {
+    success: _base-color('success');
+    error: _base-color('error');
+    darkDeco: _base-color('dark-deco');
+}

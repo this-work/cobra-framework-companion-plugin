@@ -1,0 +1,74 @@
+////
+///
+/// m-interaction
+///
+/// @group Modules
+///
+////
+
+.m-interaction {
+    // #region [Block]
+    $module: &;
+    padding-bottom: 0;
+    overflow: hidden; // QUICKFIX, BACKGROUMD SHIFTED
+    align-content: center;
+    // #endregion
+
+    // #region [Element]
+    @at-root .module#{&} {
+
+        #{$module}__question {
+            @include grid-cell-row-start(1);
+        }
+
+        #{$module}__interaction {
+            @include grid-cell-row-start(2);
+
+            padding: spacing('44') 0 0;
+            @include above('l') {
+                padding: spacing('71') 0 0;
+            }
+        }
+
+        #{$module}__answer {
+            @include grid-cell-row-start(3);
+
+            @include color-theme('feedback-background');
+        }
+
+        .module__decoration {
+            @include grid-cell-row-start(1);
+            @include grid-cell-height(3);
+            @include color-theme('background');
+            z-index: -2;
+        }
+
+        .module__background--viewport {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--page {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--content {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--page + .module__decoration {
+            @include grid-cell-position(2,3);
+            @include grid-cell-size(3);
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-interaction) {
+        @include m-interaction;
+    }
+    // #endregion
+
+}

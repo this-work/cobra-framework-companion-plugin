@@ -1,0 +1,54 @@
+////
+///
+/// m-true-false-interaction
+///
+/// @group Modules
+///
+////
+
+.m-true-false-interaction {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    @at-root .module#{&} {
+
+        #{$module}__choices {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            margin: 0;
+
+            > * + * {
+                margin-left: spacing('16');
+            }
+
+            &--left {
+                justify-content: flex-start;
+            }
+
+            &--center {
+                justify-content: center;
+            }
+        }
+
+        #{$module}__button {
+            @include above('s') {
+                padding: unitize(32px) spacing('44');
+            }
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-true-false-interaction) {
+        @include m-true-false-interaction;
+    }
+    // #endregion
+
+}

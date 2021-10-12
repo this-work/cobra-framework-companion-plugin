@@ -1,0 +1,64 @@
+<div :class="blockClasses">
+
+    <div :class="element('field')">
+
+        <button
+            :class="[element('button'), element('close')]"
+             @click="$store.commit('last-visited/goBackFromSearch')"
+        >
+            <c-icon name="arrowBack" />
+        </button>
+
+        <simplebar :class="element('scrollbar')">
+            <tags-input
+                    v-model="selectedTags"
+                    :existing-tags="this.$store.state.search.tags"
+                    @input="updateData"
+                    :class="element('input')"
+                    :add-tags-on-comma="true"
+                    :add-tags-on-blur="true"
+                    :placeholder="$t('f-header-search--placeholder')"
+            />
+        </simplebar>
+
+        <transition name="fade">
+            <span v-if="selectedTags.length <= 0" :class="[element('button'), element('reset-placeholder')]">
+                <c-icon name="search" />
+            </span>
+
+            <button v-else :class="[element('button'), element('reset')]" @click="removeAllTags()">
+                <c-icon name="close" />
+            </button>
+        </transition>
+
+    </div>
+
+    <transition-replace affectedElement=".f-header" affectedElementHeightSource=".module">
+
+        <div :class="element('additionals')" :key="selectedExistingTags.length + ':' + tags.length + ':' + expandedTags + ':' + forceTransition">
+
+            <div v-if="tags.length > 0"
+                 :class="tagsClasses"
+                 ref="tags"
+            >
+
+                <div :class="element('tags-container')">
+                    <span :class="element('tags-badge-pill')" data-search-tag-pill v-for="(item, index) in tags" :key="index" @click="addTag(item)">
+                        <span>{{ item.value }}</span>
+                    </span>
+                </div>
+
+                <button v-if="showExpandedTagsToggle" :class="element('toggle-expanded-tags')" @click="toggleExpandedTags()">
+                    <span :class="element('toggle-expanded-tags-icon')">
+                        <c-icon name="keyboardArrowDown" />
+                    </span>
+                    <span :class="element('toggle-expanded-tags-text')" :data-more-text="$t('f-header-search--more')" :data-less-text="$t('f-header-search--less')" />
+                </button>
+
+            </div>
+
+        </div>
+
+    </transition-replace>
+
+</div>

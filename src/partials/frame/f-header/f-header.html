@@ -1,0 +1,27 @@
+<header :class="blockClasses">
+
+    <module :class="element('module')" :background="false">
+
+        <transition-replace affected-element=".f-header" affected-element-height-source=".module">
+
+            <module-content v-if="this.$store.state.header.type === 'search'">
+
+                <f-header-search />
+
+            </module-content>
+
+            <div :class="element('wrapper')" v-else-if="this.$store.state.header.type">
+
+                <nuxt-link to="/" :class="element('logo')" :title="projectName">
+                    <c-logo :label="projectName" />
+                </nuxt-link>
+
+                <f-header-navigation />
+
+            </div>
+
+        </transition-replace>
+
+    </module>
+
+</header>

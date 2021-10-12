@@ -1,0 +1,41 @@
+<footer :class="blockClasses">
+
+    <module :background="false">
+        <module-page>
+            <module-content>
+
+                <layout layout="l-5-1-6">
+
+                    <template v-slot:column-1>
+
+                        <p :class="element('text')">
+                            © Copyright <time v-html="new Date().getFullYear()" /> <span v-html="projectName" />
+                        </p>
+
+                    </template>
+
+                    <template v-slot:column-3>
+
+                        <transition name="fade">
+
+                            <ul v-if="list.hasOwnProperty('items') && list.items.length > 0" :class="element('list')">
+                                <li :class="element('list-entry')" v-for="(item, index) in list.items" :key="index">
+
+                                    <c-link :url="item.slug" :externalUrl="item.externalUrl">
+                                        <span v-html="item.title" />
+                                    </c-link>
+
+                                </li>
+                            </ul>
+
+                        </transition>
+
+                    </template>
+
+                </layout>
+
+            </module-content>
+        </module-page>
+    </module>
+
+</footer>

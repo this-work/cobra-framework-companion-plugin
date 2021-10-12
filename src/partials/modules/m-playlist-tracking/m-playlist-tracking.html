@@ -1,0 +1,28 @@
+<module :class="blockClasses"
+        :backgroundPosition="backgroundPosition"
+        :backgroundImage="backgroundImage"
+>
+
+    <module-page>
+
+        <module-content>
+
+            <layout layout="l-12">
+
+                <template v-slot:column-1>
+
+                    <div :class="element('button')">
+
+                        <c-input-selectionbutton icon="check" name="read-confirmation" @change="trackReadPlaylist" :checked="completed ? 'checked' : null" iconPosition="left" :label="text" />
+
+                    </div>
+
+                </template>
+
+            </layout>
+
+        </module-content>
+
+    </module-page>
+
+</module>

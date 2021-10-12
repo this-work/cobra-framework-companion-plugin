@@ -1,0 +1,77 @@
+////
+///
+/// m-value-slider-interaction
+///
+/// @group Modules
+///
+////
+
+.m-value-slider-interaction {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    @at-root .module#{&} {
+
+
+        #{$module}__interaction {
+            display: flex;
+            flex-flow: column nowrap;
+        }
+
+        #{$module}__slider {
+            line-height: 0;
+        }
+
+        #{$module}__slider-current {
+            display: inline-flex;
+            flex-flow: row;
+            align-items: flex-end;
+            margin: auto;
+            @include responsive-spacing('button', margin-bottom, (
+                'button': ( 'default': '16', 'l': '44' )
+            ));
+            line-height: 0;
+        }
+
+
+        #{$module}__slider-current-value {
+            @include responsive-font('value-slider-current-value');
+            margin-bottom: -8px;
+            @include above('l') {
+                margin-bottom: -6px;
+            }
+        }
+
+        #{$module}__slider-current-unit {
+            @include responsive-font('value-slider-current-unit');
+            margin-left: spacing('3');
+        }
+
+        #{$module}__slider-label {
+            display: flex;
+            justify-content: space-between;
+            padding-top: spacing('16');
+        }
+
+        #{$module}__button {
+            align-self: center;
+            @include responsive-spacing('button', margin-top, (
+                'button': ( 'default': '44', 'l': '71' )
+            ));
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-value-slider-interaction) {
+        @include m-value-slider-interaction;
+    }
+    // #endregion
+
+}
