@@ -27,7 +27,8 @@ export default function() {
     const stores = [
         'header',
         'footer',
-        'navigation'
+        'navigation',
+        'search'
     ];
 
 
