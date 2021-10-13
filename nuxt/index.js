@@ -6,6 +6,8 @@
  *
  */
 
+import { join } from 'path';
+
 export default function() {
 
     const { nuxt } = this;
@@ -17,10 +19,28 @@ export default function() {
         throw new Error('please set `components: true` inside `nuxt.config` and ensure using `nuxt >= 2.13.0`');
     }
 
+
     /**
-     * Require the cobra-framework as parent
+     * List all stores to inject
+     * in parent project
      */
-    this.requireModule('@this/cobra-framework/nuxt');
+    const stores = [
+        'header',
+        'footer',
+        'navigation'
+    ];
+
+
+    /**
+     * Add all vuex stores to the nuxt instance
+     */
+    for (const store of stores) {
+        this.addPlugin({
+            src: join(__dirname, `../src/store/${store}.js`),
+            fileName: `cobra-framework/store/${store}.js`
+        });
+    }
+
 
     /**
      * List all component dirs
@@ -29,7 +49,6 @@ export default function() {
         'src/theme/icons',
         'src/partials/components',
         'src/partials/frame',
-        'src/partials/layout',
         'src/partials/modules'
     ];
 

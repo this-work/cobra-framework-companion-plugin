@@ -3,7 +3,7 @@
  */
 
 import { common, spacing, theme, background } from '@this/cobra-framework/src/plugins/mixins';
-import BaseFeedback from '@/partials/components/interactions/BaseFeedback';
+import BaseFeedback from '../../components/interactions/BaseFeedback';
 
 export default {
 
@@ -59,7 +59,7 @@ export default {
             if (this.feedbackType === 'solution') {
                 Object.assign(icon, {
                     background: this.$style.darkDeco,
-                    name: 'eye'
+                    name: 'visibility'
                 });
             }
 

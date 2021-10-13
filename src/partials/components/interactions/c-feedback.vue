@@ -92,7 +92,7 @@ export default {
                 case 'wrong':
                     return 'close';
                 case 'solution':
-                    return 'eye';
+                    return 'visibility';
             }
             return '';
         },

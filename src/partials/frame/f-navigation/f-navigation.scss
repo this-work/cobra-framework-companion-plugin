@@ -103,21 +103,21 @@ $f-navigation-label-image-margin-right: spacing('16') !default;
         }
     }
 
-    &__close {
+    &__close.c-button {
         position: absolute;
         z-index: zindex(800);
         top: $f-navigation-close-top;
         right: $f-navigation-close-right;
     }
 
-    &__level-down {
+    &__level-down.c-button {
         position: absolute;
         z-index: zindex(800);
         top: $f-navigation-level-down-top;
         right: $f-navigation-level-down-right;
     }
 
-    &__level-up {
+    &__level-up.c-button {
         position: absolute;
         z-index: zindex(800);
         top: $f-navigation-level-up-top;

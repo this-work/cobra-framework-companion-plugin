@@ -81,7 +81,7 @@ export default {
             if (this.feedbackType === 'solution') {
                 Object.assign(icon, {
                     background: this.$style.darkDeco,
-                    name: 'eye'
+                    name: 'visibility'
                 });
             }
 

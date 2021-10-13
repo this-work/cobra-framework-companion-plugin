@@ -17,13 +17,13 @@
 
             <template v-if="headerType === 'default'">
 
-                <li v-if="navigationTitle" :class="element('item')">
+                <li :class="element('item')">
                     <button @click.prevent="openNavigation()" :class="element('link')">
                         <span :class="element('icon')">
-                            <c-icon name="menu" :aria-label="navigationTitle" />
+                            <c-icon name="menu" :aria-label="$t('navigation')" />
                         </span>
                         <span :class="element('label')">
-                            {{ navigationTitle }}
+                            {{ $t('navigation') }}
                         </span>
                     </button>
                 </li>
@@ -31,10 +31,10 @@
                 <li :class="element('item')">
                     <nuxt-link to="/" :class="element('link')">
                         <span :class="element('icon')">
-                            <c-icon name="language" aria-label="Startseite" />
+                            <c-icon name="language" :aria-label="$t('homepage')" />
                         </span>
                         <span :class="element('label')">
-                            Startseite
+                            {{ $t('homepage') }}
                         </span>
                     </nuxt-link>
                 </li>
@@ -42,10 +42,10 @@
                 <li :class="element('item')">
                     <button :class="element('link')">
                         <span :class="element('icon')">
-                            <c-icon name="accountOutline" aria-label="Persönlich" />
+                            <c-icon name="accountCircle" :aria-label="$t('account')" />
                         </span>
                         <span :class="element('label')">
-                            Persönlich
+                            {{ $t('account') }}
                         </span>
                     </button>
                 </li>
@@ -53,10 +53,10 @@
                 <li :class="element('item')">
                     <button @click="logout()" :class="element('link')">
                         <span :class="element('icon')">
-                            <c-icon name="lock" aria-label="Ausloggen" />
+                            <c-icon name="lock" :aria-label="$t('logout')" />
                         </span>
                         <span :class="element('label')">
-                            Ausloggen
+                            {{ $t('logout') }}
                         </span>
                     </button>
                 </li>
@@ -64,7 +64,7 @@
                 <li :class="[element('item'), element('item--search')]">
                     <nuxt-link to="/search" :class="element('link')">
                         <span :class="element('icon')">
-                            <c-icon name="search" aria-label="Suche" />
+                            <c-icon name="search" :aria-label="$t('search')" />
                         </span>
                     </nuxt-link>
                 </li>

@@ -28,14 +28,7 @@ export default {
             return this.$store.state.header.type;
         },
         navigationTitle() {
-
-            const navigation = this.$store.state.navigation.list;
-
-            if (!navigation.hasOwnProperty('title')) {
-                return false;
-            }
-
-            return navigation.title;
+            return this.$store.state.navigation.title;
 
         },
         playlistNavigation() {

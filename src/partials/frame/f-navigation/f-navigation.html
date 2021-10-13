@@ -3,7 +3,7 @@
 
         <nav :class="[element('wrapper'), 'slide-in']">
 
-            <c-spinner v-if="!navigation.hasOwnProperty('items')" :visible="true" />
+            <c-spinner v-if="navigation.length === 0" :visible="true" />
 
             <transition :name="'slide--' + direction">
 
