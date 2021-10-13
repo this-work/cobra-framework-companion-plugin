@@ -54,7 +54,7 @@ export default {
 
                     if (response.success) {
                         this.loading = false;
-                        this.message = this.$i18n.t('c-form-forgot-password--success');
+                        this.message = this.$i18n.t('success');
 
                     }
 
@@ -62,7 +62,7 @@ export default {
                     this.loading = false;
                     if (err.response.data.error) {
                         this.valid = false;
-                        this.message = this.$i18n.t('c-form-forgot-password--failed');
+                        this.message = this.$i18n.t('failed');
                     } else {
                         this.message = err.message;
                     }

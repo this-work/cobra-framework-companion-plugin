@@ -1,0 +1,8 @@
+de:
+    username: "Benutzernamen oder E-Mail"
+    password: "Passwort"
+    password-lost: "Passwort vergessen?"
+    remember-me: "Eingeloggt bleiben"
+    label: "Login"
+    success-new-password: "Wir haben Ihr Passwort erfolgreich geändert.<br>Bitte loggen Sie sich ein."
+    failed: "Bitte überprüfen Sie Ihre Eingaben!"
