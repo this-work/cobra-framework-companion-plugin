@@ -204,6 +204,7 @@ $c-anchor-dropdown-item-headline-color: 'dark' !default;
 			display: block;
 			width: inherit;
 			height: inherit;
+            pointer-events: none;
 		}
 	}
 

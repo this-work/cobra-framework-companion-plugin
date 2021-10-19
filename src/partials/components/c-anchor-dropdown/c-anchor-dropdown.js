@@ -44,7 +44,7 @@ export default {
                 window.setTimeout(() => {
                     disablePageScrolling([
                         { element: document.body, property: 'right' }
-                    ], false);
+                    ], this.$styling.breakpointConfig.s);
                 }, 0);
 
             } else {
@@ -52,7 +52,7 @@ export default {
                 document.removeEventListener('click', this.checkClickOutside);
 
                 setTimeout(() => {
-                    enablePageScrolling(false);
+                    enablePageScrolling();
                 }, 0);
 
             }

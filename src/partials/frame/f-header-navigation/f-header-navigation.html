@@ -5,12 +5,9 @@
         <component :is="headerType === 'default' ? 'ul' : 'div'" :class="element('wrapper')" :key="headerType">
 
             <span  v-if="headerType === 'playlist' || headerType === 'basic'" :class="[element('item'), element('item--close')]">
-                <button
-                    :class="element('link')"
-                    @click="$store.commit('last-visited/goBack')"
-                >
+                <button :class="element('link')" @click="closePage()">
                     <span :class="element('icon')">
-                        <c-icon name="Close" aria-label="Schließen" />
+                        <c-icon name="close" :aria-label="$t('close')" />
                     </span>
                 </button>
             </span>
