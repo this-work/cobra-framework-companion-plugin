@@ -1,7 +1,7 @@
 <template>
     <div :class="blockClasses" v-if="visible">
         <slot name="default" v-bind="{ $props, $data }">
-            <layout :layout="this.image ? 'l-6-1-5' : 'l-12'">
+            <layout :layout="image ? 'l-6-1-5' : 'l-12'">
 
                 <template #column-1>
                     <div

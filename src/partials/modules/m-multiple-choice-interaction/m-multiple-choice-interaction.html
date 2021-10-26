@@ -1,4 +1,4 @@
-<c-choice-interaction
+<interactions-c-choice-interaction
     :points="points"
     :retries="retries"
     #default="{ evaluate, retry, solve, isDisabled, isFeedbackVisible }"
@@ -31,7 +31,7 @@
                 { [elementModifier('choices', '2-rows-layout')]: hasAnswerImages }
             ]">
 
-                <c-choice
+                <interactions-c-choice
                     :correct="answer.correct"
                     :key="`multiple-choice-${choiceIndex}-${uid}`"
                     v-for="(answer, choiceIndex) in answers"
@@ -43,7 +43,7 @@
                         :class="element('choice-wrapper')"
                         v-if="hasAnswerImage(answer)"
                     >
-                        <c-choice-image
+                        <interactions-c-choice-image
                             :disabled="$data.disabled"
                             :readonly="$data.readonly"
                             v-model="$data.selected"
@@ -65,7 +65,7 @@
                         size="big"
                         :label="answer.text"
                     />
-                </c-choice>
+                </interactions-c-choice>
 
             </div>
 
@@ -81,13 +81,13 @@
         </template>
 
         <template #feedbacks="{ scrollTo }">
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="positive"
                 v-if="feedbacks && feedbacks.positive"
                 v-bind="feedbacks.positive"
             />
 
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="negative"
                 v-if="feedbacks && feedbacks.negative"
                 v-bind="feedbacks.negative"
@@ -106,9 +106,9 @@
                     @click.native="solve();"
                     @touchend.native.prevent="solve();"
                 />
-            </c-feedback>
+            </interactions-c-feedback>
 
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="solution"
                 v-if="feedbacks && feedbacks.solution"
                 v-bind="feedbacks.solution"
@@ -117,4 +117,4 @@
 
     </m-interaction>
 
-</c-choice-interaction>
+</interactions-c-choice-interaction>

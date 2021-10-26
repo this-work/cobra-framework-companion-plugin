@@ -1,4 +1,4 @@
-<c-range-interaction
+<interactions-c-range-interaction
     :points="points"
     :retries="retries"
     :min-value="minValue"
@@ -76,13 +76,13 @@
 
         <template #feedbacks="{ scrollTo }">
 
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="positive"
                 v-if="feedbacks && feedbacks.positive"
                 v-bind="feedbacks.positive"
             />
 
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="negative"
                 v-if="feedbacks && feedbacks.negative"
                 v-bind="feedbacks.negative"
@@ -101,9 +101,9 @@
                     @click.native="solve();"
                     @touchend.native.prevent="solve();"
                 />
-            </c-feedback>
+            </interactions-c-feedback>
 
-            <c-feedback
+            <interactions-c-feedback
                 feedback-type="solution"
                 v-if="feedbacks && feedbacks.solution"
                 v-bind="feedbacks.solution"
@@ -113,4 +113,4 @@
 
     </m-interaction>
 
-</c-range-interaction>
+</interactions-c-range-interaction>
