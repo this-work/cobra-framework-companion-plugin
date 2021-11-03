@@ -39,7 +39,7 @@ export default {
         const password = this.$route.params.password;
 
         if (password && password === 'new') {
-            this.message = this.$i18n.t('success-new-password');
+            this.message = this.$i18n.t('c-form-login--success-new-password');
         }
 
     },
@@ -69,7 +69,7 @@ export default {
                     this.loading = false;
                     if (err.response.data.error) {
                         this.valid = false;
-                        this.message = this.$i18n.t('failed');
+                        this.message = this.$i18n.t('c-form-login--failed');
                     } else {
                         this.message = err.message;
                     }

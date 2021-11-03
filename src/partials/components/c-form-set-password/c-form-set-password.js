@@ -33,7 +33,7 @@ export default {
 
     async created() {
 
-        this.message = this.$i18n.t('wait');
+        this.message = this.$i18n.t('c-form-set-password--wait');
 
         const { code, id } = this.$route.query;
 
@@ -81,7 +81,7 @@ export default {
                     this.valid = true;
 
                     if (!this.code || !this.id) {
-                        throw new Error(this.$i18n.t('failed'));
+                        throw new Error(this.$i18n.t('c-form-set-password--failed'));
                     }
 
                     const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
