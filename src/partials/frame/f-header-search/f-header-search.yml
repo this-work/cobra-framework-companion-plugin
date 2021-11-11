@@ -1,4 +1,4 @@
 de:
-    placeholder: "Themen, Schlagworte ..."
-    more: "Mehr"
-    less: "Weniger"
+    f-header-search--placeholder: "Themen, Schlagworte ..."
+    f-header-search--more: "Mehr"
+    f-header-search--less: "Weniger"

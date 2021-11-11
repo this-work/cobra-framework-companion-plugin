@@ -55,13 +55,13 @@ export default {
 
                 try {
 
-                    const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
+                    const { csrfTokenValue } = await this.$axios.$get('/api/v1/session-info');
 
                     await this.$auth.loginWith('craft', {
                         data: {
                             loginName: this.$refs.loginName.value,
                             password: this.$refs.password.value,
-                            [csrfTokenName]: csrfTokenValue
+                            'CRAFT_CSRF_TOKEN': csrfTokenValue
                         }
                     });
 

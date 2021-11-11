@@ -1,7 +1,7 @@
 de:
-    navigation: "Themen"
-    homepage: "Startseite"
-    account: "Persönlich"
-    logout: "Ausloggen"
-    search: "Suche"
-    close: "Schließen"
+    f-header--navigation: "Themen"
+    f-header--homepage: "Startseite"
+    f-header--account: "Persönlich"
+    f-header--logout: "Ausloggen"
+    f-header--search: "Suche"
+    f-header--close: "Schließen"
