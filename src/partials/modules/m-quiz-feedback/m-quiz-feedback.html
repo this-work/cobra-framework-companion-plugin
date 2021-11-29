@@ -8,36 +8,36 @@
             <layout layout="l-2-8-2">
                 <template #column-2>
 
-                        <c-icon
-                            :class="element('icon')"
-                            v-bind="iconAttrs"
-                        />
+                    <c-icon
+                        :class="[element('icon'), feedbackType ? element('icon--' + feedbackType) : '' ]"
+                        v-bind="iconAttrs"
+                    />
 
-                        <c-heading
-                            :class="element('heading')"
-                            v-if="headline"
-                            :headline="headline"
-                            headline-tag="span"
-                            headline-type="h1"
-                            alignment="center"
-                        />
-                        <c-text
-                            :class="element('text')"
-                            v-if="text"
-                            :text="text"
-                        />
+                    <c-heading
+                        :class="element('heading')"
+                        v-if="headline"
+                        :headline="headline"
+                        headline-tag="span"
+                        headline-type="h1"
+                        alignment="center"
+                    />
+                    <c-text
+                        :class="element('text')"
+                        v-if="text"
+                        :text="text"
+                    />
 
-                        <c-quiz-progress-indicator
-                            :class="element('progress-indicator')"
-                            v-bind="progressIndicator"
-                            :theme="theme"
-                        />
+                    <c-quiz-progress-indicator
+                        :class="element('progress-indicator')"
+                        v-bind="progressIndicator"
+                        :theme="theme"
+                    />
 
-                        <c-button
-                            v-bind="button"
-                            :class="element('button')"
-                            @click.native="$emit('retry', $event )"
-                        />
+                    <c-button
+                        v-bind="button"
+                        :class="element('button')"
+                        @click.native="$emit('retry', $event )"
+                    />
 
 
                 </template>

@@ -51,11 +51,11 @@ export default ({store}) => {
                 }
 
             },
-            async getSearchResults({ commit }, data) {
+            async getSearchResults({ commit }, given) {
 
-                const { data } = await this.$axios.get(data.endpoint, {
+                const { data } = await this.$axios.get(given.endpoint, {
                     params: {
-                        q: data.tags.map(tag => {
+                        q: given.tags.map(tag => {
                             return tag['value'];
                         }).filter(item => item !== undefined).join(' ')
                     }

@@ -32,6 +32,23 @@
             }
         }
 
+        &__icon {
+            width: unitize(140px);
+            height: unitize(140px);
+            padding: spacing('20');
+            color: color('white');
+            border-radius: 50%;
+            border: 3px solid color('white');
+            &--positive {
+                color: color('success');
+                border-color: color('success');
+            }
+            &--negative {
+                color: color('error');
+                border-color: color('error');
+            }
+        }
+
         &__text {
             text-align: center;
         }

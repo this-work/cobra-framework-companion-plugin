@@ -35,30 +35,22 @@ export default {
     computed: {
 
         iconAttrs() {
-            const icon = {
-                size: '140px',
-                borderRadius: '50%',
-                fill: 'white',
-                padding: '10'
-            };
+            const icon = {};
 
             if (this.feedbackType === 'positive') {
                 Object.assign(icon, {
-                    background: this.$style.success,
                     name: 'check'
                 });
             }
 
             if (this.feedbackType === 'negative') {
                 Object.assign(icon, {
-                    background: this.$style.error,
                     name: 'close'
                 });
             }
 
             if (this.feedbackType === 'solution') {
                 Object.assign(icon, {
-                    background: this.$style.darkDeco,
                     name: 'visibility'
                 });
             }
