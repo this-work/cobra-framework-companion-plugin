@@ -21,6 +21,34 @@ export default function() {
 
 
     /**
+     * List all external plugins with mode and
+     * optional css path
+     */
+    const plugins = {
+        'tags-input': { mode: 'client' },
+    };
+
+
+    /**
+     * Add all third party plugin to the nuxt instance
+     * Get all plugins from the external plugin index file
+     */
+    for (const [ name, options ] of Object.entries(plugins)) {
+        const pluginBase = {
+            src: join(__dirname, `../src/plugins/external/${name}.js`),
+            fileName: `cobra-framework/plugins/${name}.js`
+        };
+        this.addPlugin({ ...pluginBase, ...options });
+
+        if (options.css) {
+            const pluginCSS = { src: options.css };
+            'css' in nuxtConfig ? nuxtConfig['css'].push(pluginCSS) : nuxtConfig['css'] = [pluginCSS];
+        }
+
+    }
+
+
+    /**
      * List all stores to inject
      * in parent project
      */

@@ -40,16 +40,16 @@ export default {
 
             try {
 
-                const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
+                const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/v1/csrf-token');
 
-                await this.$axios.$post('/api/playlist/track-completion-state', {
+                await this.$axios.$post('/api/v1/playlist/track-completion-state', {
                     'playlistId': this.playlistId,
                     'completed': checked,
                     [csrfTokenName]: csrfTokenValue
                 });
 
             } catch (err) {
-
+                console.log(err);
             }
 
         }

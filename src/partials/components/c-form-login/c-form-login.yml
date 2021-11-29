@@ -1,5 +1,5 @@
 de:
-    c-form-login--username: "Benutzernamen oder E-Mail"
+    c-form-login--username: "E-Mail"
     c-form-login--password: "Passwort"
     c-form-login--password-lost: "Passwort vergessen?"
     c-form-login--remember-me: "Eingeloggt bleiben"

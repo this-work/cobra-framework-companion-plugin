@@ -44,7 +44,7 @@
         @include grid-cell-size(12);
         align-self: center;
         > * {
-            display: flex;
+            display: flex!important;
             margin-bottom: spacing('16');
         }
         @include above('xs') {
@@ -56,7 +56,7 @@
         @include above('s') {
             text-align: right;
             > * {
-                display: inline-flex;
+                display: inline-flex!important;
                 white-space: nowrap;
             }
         }
@@ -73,7 +73,7 @@
         align-self: center;
         text-align: right;
         > * {
-            display: flex;
+            display: flex!important;
         }
         @include above('xs') {
             @include grid-cell-position(7, 2);
@@ -82,7 +82,7 @@
         @include above('s') {
             text-align: left;
             > * {
-                display: inline-flex;
+                display: inline-flex!important;
                 white-space: nowrap;
             }
         }
