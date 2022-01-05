@@ -2,3 +2,8 @@ de_DE:
     f-header-search--placeholder: "Themen, Schlagworte ..."
     f-header-search--more: "Mehr"
     f-header-search--less: "Weniger"
+
+en_GB:
+    f-header-search--placeholder: "Topics, keywords ..."
+    f-header-search--more: "More"
+    f-header-search--less: "Less"

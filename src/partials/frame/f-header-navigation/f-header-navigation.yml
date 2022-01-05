@@ -2,3 +2,8 @@ de_DE:
     f-header--navigation: "Themen"
     f-header--search: "Suche"
     f-header--close: "Schließen"
+
+en_GB:
+    f-header--navigation: "Courses"
+    f-header--search: "Search"
+    f-header--close: "Close"
