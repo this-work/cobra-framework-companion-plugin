@@ -1,4 +1,4 @@
-<footer :class="blockClasses">
+<footer :class="blockClasses" v-if="this.$auth.loggedIn">
 
     <module :background="false">
         <module-page>
@@ -18,7 +18,7 @@
 
                         <transition name="fade">
 
-                            <ul v-if="list.hasOwnProperty('items') && list.items.length > 0" :class="element('list')">
+                            <ul :class="element('list')">
                                 <li :class="element('list-entry')" v-for="(item, index) in list.items" :key="index">
 
                                     <c-link :url="item.slug" :externalUrl="item.externalUrl">
@@ -26,6 +26,12 @@
                                     </c-link>
 
                                 </li>
+
+                                <li :class="element('list-entry')">
+                                    <c-button appearance="secondary" icon="logout" :label="$t('f-header--logout')" @click.native="$auth.logout('local')" />
+                                </li>
+
+
                             </ul>
 
                         </transition>

@@ -44,7 +44,7 @@ export default {
             window.history.back();
         },
         logout() {
-            this.$auth.logout('craft');
+            this.$auth.logout('local');
         }
     }
 };

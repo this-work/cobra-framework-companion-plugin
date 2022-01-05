@@ -4,7 +4,7 @@
 
         <button
             :class="[element('button'), element('close')]"
-             @click="$store.commit('last-visited/goBackFromSearch')"
+             @click="close()"
         >
             <c-icon name="arrowBack" />
         </button>

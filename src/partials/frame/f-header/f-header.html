@@ -12,7 +12,7 @@
 
             <div :class="element('wrapper')" v-else-if="this.$store.state.header.type">
 
-                <nuxt-link to="/" :class="element('logo')">
+                <nuxt-link :to="localePath('/')" :class="element('logo')">
                     <c-icon name="logo" />
                 </nuxt-link>
 

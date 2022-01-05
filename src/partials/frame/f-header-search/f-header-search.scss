@@ -22,7 +22,7 @@ $f-header-search-input-vertical-padding: unitize(5px) !default;
 $f-header-search-tag-margin-right: spacing('6') !default;
 $f-header-search-tag-padding: unitize(5px) unitize(12px) !default;
 $f-header-search-tag-border-radius: unitize(25px) !default;
-$f-header-search-tag-font: font($default-font-family, 'regular', '16', 25px) !default;
+$f-header-search-tag-font: font($default-font-family, 'regular', '14', 25px) !default;
 $f-header-search-tag-height: unitize(35px) !default;
 
 $f-header-tags-spacing: spacing('10') !default;
@@ -74,7 +74,7 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
         left: 50%;
         width: 100vw;
         margin-left: -50vw;
-        @include color-theme('background');
+        background: color('dark-deco');
         @include above('s') {
             display: none;
         }
@@ -277,6 +277,7 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
             position: relative;
             font: $f-header-search-tag-font;
             opacity: $f-header-toggle-expanded-tags-opacity;
+            @include color-theme('copytext')
         }
 
         &-icon {

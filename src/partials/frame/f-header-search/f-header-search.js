@@ -77,14 +77,12 @@ export default {
 
     beforeMount() {
 
-        this.$store.commit('last-visited/updateQuery', {});
-
         if (this.$route.query.selectedTags) {
 
             this.addTagsFromUriString(this.$route.query.selectedTags);
 
         } else {
-            this.$store.dispatch('search/getSearchResults', []).then(() => {
+            this.$store.dispatch('search/getSearchResults', { tags: [], endpoint: '/api/v1/' + this.$i18n.locale + '/' + this.$i18n.locale + '/search/' } ).then(() => {
                 this.$store.commit('search/loading', false);
                 this.$nuxt.$loading.finish();
             });
@@ -199,7 +197,7 @@ export default {
 
         updateSearchResult() {
 
-            this.$store.dispatch('search/getSearchResults', this.selectedTags).then(() => {
+            this.$store.dispatch('search/getSearchResults', { tags: this.selectedTags, endpoint: '/api/v1/' + this.$i18n.locale + '/' + this.$i18n.locale + '/search/' }).then(() => {
                 this.$store.commit('search/loading', false);
                 this.$nuxt.$loading.finish();
             });
@@ -213,14 +211,6 @@ export default {
             }
 
             updateUrlQuery('selectedTags', parts.join(','));
-
-            if (parts.length > 0) {
-                this.$store.commit('last-visited/updateQuery', {
-                    'selectedTags': decodeURIComponent(parts.join(','))
-                });
-            } else {
-                this.$store.commit('last-visited/updateQuery', {});
-            }
 
         },
 

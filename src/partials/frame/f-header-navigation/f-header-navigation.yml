@@ -1,7 +1,4 @@
-de:
+de_DE:
     f-header--navigation: "Themen"
-    f-header--homepage: "Startseite"
-    f-header--account: "Persönlich"
-    f-header--logout: "Ausloggen"
     f-header--search: "Suche"
     f-header--close: "Schließen"

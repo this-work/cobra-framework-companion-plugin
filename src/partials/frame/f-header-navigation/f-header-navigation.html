@@ -25,39 +25,6 @@
                     </button>
                 </li>
 
-                <li :class="element('item')">
-                    <nuxt-link to="/" :class="element('link')">
-                        <span :class="element('icon')">
-                            <c-icon name="language" :aria-label="$t('f-header--homepage')" />
-                        </span>
-                        <span :class="element('label')">
-                            {{ $t('f-header--homepage') }}
-                        </span>
-                    </nuxt-link>
-                </li>
-
-                <li :class="element('item')">
-                    <button :class="element('link')">
-                        <span :class="element('icon')">
-                            <c-icon name="accountCircle" :aria-label="$t('f-header--account')" />
-                        </span>
-                        <span :class="element('label')">
-                            {{ $t('f-header--account') }}
-                        </span>
-                    </button>
-                </li>
-
-                <li :class="element('item')">
-                    <button @click="logout()" :class="element('link')">
-                        <span :class="element('icon')">
-                            <c-icon name="lock" :aria-label="$t('f-header--logout')" />
-                        </span>
-                        <span :class="element('label')">
-                            {{ $t('f-header--logout') }}
-                        </span>
-                    </button>
-                </li>
-
                 <li :class="[element('item'), element('item--search')]">
                     <nuxt-link to="/search" :class="element('link')">
                         <span :class="element('icon')">

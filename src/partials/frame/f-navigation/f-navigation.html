@@ -23,7 +23,6 @@
 
                                     <c-link :url="item.slug" :externalUrl="item.externalUrl" :class="element('label')">
                                         <c-image v-if="item.image" v-bind="item.image" objectFit="cover" :aspectRatios="{0: '1:1'}" :skeleton="false" :class="element('label-image')" />
-                                        <c-icon v-else name="dashboard" :class="element('label-image')" />
                                         <span :class="element('label-text')" v-html="item.title" />
                                     </c-link>
 

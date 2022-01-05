@@ -22,6 +22,12 @@ $f-footer-list-entry-margin-left: spacing('27') !default;
 
     // #region [Element]
 
+    .l-5-1-6__column-1,
+    .l-5-1-6__column-2,
+    .l-5-1-6__column-3 {
+        align-self: center;
+    }
+
     &__text {
         font: $f-footer-font;
         text-align: center;
