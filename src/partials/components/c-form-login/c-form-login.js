@@ -57,7 +57,7 @@ export default {
 
                     const { csrfTokenValue } = await this.$axios.$get('/api/v1/session-info');
 
-                    await this.$auth.loginWith('craft', {
+                    await this.$auth.loginWith('local', {
                         data: {
                             loginName: this.$refs.loginName.value,
                             password: this.$refs.password.value,

@@ -19,6 +19,7 @@
                         <transition name="fade">
 
                             <ul :class="element('list')">
+
                                 <li :class="element('list-entry')" v-for="(item, index) in list.items" :key="index">
 
                                     <c-link :url="item.slug" :externalUrl="item.externalUrl">
@@ -28,9 +29,8 @@
                                 </li>
 
                                 <li :class="element('list-entry')">
-                                    <c-button appearance="secondary" icon="logout" :label="$t('f-footer--logout')" @click.native="$auth.logout('local')" />
+                                    <c-button icon="powerSettingsNew" :label="$t('f-footer--logout')" @click.native="$auth.logout('local')" />
                                 </li>
-
 
                             </ul>
 
