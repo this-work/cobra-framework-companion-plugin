@@ -56,7 +56,7 @@ $f-footer-list-entry-margin-left: spacing('27') !default;
         list-style: none;
         font: $f-footer-font;
         white-space: nowrap;
-        span {
+        &-title {
             font: inherit;
             white-space: inherit;
         }
