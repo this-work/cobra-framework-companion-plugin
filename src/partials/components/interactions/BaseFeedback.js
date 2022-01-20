@@ -29,11 +29,15 @@ export default {
     },
 
     created() {
-        this.feedbacks?.register(this);
+        if (this.feedbacks) {
+            this.feedbacks.register(this);
+        }
     },
 
     destroyed() {
-        this.feedbacks?.unregister(this);
+        if (this.feedbacks) {
+            this.feedbacks.unregister(this);
+        }
     }
 
 };

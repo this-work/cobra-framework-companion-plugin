@@ -21,26 +21,33 @@ export default {
 
     computed: {
         states() {
-            return this.interactions
-                ?.map(interaction => {
-                    return interaction?.$refs?.interaction;
+            if (this.interactions) {
+                return this.interactions.map(interaction => {
+                    if (interaction && interaction.$refs) {
+                        return interaction.$refs.interaction
+                    } else {
+                        return false;
+                    };
                 })
-                .map((interaction, index) => {
-                    if (!interaction) {
+                    .map((interaction, index) => {
+                        if (!interaction) {
+                            return {
+                                active: index === this.activeIndex,
+                                success: false,
+                                failed: false
+                            };
+                        }
+
                         return {
                             active: index === this.activeIndex,
-                            success: false,
-                            failed: false
+                            // evaluated: interaction.state === 'EVALUATED',
+                            success: interaction.state === 'EVALUATED' && interaction.evaluationResult,
+                            failed: interaction.state === 'EVALUATED' && !interaction.evaluationResult
                         };
-                    }
-
-                    return {
-                        active: index === this.activeIndex,
-                        // evaluated: interaction.state === 'EVALUATED',
-                        success: interaction.state === 'EVALUATED' && interaction.evaluationResult,
-                        failed: interaction.state === 'EVALUATED' && !interaction.evaluationResult
-                    };
-                });
+                    });
+            } else {
+                return false;
+            }
         },
 
         stateChunks() {

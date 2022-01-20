@@ -129,10 +129,14 @@ export default {
     },
 
     created() {
-        this?.quiz?.registerInteraction(this);
+        if (this && this.quiz) {
+            this.quiz.registerInteraction(this);
+        }
     },
 
     destroyed() {
-        this?.quiz?.unregisterInteraction(this);
+        if (this && this.quiz) {
+            this.quiz.unregisterInteraction(this);
+        }
     }
 };

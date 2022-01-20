@@ -54,7 +54,13 @@ export default {
         },
 
         hasAnswerImages() {
-            return this.answers?.some(this.hasAnswerImage);
+
+            if (!this.answers) {
+                return false;
+            }
+            
+            return this.answers.some(this.hasAnswerImage);
+
         }
 
     },
