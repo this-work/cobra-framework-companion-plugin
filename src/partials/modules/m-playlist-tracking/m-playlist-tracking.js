@@ -38,11 +38,18 @@ export default {
     methods: {
         async trackReadPlaylist(checked) {
 
+            document.dispatchEvent(new CustomEvent('track-playlist', { detail: {
+                    playlist: this.playlistId,
+                    completed: checked
+                } }));
+
+            if (!process.client) return;
+
             try {
 
-                const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/v1/csrf-token');
+                const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
 
-                await this.$axios.$post('/api/v1/playlist/track-completion-state', {
+                await this.$axios.$post('/api/playlist/track-completion-state', {
                     'playlistId': this.playlistId,
                     'completed': checked,
                     [csrfTokenName]: csrfTokenValue
@@ -51,6 +58,7 @@ export default {
             } catch (err) {
                 console.log(err);
             }
+
 
         }
     }
