@@ -28,7 +28,10 @@ export default {
                 slot: 'column-1'
             })
         },
-        alignment: String,
+        alignment: {
+            type: String,
+            default: 'left'
+        },
         feedbacks: Object,
         question: Object,
         type: String,

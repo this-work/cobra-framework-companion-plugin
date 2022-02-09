@@ -6,15 +6,27 @@
 ///
 ////
 
+$m-interactions-audio-container-margin-top: 'xsmall' !default;
+$m-interactions-instruction-margin-top: 'xsmall' !default;
+
 .m-interaction {
     // #region [Block]
     $module: &;
+    align-content: center;
     padding-bottom: 0;
     overflow: hidden; // QUICKFIX, BACKGROUMD SHIFTED
-    align-content: center;
     // #endregion
 
     // #region [Element]
+
+    &__audio-container {
+        @include responsive-spacing($m-interactions-audio-container-margin-top, margin-top);
+    }
+
+    &__instruction {
+        @include responsive-spacing($m-interactions-instruction-margin-top, margin-top);
+    }
+
     @at-root .module#{&} {
 
         #{$module}__question {

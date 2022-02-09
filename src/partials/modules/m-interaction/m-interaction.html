@@ -6,20 +6,47 @@
 >
 
     <module-content
-         :class="[element('question')]"
-         ref="question"
+        :class="[element('question')]"
+        ref="question"
     >
+
         <layout :layout="headingLayout.layout">
             <template #[headingLayout.slot]>
                 <slot name="heading">
                     <c-heading
                         :alignment="alignment"
                         :class="element('heading')"
-                        v-bind="question"
-                        headline-tag="h2"
-                        headline-type="h2"
-                        subline-tag="span"
-                        subline-type="copytext"
+                        :tag="question.tag"
+                        :overline="question.overline"
+                        :overlineTag="question.overlineTag"
+                        :overlineType="question.overlineType"
+                        :overlineAttrs="question.overlineAttrs"
+                        :headline="question.headline"
+                        :headlineTag="question.headlineTag || 'h2'"
+                        :headlineType="question.headlineType || 'h2'"
+                        :headlineAttrs="question.headlineAttrs"
+                    />
+                </slot>
+
+                <div v-if="question.button || $slots.audio" :class="[element('audio-container'), alignment ? `text-align-${alignment}` : null]">
+                    <slot name="audio">
+                        <c-button-audio
+                            v-if="question.button"
+                            v-bind="question.button"
+                            :class="element('audio')"
+                        />
+                    </slot>
+                </div>
+
+                <slot name="instruction">
+                    <c-heading
+                        :alignment="alignment"
+                        :class="[element('heading'), element('instruction')]"
+                        :tag="question.tag"
+                        :subline="question.subline"
+                        :sublineTag="question.sublineTag || 'span'"
+                        :sublineType="question.sublineType || 'copytext'"
+                        :sublineAttrs="question.sublineAttrs"
                     />
                 </slot>
             </template>
