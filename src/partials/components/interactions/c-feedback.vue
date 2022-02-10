@@ -125,7 +125,7 @@ export default {
     }
 
     &__icon-heading {
-        display: flex;
+        display: flex !important;
         flex-flow: row nowrap;
     }
 
