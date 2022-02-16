@@ -92,7 +92,7 @@ export default {
                         element: document.querySelector(`.f-header__module`),
                         property: 'padding-right'
                     }
-                ], true);
+                ]);
             }, 0);
 
         },
@@ -104,7 +104,7 @@ export default {
             document.removeEventListener('click', this.checkClickOutside);
 
             setTimeout(() => {
-                enablePageScrolling(true);
+                enablePageScrolling();
             }, 0);
 
         },
