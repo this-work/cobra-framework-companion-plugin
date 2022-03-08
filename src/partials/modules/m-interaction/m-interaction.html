@@ -64,18 +64,11 @@
         </layout>
     </module-content>
 
-    <div
-        ref="feedbacks"
-        :class="[
-            element('answer'),
-            `module-${backgroundPosition}`,
-        ]"
-    >
+    <component ref="feedbacks" :is="`module-${backgroundPosition}`" :class="element('answer')">
         <module-content>
             <slot name="feedbacks" v-bind="slotProps" />
         </module-content>
-    </div>
-
+    </component>
 
 </module>
 
