@@ -51,7 +51,9 @@ export default {
 
             return { layout: 'l-10-2', slot: 'column-1' };
         },
-
+        shuffledAnswers() {
+            return this.answers.sort((a, b) => 0.5 - Math.random());
+        },
         hasAnswerImages() {
             if (!this.answers) {
                 return false;

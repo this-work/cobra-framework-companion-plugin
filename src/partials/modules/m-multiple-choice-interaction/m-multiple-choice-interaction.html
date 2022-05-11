@@ -34,7 +34,7 @@
                 <interactions-c-choice
                     :correct="answer.correct"
                     :key="`multiple-choice-${choiceIndex}-${uid}`"
-                    v-for="(answer, choiceIndex) in answers"
+                    v-for="(answer, choiceIndex) in shuffledAnswers"
                     #default="{ $data }"
                     :renderless="!hasAnswerImage(answer)"
                 >
