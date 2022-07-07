@@ -44,7 +44,7 @@ export function getElasticsearchQueryString() {
         return '*';
     }
 
-    return urlQuery.tags.replaceAll(',', ' AND ');
+    return '"' + urlQuery.tags.replaceAll(',', '" AND "') + '"';
 
 }
 
