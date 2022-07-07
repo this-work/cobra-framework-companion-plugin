@@ -1,6 +1,6 @@
 {
   "name": "@this/cobra-framework-companion-plugin",
-  "version": "0.0.31",
+  "version": "1.0.0",
   "author": "THIS GmbH",
   "repository": "https://bitbucket.org/this-work/this.cobra-framework/src/master/README.md",
   "description": "Component framework plugin for companion for Nuxt 2 or Vue 2",
@@ -22,7 +22,8 @@
     "vue"
   ],
   "dependencies": {
-      "@this/cobra-framework": "^0.1.44",
+      "@this/cobra-framework": "^0.1.75",
+      "@this/cobra-framework-elastic-plugin": "^1.0.1",
       "lodash.chunk": "^4.2.0",
       "@voerro/vue-tagsinput": "^2.4.1"
   },

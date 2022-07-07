@@ -4,20 +4,20 @@
 
         <button
             :class="[element('button'), element('close')]"
-             @click="close()"
+            @click="close()"
         >
             <c-icon name="arrowBack" />
         </button>
 
         <simplebar :class="element('scrollbar')">
             <tags-input
-                    v-model="selectedTags"
-                    :existing-tags="this.$store.state.search.tags"
-                    @input="updateData"
-                    :class="element('input')"
-                    :add-tags-on-comma="true"
-                    :add-tags-on-blur="true"
-                    :placeholder="$t('f-header-search--placeholder')"
+                v-model="selectedTags"
+                :existing-tags="this.$store.state.search.tags"
+                @input="updateData"
+                :class="element('input')"
+                :add-tags-on-comma="true"
+                :add-tags-on-blur="true"
+                :placeholder="$t('f-header-search--placeholder')"
             />
         </simplebar>
 
@@ -35,7 +35,7 @@
 
     <transition-replace affectedElement=".f-header" affectedElementHeightSource=".module">
 
-        <div :class="element('additionals')" :key="selectedExistingTags.length + ':' + tags.length + ':' + expandedTags + ':' + forceTransition">
+        <div :class="element('additionals')" :key="selectedExistingTags.length + ':' + expandedTags + ':' + forceTransition">
 
             <div v-if="tags.length > 0"
                  :class="tagsClasses"

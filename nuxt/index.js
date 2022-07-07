@@ -19,6 +19,21 @@ export default function() {
         throw new Error('please set `components: true` inside `nuxt.config` and ensure using `nuxt >= 2.13.0`');
     }
 
+    /**
+     * List all nuxt modules
+     */
+    const modules = [
+        '@this/cobra-framework-elastic-plugin'
+    ];
+
+
+    /**
+     * Add all nuxt modules to the instance and
+     * require them
+     */
+    for (const module of modules) {
+        this.requireModule(module);
+    }
 
     /**
      * List all external plugins with mode and

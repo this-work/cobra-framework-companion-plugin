@@ -2,68 +2,81 @@ export default ({store}) => {
     store.registerModule('search', {
         namespaced: true,
         state: () => ({
-            loading: true,
             tags: [],
-            relatedTags: [],
+            types: [],
             searchResults: []
         }),
         mutations: {
-            loading: function(state, bool) {
-                state.loading = bool;
-            },
             setTags: function(state, tags) {
                 state.tags = tags;
             },
-            setRelatedTags: function(state, tags) {
-                state.relatedTags = tags;
+            setTypes: function(state, types) {
+                state.types = types;
             },
             setSearchResults: function(state, results) {
                 state.searchResults = results;
             }
         },
         actions: {
-            async getTags({ commit }, endpoint) {
 
-                const { data } = await this.$axios.get(endpoint);
+            async fetch({ commit }, { query = '*', selectedTags, customFilter, customAggregation } = {}) {
 
-                commit('setTags', data.data.map(item => {
-                    return {
-                        'key': item.id,
-                        'value': item.title
-                    };
-                }));
-            },
-            async getRelatedTags({ commit, state }, categories, endpoint) {
-
-                if (categories.length > 0) {
-                    const { data } = await this.$axios.get(endpoint, {
-                        params: {
-                            catids: categories.join(',')
+                const response = await this.$elastic.search(query, {
+                    fields: ['*'],
+                    index: this.$config.API_ELASTIC_SEARCH_PREFIX + this.$i18n.localeProperties.siteId
+                }, {
+                    'aggs': {
+                        'categories': {
+                            'terms': { 'field': 'categories' }
+                        },
+                        'types': {
+                            'terms': { 'field': 'type' }
+                        },
+                        ...customAggregation
+                    },
+                    'filter': {
+                        "bool" : {
+                            "must" : [
+                                {
+                                    "term" : {
+                                        "searchable" : true
+                                    }
+                                }
+                            ],
+                            ...customFilter
                         }
-                    });
-
-                    const filteredTags = [];
-                    data.data.forEach(item => {
-                        filteredTags.push(state.tags.find(tag => tag.key === item ));
-                    });
-
-                    commit('setRelatedTags', filteredTags );
-                }
-
-            },
-            async getSearchResults({ commit }, given) {
-
-                const { data } = await this.$axios.get(given.endpoint, {
-                    params: {
-                        q: given.tags.map(tag => {
-                            return tag['value'];
-                        }).filter(item => item !== undefined).join(' ')
                     }
                 });
 
-                commit('setSearchResults', data.data );
+                if (response && response.aggregations && response.aggregations.categories) {
+                    commit('setTags', response.aggregations.categories.buckets.map(tag => {
+                        return {
+                            'key': tag.key.replace(/[^a-zA-Z]+/g, '').toLowerCase(),
+                            'count': tag.doc_count,
+                            'value': tag.key
+                        };
+                    }).filter(tag => {
+                        if (selectedTags) {
+                            return !selectedTags.map(selectedTag => selectedTag.replace(/[^a-zA-Z]+/g, '').toLowerCase()).includes(tag.key);
+                        }
+                        return true;
+                    }));
+                }
+
+                if (response && response.aggregations && response.aggregations.types) {
+                    commit('setTypes', response.aggregations.types.buckets);
+                }
+
+                if (response && response.hits && response.hits.hits) {
+                    commit('setSearchResults', response.hits.hits.map(hit => {
+                        return hit._source;
+                    }));
+                }
+
+                return response;
 
             }
+
         }
     })
 }
