@@ -1,1163 +1,168 @@
-////
 ///
-/// Color Config
+/// Companion Plugin Style Palettes
 ///
-/// @group Configuration
-/// @since 1.0.0
-///
-////
+
+/// Search Color Themes
+'search-field': (
+light: (
+background-color: 'light-deco',
+color: 'light-font'
+),
+medium: (
+background-color: 'medium-deco',
+color: 'medium-font'
+),
+dark: (
+background-color: 'dark-deco',
+color: 'dark-font'
+)
+),
+'search-button': (
+light: (
+background-color: 'light',
+border-color: 'light-deco'
+),
+medium: (
+background-color: 'light',
+border-color: 'medium-deco'
+),
+dark: (
+background-color: 'light',
+border-color: 'dark-deco'
+)
+),
+
+/// Pills Color Themes
+'tag-pill': (
+light: (
+background-color: (
+'default': 'primary:15:alpha',
+':hover': 'primary',
+),
+color: (
+'default': 'primary',
+':hover': 'white',
+)
+),
+medium: (
+background-color: (
+'default': 'primary:15:alpha',
+':hover': 'primary',
+),
+color: (
+'default': 'primary',
+':hover': 'white',
+)
+),
+dark: (
+background-color: (
+'default': lighten(_color('primary'), 25%),
+':hover': 'primary',
+),
+color: (
+'default': 'white',
+':hover': 'white',
+)
+)
+),
+'selected-tag-pill': (
+light: (
+background-color: 'primary',
+color: 'white'
+),
+medium: (
+background-color: 'primary',
+color: 'white'
+),
+dark: (
+background-color: 'primary',
+color: 'white'
+)
+),
+
+/// Timebox Color Themes
+'timebox': (
+light: (
+background-color: 'dark',
+color: 'dark-font'
+),
+medium: (
+background-color: 'dark',
+color: 'dark-font'
+),
+dark: (
+background-color: 'light',
+color: 'light-font'
+)
+),
+
+/// Footer Color Themes
+'footer': (
+light: (
+background-color: 'light-deco',
+color: 'light-font'
+),
+medium: (
+background-color: 'medium-deco',
+color: 'medium-font'
+),
+dark: (
+background-color: 'dark-deco',
+color: 'dark-font'
+)
+),
+
+/// Feedback Color Themes
+'feedback-arrow': (
+light: (
+border-bottom-color: 'light-deco',
+),
+medium: (
+border-bottom-color: 'medium-deco',
+),
+dark: (
+border-bottom-color: 'dark-deco',
+)
+),
+'feedback-background': (
+light: (
+background: 'light-deco',
+),
+medium: (
+background: 'medium-deco',
+),
+dark: (
+background: 'dark-deco',
+)
+),
+'feedback-solution-icon': (
+light: (
+background: 'white',
+color: 'dark'
+),
+medium: (
+background: 'white',
+color: 'dark'
+),
+dark: (
+background: 'white',
+color: 'dark'
+)
+),
 
 
-///
-/// Private base color getter.
-/// Don´t use it the project. Use "color(xxx)" instead.
-/// @param {string} $color-name - Name of the color
-///
-/// @return {string} Hexcode
-///
-@function _base-color($color-name) {
-    @return map-get($color-base, $color-name);
-}
-
-
-///
-/// Base color configuration.
-/// Configuration of all standardized colors you can use with the color function.
-/// Alias for js import: 'colorBases'
-/// Alias to import all colors in js: 'colors'
-/// @type array
-///
-$color-base: () !default;
-$color-base: map-merge((
-    'white'            : #ffffff,
-    'black'            : #000000,
-    'primary'          : #022AE9,
-    'secondary'        : #ffccbc,
-    'dark'             : #171717,
-    'dark-deco'        : #242424,
-    'dark-font'        : #ffffff,
-    'medium'           : #eff1f2,
-    'medium-deco'      : #e2e6e8,
-    'medium-font'      : #171717,
-    'light'            : #ffffff,
-    'light-deco'       : #eff1f2,
-    'light-font'       : #171717,
-    'disabled'         : #dadee1,
-    'disabled-selected': #b1b6ba,
-    'error'            : #ba084c,
-    'success'          : #90c732,
-    'outline'          : rgba(#a2a2a2, .33),
-    'overlay'          : rgba(#000000, .75),
-), $color-base);
-
-
-///
-/// Derivate color configuration.
-/// Configuration of all modified colors from the base color array you can use with the color function.
-/// Alias for js import: 'colorDerivates'
-/// Alias to import all colors in js: 'colors'
-/// @type array
-///
-$color-derivates: () !default;
-$color-derivates: map-merge((
-    'primary:hover'                  : darken(_base-color('primary'), 15%),
-    'primary:active'                 : darken(_base-color('primary'), 15%),
-    'primary:active:hover'           : darken(_base-color('primary'), 15%),
-    'primary:disabled'               : _base-color('disabled'),
-    'primary:disabled:selected'      : _base-color('disabled-selected'),
-    'outline:focus'                  : _base-color('outline'),
-
-    'error:hover'                    : adjust-color(_base-color('error'), $lightness: -10%),
-    'error:active:hover'             : adjust-color(_base-color('error'), $lightness: -20%),
-    'error:disabled'                 : adjust-color(_base-color('error'), $lightness: -20%),
-    'success:hover'                  : adjust-color(_base-color('success'), $lightness: -10%),
-    'success:active:hover'           : adjust-color(_base-color('success'), $lightness: -20%),
-    'success:disabled'               : adjust-color(_base-color('success'), $lightness: -20%)
-), $color-derivates);
-
-
-///
-/// Color palette configuration.
-/// Configuration of all color sets.
-/// Alias for js import: 'colorPalettes'
-/// @type array
-///
-$color-palettes: () !default;
-$color-palettes: map-merge((
-
-    /// Background Themes
-    'background': (
-        light: (
-            background-color: 'light'
-        ),
-        medium: (
-            background-color: 'medium'
-        ),
-        dark: (
-            background-color: 'dark'
-        )
-    ),
-    'background-deco': (
-        light: (
-            background-color: 'light-deco'
-        ),
-        medium: (
-            background-color: 'medium-deco'
-        ),
-        dark: (
-            background-color: 'dark-deco'
-        )
-    ),
-
-    /// Content/Text Themes
-    'overline': (
-        light: (
-            color: 'primary'
-        ),
-        medium: (
-            color: 'primary'
-        ),
-        dark: (
-            color: 'primary'
-        )
-    ),
-    'headline': (
-        light: (
-            color: 'light-font'
-        ),
-        medium: (
-            color: 'medium-font'
-        ),
-        dark: (
-            color: 'dark-font'
-        )
-    ),
-    'copytext': (
-        light: (
-            color: 'light-font'
-        ),
-        medium: (
-            color: 'medium-font'
-        ),
-        dark: (
-            color: 'dark-font'
-        )
-    ),
-    'link': (
-
-        // Link state order rules
-        // @see https://www.w3schools.com/css/css_link.asp
-        light: (
-            color: (
-                'default': 'primary',
-                ':active': 'primary',
-                ':visited': 'primary',
-            ),
-            border-bottom: (
-                'default': 2px solid transparent,
-                ':hover': 2px solid _base-color('primary')
-            )
-        ),
-        medium: (
-            color: (
-                'default': 'primary',
-                ':active': 'primary',
-                ':visited': 'primary',
-            ),
-            border-bottom: (
-                'default': 2px solid transparent,
-                ':hover': 2px solid _base-color('primary')
-            )
-        ),
-        dark: (
-            color: (
-                'default': 'primary',
-                ':active': 'primary',
-                ':visited': 'primary',
-            ),
-            border-bottom: (
-                'default': 2px solid transparent,
-                ':hover': 2px solid _base-color('primary')
-            )
-        )
-    ),
-    'selectiontext': (
-        light: (
-            color: 'dark-font',
-            background-color: 'primary'
-        ),
-        medium: (
-            color: 'dark-font',
-            background-color: 'primary'
-        ),
-        dark: (
-            color: 'dark',
-            background-color: 'white'
-        )
-    ),
-    'blockqoute': (
-        light: (
-            color: 'primary'
-        ),
-        medium: (
-            color: 'primary'
-        ),
-        dark: (
-            color: 'primary'
-        )
-    ),
-    'icon': (
-        light: (
-            color: 'primary'
-        ),
-        medium: (
-            color: 'primary'
-        ),
-        dark: (
-            color: 'dark-font'
-        )
-    ),
-
-    /// Media Helper Themes
-    'media-overlay': (
-        light: (
-            background: linear-gradient(to bottom, rgba(_base-color('black'), 0.2), _base-color('overlay'))
-        ),
-        medium: (
-            background: linear-gradient(to bottom, rgba(_base-color('black'), 0.2), _base-color('overlay'))
-        ),
-        dark: (
-            background: linear-gradient(to bottom, rgba(_base-color('black'), 0.2), _base-color('overlay'))
-        )
-    ),
-    'skeleton': (
-        light: (
-            background-image: linear-gradient(270deg, _base-color('light') 0%, _base-color('light-deco') 50%, _base-color('light') 100%)
-        ),
-        medium: (
-            background-image: linear-gradient(270deg, _base-color('medium') 0%, _base-color('medium-deco') 50%, _base-color('medium') 100%)
-        ),
-        dark: (
-            background-image: linear-gradient(270deg, _base-color('dark') 0%, _base-color('dark-deco') 50%, _base-color('dark') 100%)
-        )
-    ),
-
-    /// Button Color Themes
-    'button-primary': (
-        light: (
-            color: 'white',
-            background-color: (
-                'default': 'primary',
-                ':hover': 'primary:hover',
-                ':active': 'primary:active',
-                ':active:hover': 'primary:active:hover',
-                ':disabled': 'primary:disabled',
-                ':disabled:active': 'primary:disabled',
-                ':disabled:selected': 'primary:disabled:selected',
-            )
-        ),
-        medium: (
-            color: 'white',
-            background-color: (
-                'default': 'primary',
-                ':hover': 'primary:hover',
-                ':active': 'primary:active',
-                ':active:hover': 'primary:active:hover',
-                ':disabled': 'primary:disabled',
-                ':disabled:active': 'primary:disabled',
-                ':disabled:selected': 'primary:disabled:selected',
-            )
-        ),
-        dark: (
-            color: 'white',
-            background-color: (
-                'default': 'primary',
-                ':hover': 'primary:hover',
-                ':active': 'primary:active',
-                ':active:hover': 'primary:active:hover',
-                ':disabled': 'primary:disabled',
-                ':disabled:active': 'primary:disabled',
-                ':disabled:selected': 'primary:disabled:selected',
-            )
-        )
-    ),
-    'button-secondary': (
-        light: (
-            color: 'primary',
-            background-color: (
-                'default': 'medium',
-                ':hover': darken(_base-color('medium'), 2.5%),
-                ':active': darken(_base-color('medium'), 2.5%),
-                ':active:hover': darken(_base-color('medium'), 2.5%),
-                ':disabled': 'disabled',
-                ':disabled:active': 'disabled',
-                ':disabled:selected': 'disabled-selected'
-            )
-        ),
-        medium: (
-            color: 'primary',
-            background-color: (
-                'default': 'light',
-                ':hover': darken(_base-color('light'), 2.5%),
-                ':active': darken(_base-color('light'), 2.5%),
-                ':active:hover': darken(_base-color('light'), 2.5%),
-                ':disabled': 'disabled',
-                ':disabled:active': 'disabled',
-                ':disabled:selected': 'disabled-selected'
-            )
-        ),
-        dark: (
-            color: 'white',
-            background-color: (
-                'default': 'dark-deco',
-                ':hover': darken(_base-color('dark-deco'), 2.5%),
-                ':active': darken(_base-color('dark-deco'), 2.5%),
-                ':active:hover': darken(_base-color('dark-deco'), 2.5%),
-                ':disabled': 'disabled',
-                ':disabled:active': 'disabled',
-                ':disabled:selected': 'disabled-selected'
-            )
-        )
-    ),
-    'button-pill-dark': (
-        light: (
-            color: 'white',
-            background-color: (
-                'default': rgba(_base-color('black'), 0.33),
-                ':hover': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active:hover': lighten(rgba(_base-color('black'), 0.33), 20%)
-            )
-        ),
-        medium: (
-            color: 'white',
-            background-color: (
-                'default': rgba(_base-color('black'), 0.33),
-                ':hover': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active:hover': lighten(rgba(_base-color('black'), 0.33), 20%)
-            )
-        ),
-        dark: (
-            color: 'white',
-            background-color: (
-                'default': rgba(_base-color('black'), 0.33),
-                ':hover': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active': lighten(rgba(_base-color('black'), 0.33), 20%),
-                ':active:hover': lighten(rgba(_base-color('black'), 0.33), 20%)
-            )
-        )
-    ),
-    'button-icon': (
-        light: (
-            color: (
-                'default': rgba(_base-color('light-font'), .50),
-                ':hover': 'light-font',
-                ':active': 'light-font',
-                ':disabled': rgba(_base-color('light-font'), .15),
-                ':disabled:active': rgba(_base-color('light-font'), .15),
-                '.disabled': rgba(_base-color('light-font'), .15)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('disabled-selected'),.15),
-                ':active': rgba(_base-color('disabled-selected'),.15),
-                ':active:hover': rgba(_base-color('disabled-selected'),.15),
-                ':disabled': transparent,
-                ':disabled:active': transparent,
-                '.disabled': transparent
-            )
-        ),
-        medium: (
-            color: (
-                'default': rgba(_base-color('medium-font'), .50),
-                ':hover': 'medium-font',
-                ':active': 'medium-font',
-                ':disabled': rgba(_base-color('medium-font'), .15),
-                ':disabled:active': rgba(_base-color('medium-font'), .15),
-                '.disabled': rgba(_base-color('medium-font'), .15)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('disabled-selected'),.15),
-                ':active': rgba(_base-color('disabled-selected'),.15),
-                ':active:hover': rgba(_base-color('disabled-selected'),.15),
-                ':disabled': transparent,
-                ':disabled:active': transparent,
-                '.disabled': transparent
-            )
-        ),
-        dark: (
-            color: (
-                'default': rgba(_base-color('dark-font'), .50),
-                ':hover': 'dark-font',
-                ':active': 'dark-font',
-                ':disabled': rgba(_base-color('dark-font'), .15),
-                ':disabled:active': rgba(_base-color('dark-font'), .15),
-                '.disabled': rgba(_base-color('dark-font'), .15)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('disabled-selected'),.15),
-                ':active': rgba(_base-color('disabled-selected'),.15),
-                ':active:hover': rgba(_base-color('disabled-selected'),.15),
-                ':disabled': transparent,
-                ':disabled:active': transparent,
-                '.disabled': transparent
-            )
-        ),
-    ),
-    'button-text': (
-        light: (
-            color: (
-                'default': 'light-font',
-                ':active': 'white',
-                ':disabled': rgba(_base-color('light-font'), .33),
-                ':disabled:selected': rgba(_base-color('light-font'), .33)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('dark'), .15),
-                ':active': 'primary',
-                ':active:hover': 'primary',
-                ':disabled': transparent,
-                ':disabled:active': rgba(_base-color('dark'), .05),
-                ':disabled:selected': rgba(_base-color('dark'), .05)
-            )
-        ),
-        medium: (
-            color: (
-                'default': 'medium-font',
-                ':active': 'white',
-                ':disabled': rgba(_base-color('medium-font'), .33),
-                ':disabled:selected': rgba(_base-color('medium-font'), .33)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('dark'), .15),
-                ':active': 'primary',
-                ':active:hover': 'primary',
-                ':disabled': transparent,
-                ':disabled:active': rgba(_base-color('dark'), .05),
-                ':disabled:selected': rgba(_base-color('dark'), .05)
-            )
-        ),
-        dark: (
-            color: (
-                'default': 'dark-font',
-                ':active': 'white',
-                ':disabled': rgba(_base-color('dark-font'), .33),
-                ':disabled:selected': rgba(_base-color('dark-font'), .33)
-            ),
-            background-color: (
-                'default': transparent,
-                ':hover': rgba(_base-color('white'), .15),
-                ':active': 'primary',
-                ':active:hover': 'primary',
-                ':disabled': transparent,
-                ':disabled:active': rgba(_base-color('dark'), .05),
-                ':disabled:selected': rgba(_base-color('dark'), .05)
-            )
-        ),
-    ),
-
-    /// Form Color Themes
-    'input': (
-        light: (
-            color: (
-                'default': 'light-font',
-                ' + *': rgba(_base-color('light-font'), 0.50),
-                ':disabled': rgba(_base-color('light-font'), 0.25),
-                ':disabled + *': rgba(_base-color('light-font'), 0.25),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            border-color: (
-                'default': rgba(_base-color('dark'), 0.25),
-                ':not([value=""])': rgba(_base-color('dark'), 0.50),
-                ':-webkit-autofill': rgba(_base-color('dark'), 0.50),
-                ':focus': _base-color('dark'),
-                ':disabled': rgba(_base-color('dark'), 0.15),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            -webkit-text-fill-color: (
-                ':-webkit-autofill': 'light-font',
-            )
-        ),
-        medium: (
-            color: (
-                'default': 'medium-font',
-                ' + *': rgba(_base-color('medium-font'), 0.50),
-                ':disabled': rgba(_base-color('medium-font'), 0.25),
-                ':disabled + *': rgba(_base-color('medium-font'), 0.25),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            border-color: (
-                'default': rgba(_base-color('dark'), 0.25),
-                ':not([value=""])': rgba(_base-color('dark'), 0.50),
-                ':-webkit-autofill': rgba(_base-color('dark'), 0.50),
-                ':focus': _base-color('dark'),
-                ':disabled': rgba(_base-color('dark'), 0.15),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            -webkit-text-fill-color: (
-                ':-webkit-autofill': 'medium-font',
-            )
-        ),
-        dark: (
-            color: (
-                'default': 'dark-font',
-                ' + *': rgba(_base-color('dark-font'), 0.50),
-                ':disabled': rgba(_base-color('dark-font'), 0.25),
-                ':disabled + *': rgba(_base-color('dark-font'), 0.25),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            border-color: (
-                'default': rgba(_base-color('white'), 0.25),
-                ':not([value=""])': rgba(_base-color('white'), 0.50),
-                ':-webkit-autofill': rgba(_base-color('white'), 0.50),
-                ':focus': _base-color('white'),
-                ':disabled': rgba(_base-color('white'), 0.15),
-                ':invalid': 'error',
-                ':invalid + *': 'error',
-                '.error': 'error',
-                '.error + *': 'error',
-            ),
-            -webkit-text-fill-color: (
-                ':-webkit-autofill': 'dark-font',
-            )
-        )
-    ),
-    'focus': (
-        light: (
-            box-shadow: 0 0 0 6px _base-color('outline')
-        ),
-        medium: (
-            box-shadow: 0 0 0 6px _base-color('outline')
-        ),
-        dark: (
-            box-shadow: 0 0 0 6px _base-color('outline')
-        )
-    ),
-
-    /// Checkbox Input Color Theme
-    'checkbox': (
-        light: (
-            border-color: 'primary',
-            background: 'white'
-        ),
-        medium: (
-            border-color: 'primary',
-            background: 'white'
-        ),
-        dark: (
-            border-color: 'primary',
-            background: 'white'
-        )
-    ),
-    'checkbox:checked': (
-        light: (
-            color: 'primary'
-        ),
-        medium: (
-            color: 'primary'
-        ),
-        dark: (
-            color: 'primary'
-        )
-    ),
-    'checkbox:disabled': (
-        light: (
-            border-color: 'disabled'
-        ),
-        medium: (
-            border-color: 'disabled'
-        ),
-        dark: (
-            border-color: rgba(_base-color('disabled'), .25),
-            background: rgba(_base-color('disabled'), .10)
-        )
-    ),
-    'checkbox:disabled:checked': (
-        light: (
-            border-color: 'disabled-selected',
-            color: 'disabled-selected'
-        ),
-        medium: (
-            border-color: 'disabled-selected',
-            color: 'disabled-selected'
-        ),
-        dark: (
-            border-color: rgba(_base-color('disabled-selected'), .50),
-            color: rgba(_base-color('disabled-selected'), .50),
-            background: rgba(_base-color('disabled-selected'), .10)
-        )
-    ),
-    'checkbox:error': (
-        light: (
-            border-color: 'error',
-            color: 'error'
-        ),
-        medium: (
-            border-color: 'error',
-            color: 'error'
-        ),
-        dark: (
-            border-color: 'error',
-            color: 'error'
-        )
-    ),
-    'checkbox:success': (
-        light: (
-            border-color: 'success',
-            color: 'success'
-        ),
-        medium: (
-            border-color: 'success',
-            color: 'success'
-        ),
-        dark: (
-            border-color: 'success',
-            color: 'success'
-        )
-    ),
-
-    /// Radiobox Input Color Theme
-    'radiobox': (
-        light: (
-            border-color: 'primary'
-        ),
-        medium: (
-            border-color: 'primary'
-        ),
-        dark: (
-            border-color: 'primary'
-        )
-    ),
-    'radiobox:checked': (
-        light: (
-            color: 'primary'
-        ),
-        medium: (
-            color: 'primary'
-        ),
-        dark: (
-            color: 'primary'
-        )
-    ),
-    'radiobox:disabled': (
-        light: (
-            border-color: 'disabled'
-        ),
-        medium: (
-            border-color: 'disabled'
-        ),
-        dark: (
-            border-color: rgba(_base-color('disabled'), .25),
-            background: rgba(_base-color('disabled'), .10)
-        )
-    ),
-    'radiobox:disabled:checked': (
-        light: (
-            border-color: 'disabled-selected',
-            color: 'disabled-selected'
-        ),
-        medium: (
-            border-color: 'disabled-selected',
-            color: 'disabled-selected'
-        ),
-        dark: (
-            border-color: rgba(_base-color('disabled-selected'), .50),
-            color: rgba(_base-color('disabled-selected'), .50),
-            background: rgba(_base-color('disabled-selected'), .10)
-        )
-    ),
-    'radiobox:error': (
-        light: (
-            border-color: 'error',
-            color: 'error'
-        ),
-        medium: (
-            border-color: 'error',
-            color: 'error'
-        ),
-        dark: (
-            border-color: 'error',
-            color: 'error'
-        )
-    ),
-    'radiobox:success': (
-        light: (
-            border-color: 'success',
-            color: 'success'
-        ),
-        medium: (
-            border-color: 'success',
-            color: 'success'
-        ),
-        dark: (
-            border-color: 'success',
-            color: 'success'
-        )
-    ),
-
-    /// Range Input Color Theme
-    'range': (
-        light: (
-            color: 'primary',
-            border-right-color: 'light-deco',
-            background-color: 'light-deco',
-        ),
-        medium: (
-            color: 'primary',
-            border-right-color: 'white',
-            background-color: 'white',
-        ),
-        dark: (
-            color: 'primary',
-            border-right-color: 'medium',
-            background-color: 'medium',
-        )
-    ),
-    'range:disabled': (
-        light: (
-            color: 'disabled-selected'
-        ),
-        medium: (
-            color: 'disabled-selected'
-        ),
-        dark: (
-            color: 'disabled-selected'
-        )
-    ),
-    'range-knob': (
-        light: (
-            color: 'white',
-            background-color: 'primary',
-        ),
-        medium: (
-            color: 'white',
-            background-color: 'primary',
-        ),
-        dark: (
-            color: 'white',
-            background-color: 'primary',
-        )
-    ),
-    'range-knob:disabled': (
-        light: (
-            color: rgba(_base-color('white'), .33),
-            background-color: 'disabled-selected',
-        ),
-        medium: (
-            color: rgba(_base-color('white'), .33),
-            background-color: 'disabled-selected',
-        ),
-        dark: (
-            color: rgba(_base-color('white'), .33),
-            background-color: 'disabled-selected',
-        )
-    ),
-    'range-knob:hover': (
-        light: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        ),
-        medium: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        ),
-        dark: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        )
-    ),
-    'range-knob:active': (
-        light: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        ),
-        medium: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        ),
-        dark: (
-            color: 'white',
-            background-color: mix(_base-color('black'), _base-color('primary'), 10%),
-        )
-    ),
-
-    /// Table Color Themes
-    'table': (
-        light: (
-            border-color: rgba(_base-color('black'), 0.33)
-        ),
-        medium: (
-            border-color: rgba(_base-color('black'), 0.33)
-        ),
-        dark: (
-            border-color: rgba(_base-color('white'), 0.33)
-        )
-    ),
-
-    /// Search Color Themes
-    'search-field': (
-        light: (
-            background-color: 'light-deco',
-            color: 'light-font'
-        ),
-        medium: (
-            background-color: 'medium-deco',
-            color: 'medium-font'
-        ),
-        dark: (
-            background-color: 'dark-deco',
-            color: 'dark-font'
-        )
-    ),
-    'search-button': (
-        light: (
-            background-color: 'light',
-            border-color: 'light-deco'
-        ),
-        medium: (
-            background-color: 'light',
-            border-color: 'medium-deco'
-        ),
-        dark: (
-            background-color: 'light',
-            border-color: 'dark-deco'
-        )
-    ),
-
-    /// Pills Color Themes
-    'tag-pill': (
-        light: (
-            background-color: (
-                'default': rgba(_base-color('primary'), .15),
-                ':hover': 'primary',
-            ),
-            color: (
-                'default': 'primary',
-                ':hover': 'white',
-            )
-        ),
-        medium: (
-            background-color: (
-                'default': rgba(_base-color('primary'), .15),
-                ':hover': 'primary',
-            ),
-            color: (
-                'default': 'primary',
-                ':hover': 'white',
-            )
-        ),
-        dark: (
-            background-color: (
-                'default': lighten(_base-color('primary'), 25%),
-                ':hover': 'primary',
-            ),
-            color: (
-                'default': 'white',
-                ':hover': 'white',
-            )
-        )
-    ),
-    'selected-tag-pill': (
-        light: (
-            background-color: 'primary',
-            color: 'white'
-        ),
-        medium: (
-            background-color: 'primary',
-            color: 'white'
-        ),
-        dark: (
-            background-color: 'primary',
-            color: 'white'
-        )
-    ),
-
-    /// Slider Module Color Themes
-    'slider-bullet': (
-        light: (
-            background-color: rgba(_base-color('dark'), 0.10)
-        ),
-        medium: (
-            background-color: rgba(_base-color('dark'), 0.10)
-        ),
-        dark: (
-            background-color: rgba(_base-color('light'), 0.10)
-        )
-    ),
-    'slider-bullet:active': (
-        light: (
-            background-color: 'dark'
-        ),
-        medium: (
-            background-color: 'dark'
-        ),
-        dark: (
-            background-color: 'light'
-        )
-    ),
-    'slider-controls-fraction': (
-        light: (
-            background: rgba(_base-color('dark'), 0.10)
-        ),
-        medium: (
-            background: rgba(_base-color('dark'), 0.10)
-        ),
-        dark: (
-            background: rgba(_base-color('light'), 0.10)
-        )
-    ),
-    'slide-control-color': (
-        light: (
-            color: 'dark'
-        ),
-        medium: (
-            color: 'dark'
-        ),
-        dark: (
-            color: 'white'
-        )
-    ),
-
-    /// Tab Module Color Themes
-    'tab-title': (
-        light: (
-            color: (
-                'default': 'light-font',
-                ':hover': 'primary',
-                '--active': 'primary',
-            ),
-            background-color: (
-                'default': transparent,
-                ':after': 'primary'
-            )
-        ),
-        medium: (
-            color: (
-                'default': 'medium-font',
-                ':hover': 'primary',
-                '--active': 'primary',
-            ),
-            background-color: (
-                'default': transparent,
-                ':after': 'primary'
-            )
-        ),
-        dark: (
-            color: (
-                'default': 'dark-font',
-                ':hover': 'primary',
-                '--active': 'primary',
-            ),
-            background-color: (
-                'default': transparent,
-                ':after': 'primary'
-            )
-        )
-    ),
-    'tab-thumbnail': (
-        light: (
-            box-shadow: (
-                ':after': inset 0 0 0 2px transparent,
-                ':hover:after': inset 0 0 0 2px _base-color('primary'),
-                '--active:after': inset 0 0 0 2px _base-color('primary')
-            )
-        ),
-        medium: (
-            box-shadow: (
-                ':after': inset 0 0 0 2px transparent,
-                ':hover:after': inset 0 0 0 2px _base-color('primary'),
-                '--active:after': inset 0 0 0 2px _base-color('primary')
-            )
-        ),
-        dark: (
-            box-shadow: (
-                ':after': inset 0 0 0 2px transparent,
-                ':hover:after': inset 0 0 0 2px _base-color('white'),
-                '--active:after': inset 0 0 0 2px _base-color('white')
-            )
-        )
-    ),
-
-    /// Tooltip Component Color Themes
-    'tooltip': (
-        light: (
-            background-color: 'primary',
-            color: 'dark-font'
-        ),
-        medium: (
-            background-color: 'primary',
-            color: 'dark-font'
-        ),
-        dark: (
-            background-color: 'light',
-            color: 'light-font'
-        )
-    ),
-
-    /// Accordion Module Color Themes
-    'accordion-panel': (
-        light: (
-            border-color: (
-                'default': rgba(_base-color('dark'), 0.33),
-            )
-        ),
-        medium: (
-            border-color: (
-                'default': rgba(_base-color('medium'), 0.33),
-            )
-        ),
-        dark: (
-            border-color: (
-                'default': rgba(_base-color('light'), 0.33),
-            )
-        )
-    ),
-    'accordion-toggle-icon': (
-        light: (
-            color: rgba(_base-color('light-font'), .50),
-            background: transparent
-        ),
-        medium: (
-            color: rgba(_base-color('medium-font'), .50),
-            background: transparent
-        ),
-        dark: (
-            color: rgba(_base-color('dark-font'), .50),
-            background: transparent
-        )
-    ),
-    'accordion-toggle-icon:hover': (
-        light: (
-            color: rgba(_base-color('light-font'), .50),
-            background: rgba(_base-color('light-font'),.15)
-        ),
-        medium: (
-            color: rgba(_base-color('medium-font'), .50),
-            background: rgba(_base-color('light-font'),.15)
-        ),
-        dark: (
-            color: rgba(_base-color('dark-font'), .50),
-            background: rgba(_base-color('dark-font'),.15)
-        )
-    ),
-
-    /// Timebox Color Themes
-    'timebox': (
-        light: (
-            background-color: 'dark',
-            color: 'dark-font'
-        ),
-        medium: (
-            background-color: 'dark',
-            color: 'dark-font'
-        ),
-        dark: (
-            background-color: 'light',
-            color: 'light-font'
-        )
-    ),
-
-    /// Modal Color Theme
-    'modal': (
-        light: (
-            color: 'light-font',
-            background: 'white',
-        )
-    ),
-
-    /// Footer Color Themes
-    'footer': (
-        light: (
-            background-color: 'light-deco',
-            color: 'light-font'
-        ),
-        medium: (
-            background-color: 'medium-deco',
-            color: 'medium-font'
-        ),
-        dark: (
-            background-color: 'dark-deco',
-            color: 'dark-font'
-        )
-    ),
-
-    /// Feedback Color Themes
-    'feedback-arrow': (
-        light: (
-            border-bottom-color: 'light-deco',
-        ),
-        medium: (
-            border-bottom-color: 'medium-deco',
-        ),
-        dark: (
-            border-bottom-color: 'dark-deco',
-        )
-    ),
-    'feedback-background': (
-        light: (
-            background: 'light-deco',
-        ),
-        medium: (
-            background: 'medium-deco',
-        ),
-        dark: (
-            background: 'dark-deco',
-        )
-    ),
-    'feedback-solution-icon': (
-        light: (
-            background: 'white',
-            color: 'dark'
-        ),
-        medium: (
-            background: 'white',
-            color: 'dark'
-        ),
-        dark: (
-            background: 'white',
-            color: 'dark'
-        )
-    ),
-
-    /// Hotspot Color Themes
-    'hotspot': (
-        light: (
-            background-color: (
-                ':before': rgba(_base-color('primary'), 0.25),
-                ':after': 'primary'
-            )
-        ),
-        medium: (
-            background-color: (
-                ':before': rgba(_base-color('primary'), 0.25),
-                ':after': 'primary'
-            )
-        ),
-        dark: (
-            background-color: (
-                ':before': rgba(_base-color('primary'), 0.25),
-                ':after': 'primary'
-            )
-        )
-    )
-), $color-palettes);
+/// Tooltip Component Color Themes
+'tooltip': (
+light: (
+background-color: 'primary',
+color: 'dark-font'
+),
+medium: (
+background-color: 'primary',
+color: 'dark-font'
+),
+dark: (
+background-color: 'light',
+color: 'light-font'
+)
+),

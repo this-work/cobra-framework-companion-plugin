@@ -1,0 +1,40 @@
+////
+///
+/// c-input-selectionbutton
+///
+/// @group Components
+///
+////
+
+$c-input-selectionbutton-background--checked: color('primary') !default;
+$c-input-selectionbutton-color--checked: color('white') !default;
+
+.c-input-selectionbutton {
+    // #region [Block]
+    display: inline-flex;
+    // #endregion
+
+    // #region [Element]
+    .c-input-checkbox__form-element {
+        &:checked {
+            + .c-button {
+                background: $c-input-selectionbutton-background--checked;
+                color: $c-input-selectionbutton-color--checked;
+                .c-button__icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-input-selectionbutton) {
+        @include c-input-selectionbutton;
+    }
+    // #endregion
+
+}
