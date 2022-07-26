@@ -31,6 +31,8 @@ import { common } from '@this/cobra-framework/src/plugins/mixins';
 export default {
     mixins: [...common],
 
+    name: 'c-choice-image',
+
     props: {
         disabled: { type: Boolean },
         selected: { type: Boolean },
