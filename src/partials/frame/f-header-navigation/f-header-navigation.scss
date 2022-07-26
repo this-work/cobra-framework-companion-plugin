@@ -24,7 +24,7 @@ $f-header-navigation-link-border-radius-desktop: unitize(22px) !default;
 $f-header-navigation-link-first-last-margin: spacing('16') !default;
 
 $f-header-navigation-icon-icon-size: unitize(24px) !default;
-$f-header-navigation-icon-margin-desktop: 0 spacing('10') 0 0 !default;
+$f-header-navigation-icon-margin-desktop: spacing('10') !default;
 $f-header-navigation-icon-opacity-desktop: .33 !default;
 
 $f-header-navigation-item-right-horizontal-desktop: spacing('20') !default;
@@ -122,8 +122,11 @@ $f-header-navigation-label-font: font($default-font-family, 'bold', '16') !defau
         height: $f-header-navigation-icon-icon-size;
         @include above('s') {
             display: inline-block;
-            margin: $f-header-navigation-icon-margin-desktop;
+            margin: 0 $f-header-navigation-icon-margin-desktop 0 0;
             opacity: $f-header-navigation-icon-opacity-desktop;
+            @include rtl() {
+                margin: 0 0 0 $f-header-navigation-icon-margin-desktop;
+            }
         }
         svg {
             display: block;
@@ -170,6 +173,7 @@ $f-header-navigation-label-font: font($default-font-family, 'bold', '16') !defau
 
                 #{$module}__icon {
                     margin-right: 0;
+                    margin-left: 0;
                     opacity: 1;
                 }
 
@@ -193,6 +197,7 @@ $f-header-navigation-label-font: font($default-font-family, 'bold', '16') !defau
 
                 #{$module}__icon {
                     margin-right: 0;
+                    margin-left: 0;
                 }
 
                 #{$module}__link {
