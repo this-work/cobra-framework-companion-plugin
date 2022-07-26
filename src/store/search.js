@@ -27,10 +27,16 @@ export default ({store}) => {
                 }, {
                     'aggs': {
                         'categories': {
-                            'terms': { 'field': 'categories' }
+                            'terms': {
+                                'field': 'categories',
+                                'size': 100
+                            }
                         },
                         'types': {
-                            'terms': { 'field': 'type' }
+                            'terms': {
+                                'field': 'type',
+                                'size': 100
+                            }
                         },
                         ...customAggregation
                     },
