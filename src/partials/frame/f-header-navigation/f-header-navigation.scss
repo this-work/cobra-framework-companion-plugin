@@ -177,6 +177,10 @@ $f-header-navigation-label-font: font($default-font-family, 'bold', '16') !defau
                     padding: $f-header-navigation-link-vertical-padding-mobile;
                 }
 
+                @include rtl() {
+                    right: auto;
+                    left:  $f-header-navigation-item-right-horizontal-desktop;
+                }
             }
         }
 
@@ -195,6 +199,10 @@ $f-header-navigation-label-font: font($default-font-family, 'bold', '16') !defau
                     padding: $f-header-navigation-link-vertical-padding-mobile;
                 }
 
+                @include rtl() {
+                    right: auto;
+                    left:  $f-header-navigation-item-right-horizontal-desktop;
+                }
             }
         }
 
