@@ -1,4 +1,4 @@
-export default ({store}) => {
+export default ({ store }) => {
     store.registerModule('search', {
         namespaced: true,
         state: () => ({
@@ -41,11 +41,11 @@ export default ({store}) => {
                         ...customAggregation
                     },
                     'filter': {
-                        "bool" : {
-                            "must" : [
+                        'bool': {
+                            'must': [
                                 {
-                                    "term" : {
-                                        "searchable" : true
+                                    'term': {
+                                        'searchable': true
                                     }
                                 }
                             ],
@@ -84,5 +84,5 @@ export default ({store}) => {
             }
 
         }
-    })
-}
+    });
+};
