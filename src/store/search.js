@@ -4,6 +4,7 @@ export default ({ store }) => {
         state: () => ({
             tags: [],
             types: [],
+            searchCategories: [],
             searchResults: []
         }),
         mutations: {
@@ -13,13 +14,16 @@ export default ({ store }) => {
             setTypes: function(state, types) {
                 state.types = types;
             },
+            setSearchCategories: function(state, results) {
+                state.searchCategories = results;
+            },
             setSearchResults: function(state, results) {
                 state.searchResults = results;
             }
         },
         actions: {
 
-            async fetch({ commit }, { query = '*', selectedTags, customFilter, customAggregation } = {}) {
+            async fetch({ commit, state }, { query = '*', selectedTags, customFilter, customAggregation } = {}) {
 
                 const response = await this.$elastic.search(query, {
                     fields: ['*'],
@@ -55,6 +59,7 @@ export default ({ store }) => {
                 });
 
                 if (response && response.aggregations && response.aggregations.categories) {
+
                     commit('setTags', response.aggregations.categories.buckets.map(tag => {
                         return {
                             'key': tag.key.replace(/[^a-zA-Z]+/g, '').toLowerCase(),
@@ -66,6 +71,13 @@ export default ({ store }) => {
                             return !selectedTags.map(selectedTag => selectedTag.replace(/[^a-zA-Z]+/g, '').toLowerCase()).includes(tag.key);
                         }
                         return true;
+                    }).sort((a, b) => {
+
+                        const sortIndexA = state.searchCategories.indexOf(a.value.toLowerCase());
+                        const sortIndexB = state.searchCategories.indexOf(b.value.toLowerCase());
+
+                        return (sortIndexA > -1 ? sortIndexA : Number.MAX_VALUE) - (sortIndexB > -1 ? sortIndexB : Number.MAX_VALUE);
+
                     }));
                 }
 
@@ -81,6 +93,13 @@ export default ({ store }) => {
 
                 return response;
 
+            },
+
+            async categories({ commit }, endpoint) {
+                const data = await this.$axios.$get(endpoint);
+                commit('setSearchCategories', data.data.map(category => {
+                    return category.title.toLowerCase();
+                }) );
             }
 
         }
