@@ -1,0 +1,5 @@
+<component :is="tag" :class="blockClasses" v-if="readingTime || completed">
+    <slot></slot>
+    <time v-if="readingTime" :class="element('time')">{{ readingTime }}</time>
+    <c-icon :class="element('mark')" v-if="completed" name="check" />
+</component>

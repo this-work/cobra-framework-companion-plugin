@@ -1,0 +1,309 @@
+////
+///
+/// c-tile
+///
+/// @group Components
+///
+////
+
+$c-tile-border-radius: unitize(5px) !default;
+$c-tile-padding-vertical-mobile: unitize(10px) !default;
+$c-tile-padding-horizontal-mobile: unitize(10px) !default;
+$c-tile-padding-vertical-desktop: unitize(16px) !default;
+$c-tile-padding-horizontal-desktop: unitize(16px) !default;
+$c-tile-hover-transform: scale(1.04) !default;
+
+$c-tile-readbox-padding: 0 spacing('10') !default;
+$c-tile-readbox-border-radius: unitize(10px) !default;
+$c-tile-readbox-background: color('dark') !default;
+$c-tile-readbox-color: color('white') !default;
+$c-tile-readbox-font:  font($default-font-family, 'regular', '12') !default;
+$c-tile-readbox-mark-size: unitize(16px) !default;
+
+$c-tile-lock-padding-mobile: spacing('16') !default;
+$c-tile-lock-padding-desktop: spacing('20') !default;
+$c-tile-lock-border-radius: 50% !default;
+$c-tile-lock-background-theme: 'background' !default;
+$c-tile-lock-color: color('disabled-selected') !default;
+$c-tile-lock-icon-size-mobile: unitize(24px) !default;
+$c-tile-lock-icon-size-desktop: unitize(24px) !default;
+
+$c-tile-content-margin: unitize(13px) 0 0 0 !default;
+$c-tile-content-padding-mobile: 0 spacing('10') !default;
+$c-tile-content-padding-dekstop: 0 !default;
+$c-tile-content-background-theme: 'copytext' !default;
+
+$c-tile-overline-font: font($default-font-family, 'regular', '12') !default;
+$c-tile-overline-line-clamp: 1 !default;
+$c-tile-headline-font: font($default-font-family, 'bold', '16', 20px) !default;
+$c-tile-headline-line-clamp: 3 !default;
+
+.c-tile {
+    // #region [Block]
+    $module: &;
+    display: block;
+    position: relative;
+    width: 100%;
+    // #endregion
+
+    // #region [Element]
+    &__link {
+        display: block;
+        cursor: pointer;
+    }
+
+    &__image {
+        z-index: zindex(100);
+        overflow: hidden;
+        border-radius: $c-tile-border-radius;
+        img {
+            transition: transition-fade-in(transform, 300ms);
+        }
+    }
+
+    &__lock {
+        display: flex;
+        position: absolute;
+        z-index: zindex(300);
+        top: 50%;
+        left: 50%;
+        align-items: center;
+        padding: $c-tile-lock-padding-mobile;
+        transform: translate(-50%, -50%);
+        border-radius: $c-tile-lock-border-radius;
+        @include color-theme($c-tile-lock-background-theme);
+        color: $c-tile-lock-color;
+        &-icon {
+            width: $c-tile-lock-icon-size-mobile;
+            height: $c-tile-lock-icon-size-mobile;
+            @include above('s') {
+                width: $c-tile-lock-icon-size-desktop;
+                height: $c-tile-lock-icon-size-desktop;
+            }
+        }
+        @include above('s') {
+            padding: $c-tile-lock-padding-desktop;
+        }
+    }
+
+    &__content {
+        display: block;
+        z-index: zindex(200);
+        margin: $c-tile-content-margin;
+        padding: $c-tile-content-padding-mobile;
+        @include color-theme($c-tile-content-background-theme);
+        @include above('s') {
+            padding: $c-tile-content-padding-dekstop;
+        }
+    }
+
+    &__overline {
+        display: flex;
+        align-items: center;
+        margin-bottom: spacing('3');
+        opacity: .75;
+        font: $c-tile-overline-font;
+        span {
+            display: -webkit-box;
+            overflow: hidden;
+            font: inherit;
+            -webkit-line-clamp: $c-tile-overline-line-clamp;
+            -webkit-box-orient: vertical;
+        }
+    }
+
+    &__headline {
+        display: -webkit-box;
+        overflow: hidden;
+        font: $c-tile-headline-font;
+        -webkit-line-clamp: $c-tile-headline-line-clamp;
+        -webkit-box-orient: vertical;
+    }
+
+    &__popup {
+        max-width: unitize(440px);
+
+        &-text {
+            font: font($default-font-family, 'regular', '16');
+            p, span {
+                font: inherit;
+            }
+        }
+        &-footer {
+            text-align: center;
+        }
+        &-headline + &-text{
+            margin-top: spacing('16');
+        }
+        &-headline + &-footer, &-text + &-footer {
+            margin-top: spacing('44');
+        }
+    }
+
+
+    .c-timebox {
+        position: absolute;
+        top: $c-tile-padding-vertical-mobile;
+        left: $c-tile-padding-horizontal-mobile;
+        @include above('s') {
+            top: $c-tile-padding-vertical-desktop;
+            left: $c-tile-padding-horizontal-desktop;
+        }
+    }
+
+    &:hover {
+        #{$module}__image img {
+            transform: $c-tile-hover-transform;
+        }
+    }
+
+    // #endregion
+
+    // #region [Modifier]
+    &--type-collection {
+        height: auto;
+
+        #{$module}__link {
+            height: 100%;
+        }
+
+        #{$module}__image {
+            height: 100%;
+        }
+
+        #{$module}__content {
+            position: absolute;
+            right: $c-tile-padding-horizontal-mobile;
+            bottom: $c-tile-padding-vertical-mobile;
+            left: $c-tile-padding-horizontal-mobile;
+            max-width: unitize(340px);
+            margin-top: 0;
+            padding: 0;
+            color: color('white') !important; // overwrite theme color
+            @include above('s') {
+                right: $c-tile-padding-horizontal-desktop;
+                bottom: $c-tile-padding-vertical-desktop;
+                left: $c-tile-padding-horizontal-desktop;
+            }
+        }
+
+        #{$module}__headline {
+            font: font($default-font-family, 'bold', '19', 26px);
+            @include above('xl') {
+                font: font($default-font-family, 'bold', '26', 32px);
+            }
+        }
+
+        @include below('xs') {
+            #{$module}__lock {
+                top: 35%;
+            }
+        }
+
+    }
+
+    &--type-playlist {
+        height: auto;
+
+        #{$module}__link {
+            height: 100%;
+        }
+
+        #{$module}__image {
+            height: 100%;
+        }
+
+        #{$module}__content {
+            position: absolute;
+            right: $c-tile-padding-horizontal-mobile;
+            bottom: $c-tile-padding-vertical-mobile;
+            left: $c-tile-padding-horizontal-mobile;
+            margin-top: 0;
+            padding: 0;
+            color: color('white') !important; // overwrite theme color
+            @include above('s') {
+                right: $c-tile-padding-horizontal-desktop;
+                bottom: $c-tile-padding-vertical-desktop;
+                left: $c-tile-padding-horizontal-desktop;
+            }
+        }
+
+        #{$module}__overline-playlist-icon {
+            width: unitize(16px);
+            height: unitize(16px);
+            margin-right: spacing('10');
+        }
+
+        @include below('xs') {
+            #{$module}__lock {
+                top: 35%;
+            }
+        }
+
+    }
+
+    &--type-nugget {
+        padding-bottom: spacing('10');
+
+        #{$module}__image {
+            .c-image__canvas-overlay:after {
+                background: rgba(color('black'), 0.2);
+            }
+        }
+
+        @include above('s') {
+            padding-bottom: spacing('16');
+        }
+
+    }
+
+    &--type-quiz {
+
+        height: auto;
+
+        #{$module}__link {
+            height: 100%;
+        }
+
+        #{$module}__image {
+            height: 100%;
+        }
+
+        #{$module}__content {
+            position: absolute;
+            right: $c-tile-padding-horizontal-mobile;
+            bottom: $c-tile-padding-vertical-mobile;
+            left: $c-tile-padding-horizontal-mobile;
+            margin-top: 0;
+            padding: 0;
+            color: color('white') !important; // overwrite theme color
+            @include above('s') {
+                right: $c-tile-padding-horizontal-desktop;
+                bottom: $c-tile-padding-vertical-desktop;
+                left: $c-tile-padding-horizontal-desktop;
+            }
+        }
+
+        #{$module}__overline-quiz-icon {
+            width: unitize(16px);
+            height: unitize(16px);
+            margin-right: spacing('10');
+        }
+
+        @include below('xs') {
+            #{$module}__lock {
+                top: 35%;
+            }
+        }
+
+    }
+
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-tile) {
+        @include c-tile;
+    }
+    // #endregion
+
+}

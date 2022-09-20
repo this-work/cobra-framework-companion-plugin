@@ -39,11 +39,33 @@ export default {
         async trackReadPlaylist(checked) {
 
             document.dispatchEvent(new CustomEvent('track-playlist', { detail: {
-                    playlist: this.playlistId,
-                    completed: checked
-                } }));
+                playlist: this.playlistId,
+                completed: checked
+            } }));
 
             if (!process.client) return;
+
+            if (localStorage && localStorage.getItem('completed')) {
+
+                const completedList = localStorage.getItem('completed').split(",");;
+
+                const completedListIndex = completedList.indexOf(this.playlistId + '');
+
+                if (checked && completedListIndex > -1) {
+
+                    completedList.push(this.playlistId);
+
+                } else {
+
+                    if (completedListIndex > -1) {
+                        completedList.splice(completedListIndex, 1);
+                    }
+
+                }
+
+                localStorage.setItem('completed', completedList);
+
+            }
 
             try {
 

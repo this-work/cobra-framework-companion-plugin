@@ -1,0 +1,51 @@
+////
+///
+/// c-timebox
+///
+/// @group Components
+///
+////
+
+$c-timebox-padding: 0 spacing('10') !default;
+$c-timebox-border-radius: unitize(10px) !default;
+$c-timebox-color-theme: 'timebox' !default;
+$c-timebox-font:  font($default-font-family, 'regular', '12') !default;
+$c-timebox-mark-size: unitize(16px) !default;
+
+.c-timebox {
+    // #region [Block]
+    $module: &;
+    display: flex;
+    z-index: zindex(200);
+    align-items: center;
+    min-height: unitize(20px);
+    padding: $c-timebox-padding;
+    border-radius: $c-timebox-border-radius;
+    opacity: .5;
+    font: $c-timebox-font;
+    @include color-theme('timebox');
+    // #endregion
+
+    // #region [Element]
+    &__mark {
+        width: $c-timebox-mark-size;
+        height: $c-timebox-mark-size;
+    }
+    &__time + &__mark {
+        margin-left: spacing('3');
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &--readed {
+        opacity: 1;
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-timebox) {
+        @include c-timebox;
+    }
+    // #endregion
+
+}
