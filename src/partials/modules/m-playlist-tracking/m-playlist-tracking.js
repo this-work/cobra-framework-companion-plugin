@@ -47,11 +47,11 @@ export default {
 
             if (localStorage && localStorage.getItem('completed')) {
 
-                const completedList = localStorage.getItem('completed').split(",");;
+                const completedList = localStorage.getItem('completed').split(",");
 
                 const completedListIndex = completedList.indexOf(this.playlistId + '');
 
-                if (checked && completedListIndex > -1) {
+                if (checked && completedListIndex === -1) {
 
                     completedList.push(this.playlistId);
 
