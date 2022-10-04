@@ -1,0 +1,36 @@
+////
+///
+/// Typography Config
+///
+/// @group Configuration
+/// @since 1.0.0
+///
+////
+
+
+///
+/// Additional font types configuration.
+/// Extends the configuration of all possible font variants of the project.
+/// Alias for js import: 'responsiveFontTypes'
+/// @type array
+///
+$responsive-font-types: map-merge((
+    'choice-image-label': (
+        'default': ( $default-font-family, 'regular', '12', 14px ),
+        'xs':      ( $default-font-family, 'regular', '14', 16px ),
+        's':       ( $default-font-family, 'regular', '16', 20px )
+    ),
+    'value-slider-current-value': (
+        'default': ( $default-font-family, 'regular', '42' ),
+        'l':       ( $default-font-family, 'regular', '51' )
+    ),
+    'value-slider-current-unit': (
+        'default': ( $default-font-family, 'bold', '12' )
+    )
+), $responsive-font-types);
+
+
+///
+/// Update the default map from the scss framework
+///
+$default-responsive-font-types-map: $responsive-font-types;

@@ -213,7 +213,7 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
     }
 
     &__additionals {
-        margin-top: $f-header-tags-spacing / 2;
+        margin-top: calc($f-header-tags-spacing / 2);
         @include above('s') {
             margin-bottom: $f-header-tags-spacing * -1;
         }
@@ -224,7 +224,7 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        height: $f-header-search-tag-height + $f-header-tags-spacing / 2;
+        height: $f-header-search-tag-height + calc($f-header-tags-spacing / 2);
         overflow: hidden;
 
         &--expanded {
@@ -256,7 +256,7 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
 
     &__tags-badge-pill {
         @include tag-badge-pill;
-        margin-top: $f-header-tags-spacing / 2;
+        margin-top: calc($f-header-tags-spacing / 2);
         cursor: pointer;
         user-select: none;
         @include color-theme('tag-pill');

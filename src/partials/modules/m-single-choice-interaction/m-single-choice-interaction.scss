@@ -45,7 +45,7 @@
                 $colum-gutter: _get-grid-data('column-gutter', 'default');
 
                 flex-flow: row wrap;
-                margin: $colum-gutter / -2 $colum-gutter / -2 calc(#{$colum-gutter / -2} + #{spacing('44')});
+                margin: calc($colum-gutter / -2) calc($colum-gutter / -2) calc(#{$colum-gutter / -2} + #{spacing('44')});
                 overflow: hidden;
 
                 > * + * {
@@ -57,7 +57,7 @@
                     width: 50%;
                     max-width: 50%;
                     margin: 0;
-                    padding: $colum-gutter / 2;
+                    padding: calc($colum-gutter / -2);
                 }
             }
 

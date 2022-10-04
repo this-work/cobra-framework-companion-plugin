@@ -55,7 +55,7 @@ export default {
 
                 try {
 
-                    const { csrfTokenValue } = await this.$axios.$get('/api/v1/session-info');
+                    const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
                     await this.$auth.loginWith('local', {
                         data: {

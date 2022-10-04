@@ -65,7 +65,7 @@ $c-progress-indicator-colors: (
         max-width: 40px;
         min-width: 20px;
         height: 6px;
-        margin: 0 spacing('3') / 2;
+        margin: 0 calc(spacing('3') / 2);
         border-radius: 3px;
         transition: transition-appear(background);
 
