@@ -71,7 +71,7 @@ export default {
 
                 const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
 
-                await this.$axios.$post('/api/playlist/track-completion-state', {
+                await this.$axios.$post('/api/set-completion-state', {
                     'playlistId': this.playlistId,
                     'completed': checked,
                     [csrfTokenName]: csrfTokenValue
