@@ -1,0 +1,96 @@
+////
+///
+/// i-true-false
+///
+/// @group Interactions
+///
+////
+
+$i-true-false-breakpoint-desktop: 's' !default;
+$i-true-false-button-margin: spacing('27') !default;
+
+$i-true-false-padding--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+
+
+$m-interaction-question-column-size: 5 !default;
+
+$i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
+
+
+
+
+.i-true-false {
+    // #region [Block]
+    $module: &;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+
+    @include grid-cell-size(12);
+    // #endregion
+
+    // #region [Element]
+
+    &__interaction-wrapper {
+        //display: flex;
+        //align-items: stretch;
+        z-index: zindex(700);
+
+        //& > * {
+        //    width: 100%;
+        //}
+    }
+
+
+
+    &__actions {
+        margin-top: $i-true-false-button-margin * -1;
+        margin-right: $i-true-false-button-margin * -1;
+    }
+
+    &__button {
+        margin-top: $i-true-false-button-margin;
+        margin-right: $i-true-false-button-margin;
+        //flex-shrink: 0;
+        //flex-grow: 0;
+        flex: 0;
+    }
+    // #endregion
+
+    // #region [Modifier]
+    @at-root.m-interaction {
+
+        &--type-default {
+
+            #{$module} {
+
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-true-false-padding--type-default);
+
+                @include grid-cell-offset('end', 'page', $i-true-false-breakpoint-desktop, 'above');
+
+                @include above($i-true-false-breakpoint-desktop) {
+                    @include grid-cell-size($i-true-false-interaction-column-size);
+                    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                    @include grid-cell-push-gap('left', $i-true-false-interaction-column-size);
+                }
+            }
+        }
+
+        &--type-stacked {
+
+            #{$module} {
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-true-false) {
+        @include i-true-false;
+    }
+    // #endregion
+
+}

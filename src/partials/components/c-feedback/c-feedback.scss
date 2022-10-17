@@ -1,0 +1,268 @@
+////
+///
+/// c-feedback
+///
+/// @group Modules
+///
+////
+
+$c-feedback-breakpoint-desktop: 's' !default;
+$c-feedback-actions-padding-top: spacing('44') !default;
+$c-feedback-button-margin: spacing('16') !default;
+$c-feedback-content-actions-justify-content: center !default;
+$c-feedback-content-text-align: left !default;
+$c-feedback-image-width: unitize(187px) !default;
+$c-feedback-overline-padding-bottom: 'medium' !default;
+$c-feedback-overline-responsive-font: 'copytext--big' !default;
+$c-feedback-padding-y: 'medium' !default;
+$c-feedback-spacing-map--type-standard: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+$c-feedback-text-responsive-spacing: 'xsmall' !default;
+
+
+
+$c-feedback-padding--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+$m-interaction-question-column-size: 5 !default;
+
+$c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
+
+
+.c-feedback {
+    // #region [Block]
+    $module: &;
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    //padding: 0;
+    pointer-events: auto;
+
+    //@include color-theme('feedback-background');
+
+    @include grid-cell-size(12);        // @CW - NEU
+    // #endregion
+
+    // #region [Element]
+    &__solution {
+        @include above($c-feedback-breakpoint-desktop) {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &__feedback {
+        width: inherit;
+    }
+
+    &__feedback-wrapper {
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    &__icon-heading {
+        display: flex !important;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+
+    &__icon {
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: unitize(44px);
+        height: unitize(44px);
+        padding: spacing('10');
+        border-radius: 50%;
+        @include responsive-spacing('small', margin-bottom);
+
+        svg {
+            display: block;
+            width: unitize(24px);
+            height:unitize(24px);
+        }
+
+        &--correct {
+            background: color('success');
+            color: color('white');
+        }
+
+        &--wrong {
+            background: color('error');
+            color: color('white');
+        }
+
+        &--solution {
+            @include color-theme('feedback-solution-icon');
+        }
+    }
+
+    &__overline {
+        text-align: $c-feedback-content-text-align;
+        @include responsive-font($c-feedback-overline-responsive-font, $font-weight-overwrite: 'bold');
+
+        &-container {
+            @include responsive-spacing($c-feedback-overline-padding-bottom, padding-bottom);
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: $c-feedback-content-actions-justify-content;
+        align-items: flex-start;
+        padding-top: $c-feedback-actions-padding-top;
+
+        margin-top: $c-feedback-button-margin * -1;
+        margin-right: $c-feedback-button-margin * -1;
+
+        & > * {
+            margin-top: $c-feedback-button-margin;
+            margin-right: $c-feedback-button-margin;
+            margin-left: 0 !important;  // @CW - !important, solange das alte c-feedback noch drin ist
+        }
+    }
+
+    &__image {
+        width: $c-feedback-image-width;
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            flex-grow: 0;
+            margin-bottom: 27px;
+
+            & .c-image__canvas {
+                border-radius: 5px;
+            }
+
+            @include above($c-feedback-breakpoint-desktop) {
+                margin-right: spacing('20');
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__text-wrapper {
+        text-align: center;
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &__solution--with-image{
+
+        @include above($c-feedback-breakpoint-desktop) {
+
+            #{$module}__text-wrapper {
+                text-align: left;
+            }
+        }
+    }
+
+    &__icon {
+
+        &--correct {
+            animation: jump .3s linear 300ms alternate;
+
+            @keyframes jump {
+                0% { transform: translate3d(0, 0, 0); }
+                40% { transform: translate3d(0, -20px, 0); }
+                70% { transform: translate3d(0, 0, 0); }
+                85% { transform: translate3d(0, -10px, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+            }
+        }
+
+        &--wrong {
+            animation: shake .3s linear 300ms alternate;
+
+            @keyframes shake {
+                0% { transform: translate3d(0, 0, 0); }
+                16.6666% { transform: translate3d(10px, 0, 0); }
+                50% { transform: translate3d(-10px, 0, 0); }
+                83.333% { transform: translate3d(10px, 0, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+            }
+        }
+    }
+
+    //@at-root.m-interaction {
+    //
+    //    @mixin c-feedback-before-and-after-addition {
+    //        content: '';
+    //        position: absolute;
+    //        top: 0;
+    //        width: unitize(999999px);
+    //        height: 100%;
+    //        @include color-theme('feedback-background');
+    //    }
+    //
+    //    &--type-default {
+    //
+    //        #{$module} {
+    //
+    //            @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $c-feedback-spacing-map--type-standard);
+    //        }
+    //
+    //        &.m-interaction--layout-area-viewport {
+    //
+    //            #{$module}:after {
+    //                right: unitize(-999999px);
+    //                @include c-feedback-before-and-after-addition;
+    //            }
+    //        }
+    //    }
+    //
+    //    &--type-stacked {
+    //
+    //        &.m-interaction--layout-area-viewport {
+    //
+    //            #{$module}:before {
+    //                left: unitize(-999999px);
+    //                @include c-feedback-before-and-after-addition;
+    //            }
+    //
+    //            #{$module}:after {
+    //                right: unitize(-999999px);
+    //                @include c-feedback-before-and-after-addition;
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    @at-root.m-interaction {
+
+        &--type-default {
+
+            #{$module} {
+
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $c-feedback-padding--type-default);
+
+                @include grid-cell-offset('end', 'page', $c-feedback-breakpoint-desktop, 'above');
+
+                @include above($c-feedback-breakpoint-desktop) {
+                    @include grid-cell-size($c-feedback-interaction-column-size);
+                    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                    @include grid-cell-push-gap('left', $c-feedback-interaction-column-size);
+                }
+            }
+        }
+
+        &--type-stacked {
+
+            #{$module} {
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-feedback) {
+        @include c-feedback;
+    }
+    // #endregion
+}

@@ -1,0 +1,49 @@
+<module-content :class="element('interaction-wrapper')">
+
+    <c-grid>
+
+        <component :is="tag" :class="blockClasses">
+
+            <layout layout="l-12">
+
+                <draggable :class="element('list-wrapper')"
+                           v-bind="draggableOptions"
+                           :list="_shuffledItems"
+                           :sort="!resolved"
+                           :handle="`.${$options.name}__item-handle`"
+                           :disabled="resolved"
+                           @update="onUpdate"
+                           @start="onStart"
+                           @end="onEnd">
+
+                        <li v-for="item in _shuffledItems"
+                            :key="item.id"
+                            :class="element('item')">
+
+                            <span :class="element('item-handle')">
+                                <c-icon name="drag-indicator" />
+                            </span>
+
+                            <span v-if="item.text" :class="element('item-label')" v-html="item.text" />
+
+                        </li>
+
+                </draggable>
+
+            </layout>
+
+            <div :class="element('button-wrapper')">
+
+                <c-button :class="element('button')"
+                          :label="buttonLabelEvaluate"
+                          :disabled="resolved || !evaluationPermitted"
+                          @click.native="evaluate"
+                          @touchend.native.prevent="evaluate" />
+
+            </div>
+
+        </component>
+
+    </c-grid>
+
+</module-content>

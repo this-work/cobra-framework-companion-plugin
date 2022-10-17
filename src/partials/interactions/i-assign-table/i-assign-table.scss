@@ -1,0 +1,513 @@
+////
+///
+/// i-assign-table
+///
+/// @group Interactions
+///
+////
+
+$i-assign-table-breakpoint-desktop: 's' !default;
+$i-assign-table-breakpoint--size-smaller: 'm' !default;
+$i-assign-table-drag-indicator-color--with-image: color('white') !default;
+$i-assign-table-label-responsive-font: 'copytext--small' !default;
+$i-assign-table-possible-answer-spacing: 'small' !default;
+$i-assign-table-possible-button-spacing: 'small' !default;
+$i-assign-table-spacing-map: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+$i-assign-table-transition-duration: 0.5s !default;
+
+$m-interaction-question-column-size: 5 !default;
+$i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
+@mixin i-assign-table-add-grid-gutter-spacing (
+    $properties,
+    $config: $grid-config,
+    $grid: $default-grid
+) {
+
+    @if (length($properties) == 0) {
+        @error 'No properties given.';
+    }
+
+    $column-gutter: 0px;
+
+    @if (map-has-key(map-get($config, $grid), 'column-gutter')) {
+        $column-gutter: map-get(map-get($config, $grid), 'column-gutter');
+    } @else {
+        @error 'No column-gutter in grid "#{$grid}" with grid-config "#{$config}" found.';
+    }
+
+    @each $property in $properties {
+
+        #{$property}: #{$column-gutter};
+
+    }
+
+}
+
+@mixin add-page-spacing (   // ORIGINAL in m-interaction.scss
+    $breakpoint,
+    $properties: margin-left margin-right,
+    $offsetVisbilityDirection: 'above',
+    $site-area-config: $site-area-columns
+) {
+
+    $direction: 'positive';     // wird nicht mehr brgraucht!
+
+    $largest-breakpoint: 0px;
+    $largest-breakpoint-content-width: 0px;
+
+    @each $page-breakpoint, $settings in $site-area-columns {
+
+        @if (   $offsetVisbilityDirection == 'below' and strip-unit(breakpoint($page-breakpoint)) < strip-unit(breakpoint($breakpoint))
+             or $offsetVisbilityDirection == 'above' and strip-unit(breakpoint($page-breakpoint)) >= strip-unit(breakpoint($breakpoint)) ) {
+
+            @if ($offsetVisbilityDirection == 'above' and $largest-breakpoint < breakpoint($page-breakpoint)) {
+                $largest-breakpoint: breakpoint($page-breakpoint);
+                $largest-breakpoint-content-width: map-get($settings, 'content');
+            }
+
+            @include possible-mediaquery($page-breakpoint) {
+
+                $minPageWidth: map-get($settings, 'page');
+
+                @if (str-index(#{$minPageWidth}, 'minmax')) {
+
+
+                    @each $property in $properties {
+
+                        $minPageWidth: str-slice(#{map-get($settings, 'page')}, 8, (str-index(#{map-get($settings, 'page')}, "px,") + 1));
+
+                        @if ($direction == 'positive') {
+                            #{$property}: #{'calc((100vw - #{map-get($settings, 'content')}) / -2 / 2)'}; // for IE
+                            #{$property}: #{'calc(max(#{$minPageWidth}, (100vw - #{map-get($settings, 'content')}) / 2 / 2))'};
+                        } @else {
+                            #{$property}: #{'calc((100vw - #{map-get($settings, 'content')}) / 2 / 2)'}; // for IE
+                            #{$property}: #{'calc(max(#{$minPageWidth}, (100vw - #{map-get($settings, 'content')}) / 2 / 2) * -1)'};
+                        }
+                    }
+
+                } @else {
+
+                    @each $property in $properties {
+
+                        @if ($direction == 'positive') {
+
+                            #{$property}: #{$minPageWidth};
+
+                        } @else {
+
+                            $minPageWidth: number(str-replace(#{$minPageWidth}, 'px', ''));
+                            #{$property}: #{$minPageWidth * -1 + 'px'};
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        } @else {
+            @if ($offsetVisbilityDirection == 'below') {
+                @include possible-mediaquery($page-breakpoint) {
+
+                    @each $property in $properties {
+                        #{$property}: 0;
+                    }
+
+                }
+            }
+        }
+    }
+
+    @if ( $offsetVisbilityDirection == 'above') {
+
+        @include above(2 * $max-page-width - $largest-breakpoint-content-width) {
+
+            @each $property in $properties {
+                #{$property}:  calc(($max-page-width - $largest-breakpoint-content-width) / 2);
+            }
+
+        }
+    }
+}
+
+
+.i-assign-table {
+
+    // #region [Block]
+    $module: &;
+    @include grid-cell-size(12);
+    @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'below');  // @CW - NEU
+    // #endregion
+
+    // #region [Element]
+    &__interaction-wrapper {
+        //display: flex;
+        //align-items: stretch;
+        z-index: zindex(700);
+
+        //& > * {
+        //    width: 100%;
+        //}
+    }
+
+    &__label {
+        @include responsive-font($i-assign-table-label-responsive-font);
+
+        & * {
+            @include responsive-font($i-assign-table-label-responsive-font);
+        }
+    }
+
+    &__item {
+        overflow: hidden;
+        height: 100%;
+        border-radius: 5px;
+
+        &#{$module}__item--with-image {
+            display: block;
+            padding: 0;
+
+            #{$module}__item-handle {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 6px;
+                z-index: 2;
+                color: $i-assign-table-drag-indicator-color--with-image !important;
+            }
+        }
+
+        &-image {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &--question {
+
+            #{$module}__item-content {
+                align-items: flex-end;
+                height: 100%;
+
+                & > * {
+                    flex-grow: 1;
+                    text-align: center;
+                }
+            }
+        }
+
+        &-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        &--answer {
+            display: flex;
+            padding: unitize(10px) unitize(10px) unitize(10px) unitize(6px);
+            @include color-theme('drag-item');
+
+            &.sortable-chosen {
+                opacity: 0.8 !important;
+            }
+        }
+
+        &-handle {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            width: rem(30px);
+            margin-right: spacing('10');
+            cursor: grab;
+            @include color-theme('drag-indicator')
+        }
+    }
+
+    &__questions-wrapper {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        @mixin i-assign-table-question-and-answer-addition {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        &-question {
+            @include i-assign-table-question-and-answer-addition;
+
+            .c-image__canvas {
+                border-radius: 5px;
+            }
+        }
+
+        &-answer {
+            @include i-assign-table-question-and-answer-addition;
+
+            #{$module}__placeholder {
+                flex-shrink: 1;
+                @include color-theme('drag-placeholder--answers-slot');
+            }
+        }
+    }
+
+    &__possible-answer {
+        @include responsive-spacing($i-assign-table-possible-answer-spacing, margin-top);
+    }
+
+    @mixin i-assign-table-answer-and-list-addition {
+        position: relative;
+
+        #{$module}__placeholder {
+            @include color-theme('drag-placeholder');
+
+            & > * {
+                visibility: hidden;
+            }
+
+        }
+
+        #{$module}__draggable {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    &__answer {
+        width: grid-column-width-percentage(6);
+        flex-shrink: 0;
+        flex-grow: 0;
+        @include i-assign-table-add-grid-gutter-spacing(margin-right);
+        @include i-assign-table-answer-and-list-addition;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        #{$module}__placeholder {
+            box-shadow: unset !important;
+        }
+    }
+
+    &__list {
+        padding: 0;
+        width: grid-column-width-percentage(6);
+        flex-shrink: 0;
+        flex-grow: 0;
+        @include i-assign-table-add-grid-gutter-spacing(margin-right);
+        @include i-assign-table-answer-and-list-addition;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__answers {
+
+        &-wrapper {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+    }
+
+    &__button {
+        @include responsive-spacing($i-assign-table-possible-button-spacing, margin-top);
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &#{$module}--readonly {
+
+        #{$module}__item-handle {
+            cursor: not-allowed;
+        }
+    }
+
+    &__item#{$module}__item--selected {
+        box-shadow: unset !important;
+        opacity: 1 !important;
+        @include color-theme('drag-item--selected');
+
+        & > * {
+            visibility: hidden;
+        }
+    }
+
+    &--size-small {
+
+        @include above($i-assign-table-breakpoint-desktop) {
+
+            #{$module}__answer {
+                width: grid-column-width-percentage(4);
+            }
+
+            #{$module}__list {
+                width: grid-column-width-percentage(4);
+            }
+
+        }
+
+    }
+
+    @at-root.m-interaction {
+
+        @include below($i-assign-table-breakpoint-desktop) {
+
+            #{$module}__questions-wrapper-question {
+
+                &:after {
+                    content: " ";
+                    display: block;
+                    flex: 0 0 auto;
+                    @include add-page-spacing(0px, width);
+                }
+            }
+
+            .m-interaction__content #{$module} {
+                margin: 0;
+
+            }
+
+            #{$module}__questions-wrapper {
+                @include add-page-spacing(0px, padding-left padding-right);
+            }
+        }
+    }
+
+
+    @at-root.m-interaction {
+
+        &--type-stacked {
+
+            #{$module} {
+                //&__interaction-wrapper {
+                    @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'above');  // @CW - NEU
+                //}
+            }
+
+            #{$module}__questions-wrapper-question {
+
+                &:after {
+                    content: " ";
+                    display: block;
+                    flex: 0 0 auto;
+                    @include add-page-spacing(0px, width);
+                }
+            }
+
+            .m-interaction__content #{$module} {
+                margin: 0;
+            }
+
+            #{$module}__questions-wrapper {
+                @include add-page-spacing(0px, padding-left padding-right);
+            }
+
+            #{$module}--size-small {
+
+                @include above($i-assign-table-breakpoint--size-smaller) {
+
+                    #{$module}__answer {
+                        width: grid-column-width-percentage(3);
+                    }
+
+                    #{$module}__list {
+                        width: grid-column-width-percentage(3);
+                    }
+                }
+            }
+
+            #{$module}--answer-count-2,
+            #{$module}--answer-count-3 {
+
+                @include above($i-assign-table-breakpoint-desktop) {
+
+                    #{$module}__questions-wrapper-answer {
+                        justify-content: center;
+                    }
+
+                    #{$module}__questions-wrapper-questions {
+                        justify-content: center;
+                    }
+
+                    #{$module}__questions-wrapper-question {
+                        justify-content: center;
+                    }
+                }
+
+                #{$module}__questions-wrapper-question:after {
+                    display: none !important;
+                }
+            }
+        }
+
+        &--type-default {
+
+            #{$module} {
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-assign-table-spacing-map);
+                @include grid-cell-offset('end', 'page', $i-assign-table-breakpoint-desktop, 'above');
+
+                @include above($i-assign-table-breakpoint-desktop) {
+                    @include grid-cell-size($i-assign-table-interaction-column-size);
+                    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                    @include grid-cell-push-gap('left', $i-assign-table-interaction-column-size);
+                }
+            }
+
+            #{$module} {
+                &__interaction-wrapper {
+                    @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'above');  // @CW - NEU
+                }
+            }
+
+            #{$module}__questions-wrapper {
+                @include responsive-spacing($properties: margin-left margin-right, $spacing-map: $i-assign-table-spacing-map, $direction: 'negative');
+            }
+
+            @mixin i-assign-table-scroll-spacing {
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-assign-table-spacing-map);
+
+                &:after {
+                    content: " ";
+                    display: block;
+                    flex: 0 0 auto;
+                    @include responsive-spacing($properties: width, $spacing-map: $i-assign-table-spacing-map)
+                }
+            }
+
+            #{$module}__questions-wrapper-question {
+                @include i-assign-table-scroll-spacing;
+            }
+
+            #{$module}__questions-wrapper-answer {
+                @include i-assign-table-scroll-spacing;
+            }
+
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-assign-table) {
+        @include i-assign-table;
+    }
+    // #endregion
+}

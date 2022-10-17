@@ -1,0 +1,29 @@
+<div :class="blockClasses">
+
+    <div v-if="icon !== 'none'"
+         :class="[ element('icon'), elementModifier('icon', iconModifier ) ]">
+        <c-icon :name="iconName"/>
+    </div>
+
+    <c-heading v-if="heading"
+               :class="element('heading')"
+               v-bind="heading"
+               headline-tag="span"
+               headline-type="h1"
+               alignment="center" />
+
+    <c-text v-if="text"
+            :class="element('text')"
+            :text="text" />
+
+    <c-quiz-progress-indicator v-if="progressIndicator"
+                               :class="element('progress-indicator')"
+                               v-bind="progressIndicator"
+                               :theme="theme" />
+
+    <c-button v-if="feedbackType !== 'positive'"
+              :class="element('button')"
+              v-bind="buttonProps"
+              @click.native="mRetry" />
+
+</div>

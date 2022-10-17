@@ -1,0 +1,108 @@
+<module-viewport  :class="element('feedback-wrapper')">
+
+    <module-content>
+
+        <c-grid>
+
+            <transition-feedback :moduleElement="`.m-interaction`"
+                                 :affectedElementSizeSource="`.interaction`"
+                                 :backgroundElement="`.m-interaction__feedback-background`"
+                                 :feedback="`.c-feedback`">
+
+                <component :is="tag" v-if="this.status === 'feedback'" :class="blockClasses">
+
+                    <transition-replace :affectedElementHeightSource="`.${$options.name}`">
+
+                        <div :key="feedbackKey" :class="element('feedback')">
+
+                            <slot>
+
+                                <div v-if="icon !== 'none'"
+                                     :class="[element('icon-heading'), 'c-heading', 'c-heading--h2']">
+
+                                    <div v-if="icon !== 'none'"
+                                         :class="[ element('icon'), elementModifier('icon', iconModifier ) ]">
+
+                                        <c-icon :name="iconName"/>
+
+                                    </div>
+
+                                </div>
+
+                                <div v-if="heading || image || text"
+                                     :class="[element('solution'), 'c-heading--h2', image ? element('solution--with-image') : '']">
+
+                                    <div v-if="image" :class="element('image-wrapper')">
+                                        <c-image v-bind="image" :class="element('image')"/>
+                                    </div>
+
+                                    <div :class="element('text-wrapper')">
+
+                                        <c-heading v-if="heading"
+                                                   :class="element('heading')"
+                                                   v-bind="heading"
+                                                   tag="span"
+                                                   :alignment="null"
+                                                   headline-tag="h2"
+                                                   headline-type="h3"/>
+
+                                        <c-text v-if="text"
+                                                :class="element('text')"
+                                                :text="text"/>
+
+                                    </div>
+
+                                </div>
+
+                                <div v-if="feedbackType || slotHasContent('actions')"
+                                     :class="element('actions')">
+
+                                    <slot name="actions">
+
+                                        <template v-if="feedbackType === 'positive'">
+
+                                            <c-button :class="element('resolve')"
+                                                      :label="buttonLabelClose"
+                                                      @click.native="close"/>
+
+                                        </template>
+
+                                        <template v-if="feedbackType === 'negative'">
+
+                                            <c-button :class="element('retry')"
+                                                      :label="buttonLabelRetry"
+                                                      @click.native="retry"/>
+
+                                            <c-button :class="element('solution')"
+                                                      :label="buttonLabelSolution"
+                                                      @click.native="solution"/>
+
+                                        </template>
+
+                                        <template v-if="feedbackType === 'solution'">
+
+                                            <c-button :class="element('resolve')"
+                                                      :label="buttonLabelClose"
+                                                      @click.native="resolve"/>
+
+                                        </template>
+
+                                    </slot>
+
+                                </div>
+
+                            </slot>
+
+                        </div>
+
+                    </transition-replace>
+
+                </component>
+
+            </transition-feedback>
+
+        </c-grid>
+
+    </module-content>
+
+</module-viewport>

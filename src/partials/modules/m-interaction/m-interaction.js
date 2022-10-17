@@ -2,99 +2,131 @@
  * m-interaction
  */
 
-import { common, background } from '@this/cobra-framework/src/plugins/mixins';
-import { spacingProps, spacingClass } from '@this/cobra-framework/src/plugins/mixins/spacing';
+import { common, background, theme } from '@this/cobra-framework/src/plugins/mixins';
+import { spacingClass, spacingProps } from '@this/cobra-framework/src/plugins/mixins/spacing';
 
 export default {
 
+    inheritAttrs: false,
+
     name: 'm-interaction',
 
-    mixins: [ ...common, background ],
+    mixins: [
+        ...common,
+        theme,
+        background
+    ],
 
     props: {
-        ...spacingProps,
-        isFeedbackVisible: { type: Boolean },
-        headingLayout: {
-            type: Object,
-            default: () => ({
-                layout: 'l-12',
-                slot: 'column-1'
-            })
-        },
-        interactionLayout: {
-            type: Object,
-            default: () => ({
-                layout: 'l-12',
-                slot: 'column-1'
-            })
-        },
-        alignment: {
-            type: String,
-            default: 'left'
+        id: Number,
+        isQuiz: {
+            type: Boolean,
+            default: false
         },
         feedbacks: Object,
-        question: Object,
-        type: String,
-        scroll: { type: Boolean, default: true }
+        heading: Object,
+        // layoutArea: {
+        //     type: String,
+        //     default: 'page'
+        // },
+
+        backgroundPosition: {   // @CW - layoutArea oder backgroundPosition ?!?!?!? (erstmal per computed umgesetzt) !!!!!!!!
+            type: String,
+            default: 'page'
+        },
+
+        mode: {     // 'default' or 'stacked'
+            type: String,
+            default: 'default'
+        },
+        text: String,
+        interaction: String,
+        interactionProps: Object,
+        ...spacingProps
     },
 
     data() {
         return {
-            answersVisible: false,
-            scrollOptions: {
-                duration: 300,
-                easing: [ 0.42, 0.0, 0.58, 1.0 ],
-                offset: 22,
-                force: true,
-                cancelable: false
-            }
+            status: 'question', // 'question' or 'feedback' or 'resolved',
+            questionResult: null
         };
     },
 
     computed: {
+
+        layoutArea() {
+            return this.backgroundPosition;
+        },
+
         blockClasses() {
             return [
-                { [`${this.block}--alignment-${this.alignment}`]: true },
+                { [this.modifier('type-' + this.mode)]: true },
                 spacingClass('margin', 'top', this.spacingMarginTop),
-                spacingClass('margin', 'bottom', this.spacingMarginBottom),
+                spacingClass('margin', 'bottom', this.spacingMarginBottom)
+            ];
+        },
+        backgroundSizeClass() {
+            return this.elementModifier('background', this.layoutArea);
+        },
+        interactionBackgroundStyle() {
+            return this.backgroundImage ? { backgroundImage: `url('${this.backgroundImage}')` } : undefined;
+        },
+        questionSpacingClass() {
+            return [
                 spacingClass('padding', 'top', this.spacingPaddingTop),
                 spacingClass('padding', 'bottom', this.spacingPaddingBottom)
             ];
         },
-
-        slotProps() {
+        _heading() {
             return {
-                scrollTo: this.scrollTo
+                ...this.heading,
+                headline: this.heading?.headline?.replaceAll(/<[^>]*p>/g, ''),
+                alignment: 'custom'
             };
+        },
+        _interaction() {
+            return 'i-' + this.interaction;
+        },
+        _interactionProps() {
+            return { ...this.interactionProps, ...{
+                id: this.id,
+                spacingPaddingTop: this.spacingPaddingTop,
+                spacingPaddingBottom: this.spacingPaddingBottom
+            } };
+        },
+        feedbackProps() {
+            return { feedbacks: this.feedbacks, ...{
+                type: this.questionResult,
+                spacingPaddingTop: this.spacingPaddingTop,
+                spacingPaddingBottom: this.spacingPaddingBottom
+            } };
         }
+
     },
 
     methods: {
-        spacingClass,
 
-        headerHeight() {
-            return document.querySelector('.f-header').getBoundingClientRect().height;
+        changeStatus(interactionResult) {
+
+            if (this.isQuiz) {
+                this.$emit('change', interactionResult);
+                return;
+            }
+
+            this.status = 'feedback';
+            this.questionResult = interactionResult ? 'positive' : 'negative';
         },
 
-        scrollTo(target) {
-            if (!this.scroll) return;
+        retry() {
+            this.$refs.interaction.retry();
 
-            const targets = {
-                'question': this.$refs.question.$el || this.$refs.question,
-                'feedbacks': this.$refs.feedbacks.$el || this.$refs.feedbacks,
-                'interaction': this.$refs.interaction.$el || this.$refs.interaction
-            };
+            this.$nextTick(() => {
+                this.status = 'question';
+            });
+        },
 
-            const { duration, offset, ...scrollOptions } = this.scrollOptions;
-
-            this.$scrollTo(
-                targets[target],
-                duration,
-                {
-                    offset: -(this.headerHeight() + offset),
-                    ...scrollOptions
-                }
-            );
+        resolveQuestion() {
+            this.status = 'resolved';
         }
 
     }

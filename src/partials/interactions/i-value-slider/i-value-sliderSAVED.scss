@@ -1,0 +1,117 @@
+////
+///
+/// i-value-slider
+///
+/// @group Interactions
+///
+////
+
+$i-value-slider-breakpoint-desktop: 's' !default;
+$i-value-slider-slider-current-spacing-map: ('default': '16', 's': '20', 'm': '27') !default;
+$i-value-slider-slider-current-value-breakpoint: 'l' !default;
+$i-value-slider-slider-wrapper-10-columns-breakpoint: 'xs' !default;
+$i-value-slider-slider-wrapper-8-columns-breakpoint--type-stacked: 'm' !default;
+$i-value-slider-spacing-map--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+
+.i-value-slider {
+    // #region [Block]
+    $module: &;
+    display: flex;
+    flex-flow: column nowrap;
+    // #endregion
+
+    &__slider {
+        line-height: 0;
+    }
+
+    &__slider-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        @include grid-cell-size(12);
+
+        @include above($i-value-slider-slider-wrapper-10-columns-breakpoint) {
+            @include grid-cell-size(10);
+            @include grid-cell-position(2, 1);
+        }
+    }
+
+    &__slider-current {
+        display: inline-flex;
+        flex-flow: row;
+        align-items: flex-end;
+        margin: auto;
+        line-height: 0;
+        @include responsive-spacing($properties: margin-bottom, $spacing-map: $i-value-slider-slider-current-spacing-map);
+    }
+
+    &__slider-current-value {
+        margin-bottom: -8px;
+        @include responsive-font('value-slider-current-value');
+
+        @include above($i-value-slider-slider-current-value-breakpoint) {
+            margin-bottom: -6px;
+        }
+    }
+
+    &__slider-current-unit {
+        margin-left: spacing('3');
+        @include responsive-font('value-slider-current-unit');
+    }
+
+    &__slider-label {
+        display: flex;
+        justify-content: space-between;
+        padding-top: spacing('16');
+    }
+
+    &__button {
+        align-self: center;
+        margin-top: spacing('44');
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &__readonly {
+
+        #{$module} {
+            pointer-events: none;
+        }
+    }
+
+    @at-root.m-interaction {
+
+        &--type-stacked {
+
+            #{$module}__slider-wrapper {
+
+                @include above($i-value-slider-slider-wrapper-8-columns-breakpoint--type-stacked) {
+                    @include grid-cell-size(8);
+                    @include grid-cell-position(3, 1);
+                }
+            }
+        }
+
+        &--type-default {
+
+            #{$module}__slider-wrapper {
+
+                @include above($i-value-slider-breakpoint-desktop) {
+                    @include grid-cell-size(12);
+                    @include grid-cell-position(1, 1);
+                }
+            }
+
+            #{$module} {
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-value-slider-spacing-map--type-default);
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-value-slider) {
+        @include i-value-slider;
+    }
+    // #endregion
+
+}

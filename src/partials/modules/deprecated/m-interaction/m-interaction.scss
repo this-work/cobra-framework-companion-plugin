@@ -1,0 +1,86 @@
+////
+///
+/// deprecated-m-interaction
+///
+/// @group Modules
+///
+////
+
+$deprecated-m-interactions-audio-container-margin-top: 'xsmall' !default;
+$deprecated-m-interactions-instruction-margin-top: 'xsmall' !default;
+
+.deprecated-m-interaction {
+    // #region [Block]
+    $module: &;
+    align-content: center;
+    padding-bottom: 0;
+    overflow: hidden; // QUICKFIX, BACKGROUMD SHIFTED
+    // #endregion
+
+    // #region [Element]
+
+    &__audio-container {
+        @include responsive-spacing($deprecated-m-interactions-audio-container-margin-top, margin-top);
+    }
+
+    &__instruction {
+        @include responsive-spacing($deprecated-m-interactions-instruction-margin-top, margin-top);
+    }
+
+    @at-root .module#{&} {
+
+        #{$module}__question {
+            @include grid-cell-row-start(1);
+        }
+
+        #{$module}__interaction {
+            @include grid-cell-row-start(2);
+
+            padding: spacing('44') 0 0;
+            @include above('l') {
+                padding: spacing('71') 0 0;
+            }
+        }
+
+        #{$module}__answer {
+            @include grid-cell-row-start(3);
+
+            @include color-theme('feedback-background');
+        }
+
+        .module__decoration {
+            @include grid-cell-row-start(1);
+            @include grid-cell-height(3);
+            @include color-theme('background');
+            z-index: -2;
+        }
+
+        .module__background--viewport {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--page {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--content {
+            @include grid-cell-height(2);
+        }
+
+        .module__background--page + .module__decoration {
+            @include grid-cell-position(2,3);
+            @include grid-cell-size(3);
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(deprecated-m-interaction) {
+        @include deprecated-m-interaction;
+    }
+    // #endregion
+
+}

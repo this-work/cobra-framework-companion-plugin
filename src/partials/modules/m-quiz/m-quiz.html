@@ -1,22 +1,102 @@
 <module :class="blockClasses"
-        :backgroundPosition="backgroundPosition"
-        :backgroundImage="backgroundImage"
->
+        :backgroundImage="null"
+        ref="quiz"
+        style="position: relative">
 
-    <module-page>
+    <transition-group :name="transitionNameQuiz" :class="element('transition')">
+<!--    <transition-replace-slide :direction="status === 'start' ? 'right' : 'left'" >-->
 
-        <module-content>
+<!--        <template >-->
 
-            <layout :layout="layout">
+            <m-interaction
+                v-show="status === 'start'"
+                key="start"
+                v-bind="startProps"
+            >
 
-                <template v-slot:[getSlotName]>
+                <template #default>
+
+                    <component :is="`module-${backgroundPosition}`" :class="element('image-wrapper')">
+
+                        <module-content>
+
+                            <c-grid :class="element('image-grid')">
+
+                                <div :class="[element('image-container'), backgroundSizeClass]">
+
+                                    <c-image  v-bind="keyvisual"
+                                              :inline="true"
+                                              :objectFit="'cover'"
+                                              :lazyload="false" />
+
+                                </div>
+
+                            </c-grid>
+
+                        </module-content>
+
+                    </component>
 
                 </template>
 
-            </layout>
+                <template #assets>
+                    <c-button :class="element('button')"
+                              :label="buttonLabelStartQuiz"
+                              icon="play-circle-outline"
+                              @click.native="startQuiz" />
+                </template>
+            </m-interaction>
 
-        </module-content>
+<!--        </template>-->
 
-    </module-page>
+<!--        <template>-->
+
+            <template v-for="(question, index) in shuffeledQuestions">
+
+            <m-interaction
+                v-show="status === 'in progress' && selectedQuestionIndex === index"
+                :key="index"
+                v-bind="getQuestionProps(index)"
+                @change="questionChange"
+            >
+                <template #progress>
+                    <c-quiz-progress-indicator
+                        :class="element('progress-indicator')"
+                        v-bind="progressIndicator"
+                        :labelTemplate="null"
+                    />
+                </template>
+
+                <slot v-for="(_, name) in questionSlots" :name="name" :slot="name">
+                    <component-loader :components="_" />
+                </slot>
+
+            </m-interaction>
+
+            </template>
+
+<!--        </template>-->
+
+<!--        <template >-->
+
+            <component v-show="status === 'end'" :is="`module-${backgroundPosition}`" key="end" :class="element('end-wrapper')">
+
+                <module-content >
+
+                    <div :class="[ element('end-description'), descriptionSpacingClasses ]">
+
+                        <c-quiz-feedback v-bind="feedbackProps"
+                                         @retry="retry" />
+
+                    </div>
+
+                </module-content>
+
+            </component>
+
+<!--        </template>-->
+
+<!--    </transition-replace-slide>-->
+    </transition-group>
 
 </module>

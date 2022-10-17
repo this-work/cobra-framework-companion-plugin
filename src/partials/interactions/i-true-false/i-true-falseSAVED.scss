@@ -1,0 +1,51 @@
+////
+///
+/// i-true-false
+///
+/// @group Interactions
+///
+////
+
+$i-true-false-button-margin: spacing('27') !default;
+$i-true-false-padding: (
+    nth(map-keys($site-area-columns), 1): map-get(map-get($site-area-columns, nth(map-keys($site-area-columns), 1)), 'page'),
+    nth(map-keys($site-area-columns), 2): map-get(map-get($site-area-columns, nth(map-keys($site-area-columns), 2)), 'page'),
+    's': 0px
+) !default;
+
+
+.i-true-false {
+    // #region [Block]
+    $module: &;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    @include responsive-spacing(false, padding-left padding-right, $i-true-false-padding);
+    // #endregion
+
+    // #region [Element]
+    &__actions {
+        margin-top: $i-true-false-button-margin * -1;
+        margin-right: $i-true-false-button-margin * -1;
+    }
+
+    &__button {
+        margin-top: $i-true-false-button-margin;
+        margin-right: $i-true-false-button-margin;
+        flex-shrink: 0;
+        flex-grow: 0;
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-true-false) {
+        @include i-true-false;
+    }
+    // #endregion
+
+}

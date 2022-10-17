@@ -1,0 +1,98 @@
+////
+///
+/// deprecated-c-quiz-progress-indicator
+///
+/// @group Components
+///
+////
+$deprecated-c-progress-indicator-colors: (
+    'inactive': (
+        light: ( background: 'white' ),
+        medium: ( background: 'white' ),
+        dark: ( background: 'disabled' )
+    ),
+    'active': (
+        light: ( background: 'white' ),
+        medium: ( background: 'white' ),
+        dark: ( background: 'disabled' )
+    ),
+    'success': (
+        light: ( background: 'success' ),
+        medium: ( background: 'success' ),
+        dark: ( background: 'success' )
+    ),
+    'failed': (
+        light: ( background: 'error' ),
+        medium: ( background: 'error' ),
+        dark: ( background: 'error' )
+    )
+);
+
+.deprecated-c-quiz-progress-indicator {
+
+    // #region [Block]
+    display: flex;
+    flex-flow: column nowrap;
+    justify-items: center;
+    align-items: center;
+    // #endregion
+
+    // #region [Element]
+    &__label#{&}__label {
+        @include responsive-font('copytext--small', $font-weight-overwrite: 'bold');
+        text-align: center;
+    }
+
+    &__state-row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-items: center;
+        width: 100%;
+        justify-content: center;
+
+        .c-text + & {
+            margin-top: spacing('16');
+        }
+
+        & + & {
+            margin-top: spacing('3');
+        }
+    }
+
+    &__state {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 40px;
+        min-width: 20px;
+        height: 6px;
+        margin: 0 calc(spacing('3') / 2);
+        border-radius: 3px;
+        transition: transition-appear(background);
+
+        @include color-theme('inactive', $color-palettes-map: $deprecated-c-progress-indicator-colors);
+
+        &--active {
+            @include color-theme('active', $color-palettes-map: $deprecated-c-progress-indicator-colors);
+        }
+
+        &--success {
+            @include color-theme('success', $color-palettes-map: $deprecated-c-progress-indicator-colors);
+        }
+
+        &--failed {
+            @include color-theme('failed', $color-palettes-map: $deprecated-c-progress-indicator-colors);
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(deprecated-c-quiz-progress-indicator) {
+        @include deprecated-c-quiz-progress-indicator;
+    }
+    // #endregion
+
+}

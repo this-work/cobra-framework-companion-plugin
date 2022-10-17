@@ -5,28 +5,11 @@
 /// @group Components
 ///
 ////
-$c-progress-indicator-colors: (
-    'inactive': (
-        light: ( background: 'white' ),
-        medium: ( background: 'white' ),
-        dark: ( background: 'disabled' )
-    ),
-    'active': (
-        light: ( background: 'white' ),
-        medium: ( background: 'white' ),
-        dark: ( background: 'disabled' )
-    ),
-    'success': (
-        light: ( background: 'success' ),
-        medium: ( background: 'success' ),
-        dark: ( background: 'success' )
-    ),
-    'failed': (
-        light: ( background: 'error' ),
-        medium: ( background: 'error' ),
-        dark: ( background: 'error' )
-    )
-);
+
+$c-quiz-progress-indicator-border-width: unitize(1px) !default;
+$c-quiz-progress-indicator-height: unitize(10px) !default;
+$c-quiz-progress-indicator-margin-x: unitize(10px) !default;
+$c-quiz-progress-indicator-width: unitize(10px) !default;
 
 .c-quiz-progress-indicator {
 
@@ -39,8 +22,8 @@ $c-progress-indicator-colors: (
 
     // #region [Element]
     &__label#{&}__label {
-        @include responsive-font('copytext--small', $font-weight-overwrite: 'bold');
         text-align: center;
+        @include responsive-font('copytext--small', $font-weight-overwrite: 'bold');
     }
 
     &__state-row {
@@ -62,25 +45,29 @@ $c-progress-indicator-colors: (
     &__state {
         flex: 1 1 auto;
         width: 100%;
-        max-width: 40px;
-        min-width: 20px;
-        height: 6px;
-        margin: 0 calc(spacing('3') / 2);
-        border-radius: 3px;
+        max-width: $c-quiz-progress-indicator-width;
+        min-width: $c-quiz-progress-indicator-width;
+        height: $c-quiz-progress-indicator-height;
+        margin: 0 calc($c-quiz-progress-indicator-margin-x / 2);
+        border-radius: 50%;
         transition: transition-appear(background);
 
-        @include color-theme('inactive', $color-palettes-map: $c-progress-indicator-colors);
+        border-width: $c-quiz-progress-indicator-border-width;
+        border-style: solid;
+        border-color: transparent;
+
+        @include color-theme('quiz-progress-indicator--inactive');
 
         &--active {
-            @include color-theme('active', $color-palettes-map: $c-progress-indicator-colors);
+            @include color-theme('quiz-progress-indicator--active');
         }
 
         &--success {
-            @include color-theme('success', $color-palettes-map: $c-progress-indicator-colors);
+            @include color-theme('quiz-progress-indicator--success');
         }
 
         &--failed {
-            @include color-theme('failed', $color-palettes-map: $c-progress-indicator-colors);
+            @include color-theme('quiz-progress-indicator--failed');
         }
 
     }

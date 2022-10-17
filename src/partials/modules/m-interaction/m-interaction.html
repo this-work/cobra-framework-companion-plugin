@@ -1,77 +1,99 @@
-<module
-    :background-decoration="true"
-    :background-image="backgroundImage"
-    :background-position="backgroundPosition"
-    :class="blockClasses"
->
+<module :class="blockClasses"
+        :backgroundPosition="backgroundPosition"
+        :backgroundDecoration="false"
+        :backgroundImage="null">
 
-    <module-content
-        :class="[element('question')]"
-        ref="question"
-    >
-
-        <layout :layout="headingLayout.layout">
-            <template #[headingLayout.slot]>
-                <slot name="heading">
-                    <c-heading
-                        :alignment="alignment"
-                        :class="element('heading')"
-                        :tag="question.tag"
-                        :overline="question.overline"
-                        :overlineTag="question.overlineTag"
-                        :overlineType="question.overlineType"
-                        :overlineAttrs="question.overlineAttrs"
-                        :headline="question.headline"
-                        :headlineTag="question.headlineTag || 'h2'"
-                        :headlineType="question.headlineType || 'h2'"
-                        :headlineAttrs="question.headlineAttrs"
-                    />
-                </slot>
-
-                <div v-if="question.button || $slots.audio" :class="[element('audio-container'), alignment ? `text-align-${alignment}` : null]">
-                    <slot name="audio">
-                        <c-button-audio
-                            v-if="question.button"
-                            v-bind="question.button"
-                            :class="element('audio')"
-                        />
-                    </slot>
-                </div>
-
-                <slot name="instruction">
-                    <c-heading
-                        :alignment="alignment"
-                        :class="[element('heading'), element('instruction')]"
-                        :tag="question.tag"
-                        :subline="question.subline"
-                        :sublineTag="question.sublineTag || 'span'"
-                        :sublineType="question.sublineType || 'copytext'"
-                        :sublineAttrs="question.sublineAttrs"
-                    />
-                </slot>
-            </template>
-        </layout>
-    </module-content>
-
-    <module-content
-        :class="[element('interaction')]"
-        ref="interaction"
-    >
-        <layout :layout="interactionLayout.layout">
-            <template #[interactionLayout.slot]>
-                <slot v-bind="slotProps" />
-            </template>
-        </layout>
-    </module-content>
-
-    <component ref="feedbacks" :is="`module-${backgroundPosition}`" :class="element('answer')">
+    <component :is="`module-${layoutArea}`" :class="element('question-background-wrapper')">
         <module-content>
-            <slot name="feedbacks" v-bind="slotProps" />
+            <c-grid :class="element('background-grid')">
+
+                <div :class="[element('question-background'), backgroundSizeClass]"/>
+
+            </c-grid>
         </module-content>
     </component>
 
+    <module-content :class="element('question-wrapper')">
+        <c-grid>
+
+            <div :class="[element('question'), questionSpacingClass]">
+
+                <div v-if="slotHasContent('progress')" :class="element('progress')">
+                    <slot name="progress"/>
+                </div>
+
+                <c-heading v-if="heading" v-bind="_heading"/>
+
+                <div v-if="slotHasContent('assets')" :class="element('assets')">
+                    <slot name="assets"/>
+                </div>
+
+                <c-text v-if="text" :text="text"/>
+
+            </div>
+
+        </c-grid>
+    </module-content>
+
+
+    <component :is="`module-${layoutArea}`" :class="element('interaction-background-wrapper')">
+        <module-content>
+            <c-grid :class="element('background-grid')">
+
+                <div :class="[element('interaction-background'), backgroundSizeClass]"
+                     :style="interactionBackgroundStyle"/>
+
+            </c-grid>
+        </module-content>
+    </component>
+
+    <slot>
+
+        <component ref="interaction"
+                   v-bind="_interactionProps"
+                   :is="_interaction"
+                   :class="element('interaction')"
+                   :layoutArea="layoutArea"
+                   :resolved="status === 'resolved'"
+                   @evaluated="changeStatus" />
+
+    </slot>
+
+
+<!--    <component v-if="status === 'feedback'" :is="`module-${layoutArea}`" :class="element('feedback-background-wrapper')">-->
+    <component :is="`module-${layoutArea}`" :class="element('feedback-background-wrapper')">
+        <module-content>
+            <c-grid :class="element('background-grid')">
+                <div :class="[element('feedback-background'), backgroundSizeClass]" style="opacity: 0"/>
+            </c-grid>
+        </module-content>
+    </component>
+
+<!--    <transition-feedback :moduleElement="`.${$options.name}`"-->
+<!--                         :affectedElementSizeSource="`.interaction`"-->
+<!--                         :backgroundElement="`.${element('feedback-background')}`"-->
+<!--                         :feedback="`.c-feedback`">-->
+<!--&lt;!&ndash;        :affectedElementSizeSource="`.${element('interaction-wrapper')}`"&ndash;&gt;-->
+
+<!--        <c-feedback v-if="status === 'feedback'"-->
+<!--                    v-bind="feedbackProps"-->
+<!--                    :class="element('feedback')"-->
+<!--                    @retry="retry"-->
+<!--                    @resolve="resolveQuestion" />-->
+
+<!--    </transition-feedback>-->
+
+<!--    <transition-feedback :moduleElement="`.${$options.name}`"-->
+<!--                         :affectedElementSizeSource="`.interaction`"-->
+<!--                         :backgroundElement="`.${element('feedback-background')}`"-->
+<!--                         :feedback="`.c-feedback`">-->
+
+        <c-feedback v-bind="feedbackProps"
+                    :class="element('feedback')"
+                    :status="status"
+                    @retry="retry"
+                    @resolve="resolveQuestion" />
+
+<!--    </transition-feedback>-->
+
 </module>
-
-
-
-

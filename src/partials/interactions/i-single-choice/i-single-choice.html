@@ -1,0 +1,80 @@
+<component :is="`module-${layoutArea}`" :class="element('interaction-wrapper')">
+
+    <module-content>
+
+        <c-grid>
+
+            <component :is="tag" :class="blockClasses">
+
+                <template v-if="!withImages">
+
+                    <div :class="element('choices-wrapper')">
+
+                        <layout layout="l-12">
+
+                            <c-input-radio v-for="(answer, index) in shuffledAnswers"
+                                           :key="index"
+                                           v-model="markedAnswers[index]"
+                                           :class="element('choice')"
+                                           size="big"
+                                           :label="answer.text"
+                                           :readonly="resolved"
+                                           :disabled="resolved"
+                                           @change="selectionChanged(answer)" />
+
+                        </layout>
+
+                    </div>
+
+                </template>
+
+                <template v-else>
+
+                    <div :class="[element('wrapper')]">
+
+                        <div v-for="(answer, index) in shuffledAnswers"
+                             :key="'w' + index"
+                             :class="element('choice-wrapper')">
+
+                            <c-image :class="[element('image'), (markedAnswers[index]) ? modifier('selected') : '']"
+                                     v-bind="answer.image || answer.asset.image"
+                                     :tabindex="resolved ? -1: 0"
+                                     @click.native="selectionChanged(answer)"
+                                     @touchend.prevent="selectionChanged(answer)"
+                                     @keydown.space.prevent=""
+                                     @keydown.enter.prevent=""
+                                     @keyup.space="selectionChanged(answer)"
+                                     @keyup.enter="selectionChanged(answer)" />
+
+                            <div :class="element('label')"
+                                 v-html="answer.text" />
+
+                            <c-input-radio :class="[element('choice')]"
+                                           v-model="markedAnswers[index]"
+                                           :readonly="resolved"
+                                           :disabled="resolved"
+                                           @change="selectionChanged(answer)" />
+
+                        </div>
+
+                    </div>
+
+                </template>
+
+                <div :class="element('actions')">
+
+                    <c-button tabindex="0"
+                              :label="buttonLabelEvaluate"
+                              :disabled="resolved || !evaluationPermitted"
+                              @click.native="evaluate"
+                              @touchend.native.prevent="evaluate" />
+
+                </div>
+
+            </component>
+
+        </c-grid>
+
+    </module-content>
+
+</component>

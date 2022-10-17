@@ -71,7 +71,8 @@ export default function() {
         'header',
         'footer',
         'navigation',
-        'search'
+        'search',
+        'interaction'
     ];
 
 
@@ -93,7 +94,9 @@ export default function() {
         'src/theme/icons',
         'src/partials/components',
         'src/partials/frame',
-        'src/partials/modules'
+        'src/partials/modules',
+        'src/partials/interactions',
+        'src/partials/transitions'
     ];
 
 

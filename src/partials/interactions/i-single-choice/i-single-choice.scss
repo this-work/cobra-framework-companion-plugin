@@ -1,0 +1,346 @@
+////
+///
+/// i-single-choice
+///
+/// @group Interactions
+///
+////
+
+$i-single-choice-breakpoint-desktop: 's' !default;
+$i-single-choice-actions-margin-top: spacing('20') !default;
+$i-single-choice-actions-spacing-map--without-images: ('default': '44', 'm': 50px) !default;
+$i-single-choice-breakpoint-10-coloumns--type-stacked: 'l';
+$i-single-choice-choice-spacing-map--without-images: ('default': '20', 's': '27') !default;
+$i-single-choice-choice-spacing--desktop: spacing('16') !default;
+$i-single-choice-choice-spacing--mobile: spacing('10') !default;
+$i-single-choice-gaps--desktop: spacing('10') !default;
+$i-single-choice-gaps--mobile: spacing('6') !default;
+$i-single-choice-margin: spacing('27') !default;
+$i-single-choice-spacing-map--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+
+
+$m-interaction-question-column-size: 5 !default;
+
+$i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
+// <editor-fold desc="Mixins">
+@mixin i-dragg-drop-add-grid-gutter-spacing (       // ORIGINAL in i-dragg-drop.scss
+    $properties,
+    $config: $grid-config,
+    $grid: $default-grid
+) {
+
+    @if (length($properties) == 0) {
+        @error 'No properties given.';
+    }
+
+    $column-gutter: 0px;
+
+    @if (map-has-key(map-get($config, $grid), 'column-gutter')) {
+        $column-gutter: map-get(map-get($config, $grid), 'column-gutter');
+    } @else {
+        @error 'No column-gutter in grid "#{$grid}" with grid-config "#{$config}" found.';
+    }
+
+    @each $property in $properties {
+
+        #{$property}: #{$column-gutter};
+
+    }
+
+}
+// </editor-fold>
+
+.i-single-choice {
+    // #region [Block]
+    $module: &;
+    //@include responsive-spacing(false, padding-left padding-right, $i-single-choice-padding);
+    @include grid-cell-size(12);
+    // #endregion
+
+    // #region [Element]
+
+    &__interaction-wrapper {
+        //display: flex;
+        //align-items: stretch;
+        z-index: zindex(700);
+
+        //& > * {
+        //    width: 100%;
+        //}
+    }
+
+    &--without-images {
+
+        #{$module}__choice {
+            @include grid-cell-size(12);
+            @include responsive-spacing($properties: margin-top, $spacing-map: $i-single-choice-choice-spacing-map--without-images);
+
+            &:first-of-type {
+                margin-top: 0;
+            }
+
+            .c-input-radio__text {
+                opacity: 1 !important;
+            }
+        }
+
+        #{$module}__actions {
+            text-align: center;
+            @include responsive-spacing($properties: margin-top, $spacing-map: $i-single-choice-actions-spacing-map--without-images);
+        }
+    }
+
+    &--with-images {
+
+        #{$module}__wrapper {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        #{$module}__choice-wrapper {
+            position: relative;
+            flex-shrink: 0;
+            flex-grow: 0;
+            width: grid-column-width-percentage(6);
+            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+            &:nth-child(2n) {
+                margin-right: 0;
+            }
+        }
+
+        &#{$module} {
+            //@include add-page-spacing($i-single-choice-breakpoint-desktop, margin-top margin-bottom, $offsetVisbilityDirection: 'below');
+        }
+
+        #{$module}__actions {
+            text-align: center;
+            margin-top: $i-single-choice-actions-margin-top;
+        }
+
+        #{$module}__choice {
+            z-index: zindex(400);
+            position: absolute;
+            top: $i-single-choice-choice-spacing--mobile;
+            right: $i-single-choice-choice-spacing--mobile;
+
+            @include above($i-single-choice-breakpoint-desktop) {
+                top: $i-single-choice-choice-spacing--desktop;
+                right: $i-single-choice-choice-spacing--desktop;
+            }
+        }
+
+        #{$module}__label {
+            z-index: zindex(300);
+            margin-top: spacing('6');
+            @include responsive-font('choice-image-label');
+
+            > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+                @include responsive-font('choice-image-label');
+            }
+
+        }
+
+        #{$module}__image {
+            transition: transition(opacity);
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                pointer-events: none;
+                transition: transition(opacity);
+                background: rgba(0, 0, 0, 0.25);
+                z-index: zindex(100);
+                opacity: 0;
+            }
+
+            &:focus {
+                @include color-theme('focus');
+            }
+
+            &--selected {
+
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &--selected {
+
+        &#{$module}__image::after {
+            opacity: 1;
+        }
+    }
+
+    &--readonly {
+
+        #{$module}__choice-wrapper {
+            pointer-events: none;
+        }
+    }
+
+    @at-root.m-interaction {
+
+        &--type-default {
+
+            #{$module} {
+                @include grid-cell-offset('end', 'page', $i-single-choice-breakpoint-desktop, 'above');
+
+                @include above($i-single-choice-breakpoint-desktop) {
+                    @include grid-cell-size($i-single-choice-interaction-column-size);
+                    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                    @include grid-cell-push-gap('left', $i-single-choice-interaction-column-size);
+                }
+            }
+
+            #{$module}--without-images {
+
+                &#{$module} {
+                    @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-single-choice-spacing-map--type-default);
+                }
+
+                #{$module}__actions {
+                    @include above($i-single-choice-breakpoint-desktop) {
+                        text-align: left;
+                    }
+                }
+            }
+
+            #{$module}--with-images {
+
+                @include above($i-single-choice-breakpoint-desktop) {
+                    padding: $i-single-choice-margin;       // margin:
+                }
+
+                //&[class*="spacing-padding-top"] {
+                //    padding-top: 0;
+                //}
+                //
+                //&[class*="spacing-padding-bottom"] {
+                //    padding-bottom: 0;
+                //}
+
+
+
+            }
+        }
+
+        &--type-stacked {
+
+            #{$module}--without-images {
+
+                #{$module}__choice {
+                    @include above($i-single-choice-breakpoint-desktop) {
+                        @include grid-cell-size(6);
+
+                        &:nth-child(2) {
+                            margin-top: 0;
+                        }
+                    }
+                }
+
+                #{$module}__actions {
+
+                    @include above($i-single-choice-breakpoint-desktop) {
+                        text-align: left;
+                    }
+                }
+            }
+
+            #{$module}--with-images {
+
+                &[class*="spacing-padding-top"] {
+
+                    @include below($i-single-choice-breakpoint-desktop) {
+                        padding-top: 0;
+                    }
+                }
+
+                &[class*="spacing-padding-bottom"] {
+
+                    @include below($i-single-choice-breakpoint-desktop) {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+
+            #{$module}[class*="--image-count"] {
+
+                #{$module}__wrapper {
+
+                    @include above($i-single-choice-breakpoint-desktop) {
+                        justify-content: center;
+                    }
+                }
+
+                &#{$module}--image-count-2 {
+
+                    #{$module}__choice-wrapper {
+
+                        @include above($i-single-choice-breakpoint-desktop) {
+
+                            width: grid-column-width-percentage(5);
+                            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+                            &:last-of-type {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+
+                &#{$module}--image-count-3 {
+
+                    #{$module}__choice-wrapper {
+
+                        @include above($i-single-choice-breakpoint-desktop) {
+
+                            width: grid-column-width-percentage(4);
+                            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+                            &:last-of-type {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+
+                &#{$module}--image-count-4 {
+
+                    @include above($i-single-choice-breakpoint-desktop) {
+
+                        #{$module}__choice-wrapper {
+                            width: grid-column-width-percentage(3);
+                            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+                            &:last-of-type {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-single-choice) {
+        @include i-single-choice;
+    }
+    // #endregion
+
+}

@@ -1,0 +1,63 @@
+<module-content :class="element('interaction-wrapper')">
+    <c-grid>
+
+        <component :is="tag" :class="blockClasses">
+
+            <div :class="element('content')">
+
+                <template v-for="(item, itemIndex) in _content">
+
+                    <span v-if="item.text"
+                          :key="'text-' + itemIndex"
+                          :class="element('text')"
+                          v-html="item.text" />
+
+                    <div v-else-if="item.dropdown"
+                         :key="'dropdown-' + itemIndex"
+                         :class="element('dropdown')"
+                         ref="dropsdowns">
+
+                        <c-button :class="[element('dropdown-button'), elementModifier('dropdown-button', item.hasSelectedAnswer ? 'text' : 'icon'), isOpen(itemIndex) ? 'is--selected' : '']"
+                                  tag="button"
+                                  :icon="!item.hasSelectedAnswer ? 'add' : null"
+                                  appearance="icon"
+                                  :label="item.hasSelectedAnswer ? item.selectedAnswerLabel : undefined"
+                                  :disabled="resolved"
+                                  @click.native.prevent="toggleOpen(itemIndex)" />
+
+                        <transition name="dropdown" appear>
+
+                            <ul v-if="isOpen(itemIndex)" :class="element('dropdown-list')">
+
+                                <li v-for="(answer, answerIndex) in item.dropdown"
+                                    :key="answerIndex"
+                                    :class="element('dropdown-list-item')"
+                                    @click="handleAnswerSelection(item, itemIndex, answer)">
+                                    {{ answer.label }}
+                                </li>
+
+                            </ul>
+
+                        </transition>
+
+                    </div>
+
+                </template>
+
+            </div>
+
+            <div :class="element('actions')">
+
+                <c-button tabindex="0"
+                          :label="buttonLabelEvaluate"
+                          :disabled="resolved || !evaluationPermitted"
+                          @click.native="evaluate"
+                          @touchend.native.prevent="evaluate" />
+
+            </div>
+
+        </component>
+
+    </c-grid>
+
+</module-content>

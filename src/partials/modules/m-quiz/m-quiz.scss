@@ -6,14 +6,185 @@
 ///
 ////
 
+$m-quiz-breakpoint-desktop: 's' !default;
+$m-quiz-spacing: 'small' !default;
+$m-quiz-text-responsive-font: 'copytext--big' !default;
+
+$m-interaction-question-column-size: 5 !default;
+
+$m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
 .m-quiz {
     // #region [Block]
+    $module: &;
+
+    flex-grow: 1;
+    display: flex;
+
+    & > * {
+        flex: 1 0;
+    }
+
     // #endregion
 
+
+
+    // TESTING start
+
+    // TESTING end
+
+    &__image-container {
+        min-height: 200px;
+    }
+
     // #region [Element]
+
+
+
+
+
+    &__transition {
+        @include grid-context();
+
+    }
+
+
+
+    @at-root .module {
+        .m-interaction,
+        #{$module}__end-wrapper {
+            //height: 100%;
+            @include grid-cell-position(1);
+            @include grid-cell-row-start(1);
+            @include grid-cell-size(12);
+        }
+    }
+
+
+
+
+
+    &__image-wrapper {
+        display: flex;
+        align-items: stretch;
+
+        @include grid-cell-offset('complete', 'viewport', $m-quiz-breakpoint-desktop, 'below');
+
+        & > * {
+            width: 100%;
+            height: 100%;
+        }
+
+        #{$module}__image-container {
+            position: relative;
+            @include grid-cell-size(12);
+            z-index: zindex(700);
+        }
+
+        #{$module}__image-grid {
+            height: 100%;
+        }
+
+        .c-image {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            height: 100%;
+            width: 100%;
+
+            .c-image__canvas {
+                height: inherit !important;
+                padding-top: unset !important;
+            }
+        }
+    }
+
+    @at-root .module#{$module} {
+
+        #{$module} {
+
+            &__image-wrapper {
+                @include grid-cell-row-start(2);
+            }
+        }
+    }
+
+
+    &__end-wrapper {
+        @include color-theme('quiz-background');
+
+
+
+        // @CW NEU - start
+        & > * {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & > * {
+                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+        }
+        // @CW NEU - end
+
+    }
+
+    &__heading {
+        @include below($m-quiz-breakpoint-desktop) {
+            margin-top: spacing('16');
+        }
+    }
+
+    &__text {
+        text-align: center;
+        @include responsive-font($m-quiz-text-responsive-font);
+    }
     // #endregion
 
     // #region [Modifier]
+
+
+    @at-root .module.m-interaction {
+
+        &--type-default {
+
+            #{$module} {
+
+
+                &__image-wrapper {
+                    @include above($m-quiz-breakpoint-desktop) {
+                        @include grid-cell-row-start(1);
+                    }
+                }
+
+                &__image-container {
+                    @include grid-cell-offset('end', 'page', $m-quiz-breakpoint-desktop, 'above');
+
+                    @include above($m-quiz-breakpoint-desktop) {
+                        @include grid-cell-size($m-quiz-interaction-column-size);
+                        @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                        @include grid-cell-push-gap('left', $m-quiz-interaction-column-size);
+                    }
+                }
+
+
+                &__background--viewport {
+                    &[class*=image-] {
+                        @include grid-cell-offset('end', 'viewport', $m-quiz-breakpoint-desktop, 'above');
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
     // #endregion
 
     // #region [Overwrites]
@@ -21,5 +192,4 @@
         @include m-quiz;
     }
     // #endregion
-
 }

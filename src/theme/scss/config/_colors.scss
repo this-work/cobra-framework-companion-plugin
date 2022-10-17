@@ -21,6 +21,22 @@
 
 
 ///
+/// Additional Base color configuration.
+/// Additionalonfiguration of all standardized colors you can use with the color function.
+/// Alias for js import: 'colorBases'
+/// Alias to import all colors in js: 'colors'
+/// @type array
+///
+$color-base: map-merge((
+    'light-interaction-background' : #FAFAFA,
+    'medium-interaction-background': #F0F0F0,
+    'dark-interaction-background'  : #262626
+), $color-base);
+
+$default-color-map: map-merge($color-base, $color-derivates);
+
+
+///
 /// Additional Color palette configuration.
 /// Extends the configuration of all color sets.
 /// Alias for js import: 'colorPalettes'
@@ -152,13 +168,13 @@ $color-palettes: map-merge((
     ),
     'feedback-background': (
         light: (
-            background: 'light-deco',
+            background: 'light-interaction-background',
         ),
         medium: (
-            background: 'medium-deco',
+            background: 'medium-interaction-background',
         ),
         dark: (
-            background: 'dark-deco',
+            background: 'dark-interaction-background',
         )
     ),
     'feedback-solution-icon': (
@@ -175,6 +191,284 @@ $color-palettes: map-merge((
             color: 'dark'
         )
     ),
+
+    /// Interaction Color Themes
+    'interaction-question-background': (
+        light: (
+            background-color: 'light-deco'
+        ),
+        medium: (
+            background-color: 'medium-deco'
+        ),
+        dark: (
+            background-color: 'dark-deco'
+        )
+    ),
+    'interaction-background': (
+        light: (
+            background-color: 'light-interaction-background'
+        ),
+        medium: (
+            background-color: 'medium-interaction-background'
+        ),
+        dark: (
+            background-color: 'dark-interaction-background'
+        )
+    ),
+
+    /// Drag&Drop Color Themes
+    'drag-item': (
+        light: (
+            background: 'light',
+            box-shadow: (
+                '__draggable': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
+                '.sortable-chosen': #{'0px 5px 25px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
+                ':hover': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha')
+            )
+        ),
+        medium: (
+            background: 'medium',
+            box-shadow: (
+                '__draggable': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
+                '.sortable-chosen': #{'0px 5px 25px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
+                ':hover': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha')
+            )
+        ),
+        dark: (
+            background: 'dark',
+            box-shadow: (
+                '__draggable': #{'0px 5px 15px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha'),
+                '.sortable-chosen': #{'0px 5px 25px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha'),
+                ':hover': #{'0px 5px 15px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha')
+            )
+        )
+    ),
+    'drag-item--selected': (
+        light: (
+            background: 'primary:15:alpha'
+        ),
+        medium: (
+            background: 'primary:15:alpha'
+        ),
+        dark: (
+            background: 'primary:15:alpha'
+        )
+    ),
+    'drag-placeholder': (
+        light: (
+            background: 'black:05:alpha'
+        ),
+        medium: (
+            background: 'black:05:alpha'
+        ),
+        dark: (
+            background: 'white:05:alpha'
+        )
+    ),
+    'drag-placeholder--answers-slot': (
+        light: (
+            box-shadow: inset 0px 1px 2px _base-color('black:25:alpha')
+        ),
+        medium: (
+            background: inset 0px 1px 2px _base-color('black:25:alpha')
+        ),
+        dark: (
+            background: inset 0px 1px 2px _base-color('white:25:alpha')
+        )
+    ),
+    'drag-indicator': (
+        light: (
+            color: 'black:15:alpha'
+        ),
+        medium: (
+            color: 'black:15:alpha'
+        ),
+        dark: (
+            color: 'black:15:alpha'
+        )
+    ),
+
+    /// Fill the Blanks Color Themes
+    'fill-the-blanks-dropdown-button': (
+        light: (
+            color: (
+                'default': 'primary',
+                ':hover': 'light',
+                ':active': 'light',
+                ':active:hover': 'light',
+                ':disabled': 'black:50:alpha',
+                ':disabled:active': 'black:50:alpha',
+                ':disabled:selected': 'black:50:alpha',
+                '.is--selected': 'white'
+            ),
+            background-color: (
+                'default': 'primary:10:alpha',
+                ':hover': 'primary',
+                ':active': 'primary',
+                ':active:hover': 'primary',
+                ':disabled': 'disabled',
+                ':disabled:active': 'disabled',
+                ':disabled:selected': 'disabled-selected',
+                '.is--selected': 'primary'
+
+            )
+        ),
+        medium: (
+            color: (
+                'default': 'primary',
+                ':hover': 'primary',
+                ':active': 'light',
+                ':active:hover': 'light',
+                ':disabled': 'black:50:alpha',
+                ':disabled:active': 'black:50:alpha',
+                ':disabled:selected': 'black:50:alpha',
+                '.is--correct': 'light-font',
+                '.is--incorrect': 'light-font',
+                '.is--selected': 'primary'
+
+            ),
+            background-color: (
+                'default': 'primary:10:alpha',
+                ':hover': 'primary:10:alpha',
+                ':active': 'primary',
+                ':active:hover': 'primary',
+                ':disabled': 'disabled',
+                ':disabled:active': 'disabled',
+                ':disabled:selected': 'disabled-selected',
+                '.is--selected': 'primary:10:alpha'
+            )
+        ),
+        dark: (
+            color: (
+                'default': 'light',
+                ':hover': 'light',
+                ':active': 'primary',
+                ':active:hover': 'primary',
+                ':disabled': 'white:50:alpha',
+                ':disabled:active': 'white:50:alpha',
+                ':disabled:selected': 'white:50:alpha',
+                '.is--selected': 'white'
+            ),
+            background-color: (
+                'default': 'light:15:alpha',
+                ':hover': 'light:15:alpha',
+                ':active': 'light',
+                ':active:hover': 'light',
+                ':disabled': 'light:05:alpha',
+                ':disabled:active': 'light:05:alpha',
+                ':disabled:selected': 'light:05:alpha',
+                '.is--selected': 'light:15:alpha'
+            )
+        )
+    ),
+    'fill-the-blanks-dropdown-list': (
+        light: (
+            background-color: 'dark'
+        ),
+        medium: (
+            background-color: 'dark'
+        ),
+        dark: (
+            background-color: 'light'
+        )
+    ),
+    'fill-the-blanks-dropdown-list-item': (
+        light: (
+            color: (
+                'default': 'dark-font',
+                ':hover': 'primary',
+                ':active': 'primary',
+                ':active:hover': 'primary'
+            ),
+        ),
+        medium: (
+            color: (
+                'default': 'dark-font',
+                ':hover': 'primary',
+                ':active': 'primary',
+                ':active:hover': 'primary'
+            ),
+        ),
+        dark: (
+            color: (
+                'default': 'light-font',
+                ':hover': 'primary',
+                ':active': 'primary',
+                ':active:hover': 'primary'
+            ),
+        )
+    ),
+
+    /// Quiz progress Color Themes
+    'quiz-progress-indicator--inactive': (
+        light: (
+            background: transparent,
+            border-color: 'black:25:alpha'
+        ),
+        medium: (
+            background: transparent,
+            border-color: 'black:25:alpha'
+        ),
+        dark: (
+            background: transparent,
+            border-color: 'white:25:alpha'
+        )
+    ),
+    'quiz-progress-indicator--active': (
+        light: (
+            background: 'primary',
+            border-color: 'primary'
+        ),
+        medium: (
+            background: 'primary',
+            border-color: 'primary'
+        ),
+        dark: (
+            background: 'white',
+            border-color: 'white'
+        )
+    ),
+    'quiz-progress-indicator--success': (
+        light: (
+            background: 'success',
+            border-color: 'success'
+        ),
+        medium: (
+            background: 'success',
+            border-color: 'success'
+        ),
+        dark: (
+            background: 'success',
+            border-color: 'success'
+        )
+    ),
+    'quiz-progress-indicator--failed': (
+        light: (
+            background: 'error',
+            border-color: 'error'
+        ),
+        medium: (
+            background: 'error',
+            border-color: 'error'
+        ),
+        dark: (
+            background: 'error',
+            border-color: 'error'
+        )
+    ),
+
+    /// Quiz Color Themes
+    'quiz-background': (
+        light: (
+            background-color: 'light-interaction-background'
+        ),
+        medium: (
+            background-color: 'medium-interaction-background'
+        ),
+        dark: (
+            background-color: 'dark-interaction-background'
+        )
+    )
 
 ), $color-palettes);
 

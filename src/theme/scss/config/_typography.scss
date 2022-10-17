@@ -16,9 +16,8 @@
 ///
 $responsive-font-types: map-merge((
     'choice-image-label': (
-        'default': ( $default-font-family, 'regular', '12', 14px ),
-        'xs':      ( $default-font-family, 'regular', '14', 16px ),
-        's':       ( $default-font-family, 'regular', '16', 20px )
+        'default': ( $default-font-family, 'regular', '14', 1.2 ),
+        'xl':      ( $default-font-family, 'regular', '16', 1.2 )
     ),
     'value-slider-current-value': (
         'default': ( $default-font-family, 'regular', '42' ),

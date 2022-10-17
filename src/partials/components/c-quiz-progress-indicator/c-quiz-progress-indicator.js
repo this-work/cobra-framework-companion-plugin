@@ -15,49 +15,42 @@ export default {
         maxScore: { type: Number, default: 0 },
         activeIndex: { type: Number, default: 0 },
         labelTemplate: { type: String },
-        interactions: { type: Array },
-        chunkSize: { type: Number, default: 10 }
+        states: { type: Array, required: true },
+        chunkSize: { type: Number, default: 10 },
+        questionLength: { type: Number, required: true }
     },
 
     computed: {
-        states() {
-            if (this.interactions) {
-                return this.interactions.map(interaction => {
-                    if (interaction && interaction.$refs) {
-                        return interaction.$refs.interaction
-                    } else {
-                        return false;
-                    };
-                })
-                    .map((interaction, index) => {
-                        if (!interaction) {
-                            return {
-                                active: index === this.activeIndex,
-                                success: false,
-                                failed: false
-                            };
-                        }
-
-                        return {
-                            active: index === this.activeIndex,
-                            // evaluated: interaction.state === 'EVALUATED',
-                            success: interaction.state === 'EVALUATED' && interaction.evaluationResult,
-                            failed: interaction.state === 'EVALUATED' && !interaction.evaluationResult
-                        };
-                    });
-            } else {
+        indicatorStates() {
+            if (!this.states) {
                 return false;
             }
+
+            const indicatorStates = this.states.map((state, index) => ({
+                active: index === this.activeIndex,
+                success: state.result,
+                failed: !state.result
+            }));
+
+            for (let i = indicatorStates.length; i < this.questionLength; i++) {
+                indicatorStates.push({
+                    active: i === this.activeIndex,
+                    success: false,
+                    failed: false
+                });
+            }
+
+            return indicatorStates;
         },
 
         stateChunks() {
-            return _chunk(this.states, this.chunkSize);
+            return _chunk(this.indicatorStates, this.chunkSize);
         },
 
         labelText() {
             return this.labelTemplate
-                .replace('{score}', this.score)
-                .replace('{maxScore}', this.maxScore);
+                .replace('{score}', this.score.toString())
+                .replace('{maxScore}', this.maxScore.toString());
         }
     },
 
@@ -71,12 +64,10 @@ export default {
         },
 
         stateClasses(state) {
-
             return {
                 [this.element('state')]: true,
                 ...this.mapObjectKeys(state, key => this.elementModifier('state', key))
             };
-
         }
     }
 };

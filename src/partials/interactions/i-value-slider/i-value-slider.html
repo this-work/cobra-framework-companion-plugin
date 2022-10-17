@@ -1,0 +1,50 @@
+<module-content :class="element('interaction-wrapper')">
+
+    <c-grid>
+
+        <component :is="tag" :class="blockClasses">
+
+            <layout layout="l-12">
+
+                <div :class="element('slider-wrapper')">
+
+                    <div :class="element('slider-current')">
+
+                        <span :class="element('slider-current-value')" v-text="value" />
+                        <span :class="element('slider-current-unit')" v-text="unit" />
+
+                    </div>
+
+                    <div :class="element('slider')">
+
+                        <c-input-range v-model="value"
+                                       :min="minValue"
+                                       :max="maxValue"
+                                       :step="step"
+                                       :disabled="resolved"
+                                       @focus.native="focus" />
+
+                        <div :class="element('slider-label')">
+
+                            <span>{{ minLabel }}</span>
+                            <span>{{ maxLabel }}</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </layout>
+
+            <c-button :class="element('button')"
+                      :label="buttonLabelEvaluate"
+                      :disabled="resolved || !evaluationPermitted"
+                      @click.native="evaluate"
+                      @touchend.native.prevent="evaluate" />
+
+        </component>
+
+    </c-grid>
+
+</module-content>

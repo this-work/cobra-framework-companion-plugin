@@ -1,11 +1,11 @@
-<interactions-c-choice-interaction
+<deprecated-interactions-c-choice-interaction
     :points="points"
     :retries="retries"
     #default="{ evaluate, retry, solve, isDisabled, isFeedbackVisible }"
     ref="interaction"
     @change="$emit('change', $event )"
 >
-    <m-interaction
+    <deprecated-m-interaction
         :layout="layout"
         :heading-layout="headingLayout"
         :interaction-layout="interactionLayout"
@@ -31,7 +31,7 @@
                 [spacingClass('padding', 'bottom', spacingPaddingBottom)]: true
             }">
 
-                <interactions-c-choice
+                <deprecated-interactions-c-choice
                     v-for="(answer, choiceIndex) in answers"
                     :key="`true-false-${choiceIndex}`"
                     :correct="answer.correct"
@@ -50,23 +50,23 @@
                         @click.native="scrollTo('feedbacks')"
                     />
 
-                </interactions-c-choice>
+                </deprecated-interactions-c-choice>
 
             </div>
         </template>
 
         <template #feedbacks>
-            <interactions-c-feedback
+            <deprecated-interactions-c-feedback
                 feedback-type="positive"
                 v-if="feedbacks && feedbacks.positive"
                 v-bind="feedbacks.positive"
             />
 
-            <interactions-c-feedback
+            <deprecated-interactions-c-feedback
                 feedback-type="negative"
                 v-if="feedbacks && feedbacks.negative"
                 v-bind="feedbacks.negative"
             />
         </template>
-    </m-interaction>
-</interactions-c-choice-interaction>
+    </deprecated-m-interaction>
+</deprecated-interactions-c-choice-interaction>

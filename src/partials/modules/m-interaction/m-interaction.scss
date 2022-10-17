@@ -6,75 +6,431 @@
 ///
 ////
 
-$m-interactions-audio-container-margin-top: 'xsmall' !default;
-$m-interactions-instruction-margin-top: 'xsmall' !default;
+$m-interaction-breakpoint-desktop: 's' !default;
+$m-interaction-question-spacing: 'xsmall' !default;
+$m-interaction-question-column-size: 5 !default;
+$m-interaction-assets-image-max-height: unitize(330px) !default;
+$m-interaction-assets-image-max-width: unitize(500px) !default;
+
+$m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
 
 .m-interaction {
+
     // #region [Block]
     $module: &;
-    align-content: center;
-    padding-bottom: 0;
-    overflow: hidden; // QUICKFIX, BACKGROUMD SHIFTED
+    overflow: hidden;
     // #endregion
 
     // #region [Element]
 
-    &__audio-container {
-        @include responsive-spacing($m-interactions-audio-container-margin-top, margin-top);
+    // <editor-fold desc="old region Element">
+    &__question-wrapper {
+        > .c-grid {
+            height: 100%;
+        }
     }
 
-    &__instruction {
-        @include responsive-spacing($m-interactions-instruction-margin-top, margin-top);
-    }
+    &__question {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        z-index: zindex(500);
+        //@include grid-cell-size(12);
+        //@include grid-cell-position(1, 1);
 
-    @at-root .module#{&} {
-
-        #{$module}__question {
-            @include grid-cell-row-start(1);
+        .c-heading {
+            width: 100%;
+            text-align: center;
         }
 
-        #{$module}__interaction {
-            @include grid-cell-row-start(2);
+    }
 
-            padding: spacing('44') 0 0;
-            @include above('l') {
-                padding: spacing('71') 0 0;
+    &__question-background {
+        z-index: zindex(400);
+        //height: 100%;     // @CW - brauch der Background das noch ?!?!?!?
+        @include color-theme('interaction-question-background');
+        //@include grid-cell-size(12);
+        //@include grid-cell-position(1, 1);
+        //@include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+    }
+
+    &__assets {
+        @include responsive-spacing($m-interaction-question-spacing, margin-top margin-bottom);
+
+        &,
+        .component-loader {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            & > * {
+                flex: 1 0;
+
+                & ~ * {
+                    @include responsive-spacing($m-interaction-question-spacing, margin-top);
+                }
             }
         }
 
-        #{$module}__answer {
-            @include grid-cell-row-start(3);
-
-            @include color-theme('feedback-background');
+        .c-image {
+            width: 100%;
+            max-height: $m-interaction-assets-image-max-height;
+            max-width: $m-interaction-assets-image-max-width;
         }
 
-        .module__decoration {
-            @include grid-cell-row-start(1);
-            @include grid-cell-height(3);
-            @include color-theme('background');
-            z-index: -2;
-        }
+    }
 
-        .module__background--viewport {
-            @include grid-cell-height(2);
-        }
+    &__progress {
+        @include responsive-spacing($m-interaction-question-spacing, margin-bottom);
+    }
 
-        .module__background--page {
-            @include grid-cell-height(2);
-        }
+    //&__interaction-wrapper {
+    //    display: flex;
+    //    align-items: stretch;
+    //    z-index: zindex(700);
+    //    //@include grid-cell-size(12);
+    //    //@include grid-cell-position(1, 2);
+    //    ////@include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+    //
+    //    & > * {
+    //        width: 100%;
+    //    }
+    //}
 
-        .module__background--content {
-            @include grid-cell-height(2);
-        }
+    &__interaction-background {
+        z-index: zindex(400);
+        //height: 100%;         // @CW - brauch der Background das noch ?!?!?!?
+        background-position: center center;
+        background-size: cover;
+        @include color-theme('interaction-background');
+        //@include grid-cell-size(12);
+        //@include grid-cell-position(1, 2);
+        //@include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+    }
 
-        .module__background--page + .module__decoration {
-            @include grid-cell-position(2,3);
-            @include grid-cell-size(3);
+    &__interaction {
+        align-self: center;
+    }
+
+
+    &__feedback {
+        display: flex;
+        align-items: center;
+        z-index: zindex(800);
+
+        & > * {
+            flex-grow: 1;
         }
     }
+
+    &__feedback-wrapper {
+        display: flex;
+        align-items: stretch;
+        z-index: zindex(900);
+        //@include grid-cell-size(12);
+        //@include grid-cell-position(1, 2);
+
+
+        overflow: hidden;
+
+
+
+        & > * {
+            width: 100%;
+        }
+
+    }
+
+
+    &__feedback-background {
+        //height: 100%;           // @CW - brauch der Background das noch ?!?!?!?
+        z-index: zindex(800);
+        @include color-theme('interaction-background');
+        //@include grid-cell-size(12);
+        //@include grid-cell-position(1, 2);
+        //@include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+
+        pointer-events: none;
+        opacity: 0;
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="new region Element">
+    &__question {
+        @include grid-cell-size(12);
+    }
+
+    &__question-background {
+        @include grid-cell-size(12);
+        @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+    }
+
+    &__interaction,
+    &__feedback {
+        @include grid-cell-size(12);
+    }
+
+    &__interaction-background,
+    &__feedback-background {
+        @include grid-cell-size(12);
+        @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'below');
+    }
+
+    @at-root .module#{$module} {
+
+        #{$module} {
+
+            //&__interaction-wrapper,
+            &__interaction,
+
+            &__interaction-background-wrapper,
+
+            //&__feedback-wrapper,
+            &__feedback,
+
+            &__feedback-background-wrapper {
+                @include grid-cell-row-start(2);
+            }
+        }
+    }
+
+    &__background-grid {
+        height: 100%;
+    }
+    // </editor-fold>
+
     // #endregion
 
     // #region [Modifier]
+    // <editor-fold desc="old region Modifier">
+    &--type-default {
+
+        #{$module} {
+
+            &__question {
+
+                @include above($m-interaction-breakpoint-desktop) {
+                    justify-content: flex-start;
+                    align-content: center;
+                    //@include grid-cell-size($m-interaction-question-column-size - 1);
+                    //@include grid-cell-position(1, 1);
+
+                    .c-heading {
+                        text-align: left;
+                    }
+                }
+            }
+
+            &__question-background {
+                //@include grid-cell-offset('start', 'page', $m-interaction-breakpoint-desktop, 'above');
+                //
+                //@include above($m-interaction-breakpoint-desktop) {
+                //    @include grid-cell-size($m-interaction-question-column-size);
+                //    @include grid-cell-position(1, 1);
+                //}
+            }
+
+            &__assets {
+
+                @include above($m-interaction-breakpoint-desktop) {
+                    align-items: flex-start;
+
+                    .component-loader {
+                        align-items: flex-start;
+                    }
+                }
+            }
+
+            &__interaction-wrapper,
+            &__feedback-wrapper {
+                //@include grid-cell-offset('end', 'page', $m-interaction-breakpoint-desktop, 'above');
+                //
+                //@include above($m-interaction-breakpoint-desktop) {
+                //    @include grid-cell-size($m-interaction-interaction-column-size);
+                //    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                //    @include grid-cell-push-gap('left', $m-interaction-interaction-column-size);
+                //}
+            }
+
+            &__interaction-background,
+            &__feedback-background {
+                //@include grid-cell-offset('end', 'page', $m-interaction-breakpoint-desktop, 'above');
+                //
+                //@include above($m-interaction-breakpoint-desktop) {
+                //    @include grid-cell-size($m-interaction-interaction-column-size);
+                //    @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                //    @include grid-cell-push-gap('left', $m-interaction-interaction-column-size);
+                //}
+            }
+
+            //&__background--viewport {
+            //    &[class*=question-] {
+            //        @include grid-cell-offset('start', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+            //    }
+            //    &[class*=interaction-] {
+            //        @include grid-cell-offset('end', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+            //    }
+            //
+            //    &[class*=feedback-] {
+            //        @include grid-cell-offset('end', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+            //    }
+            //}
+        }
+
+    }
+
+    &--type-stacked {
+
+        #{$module} {
+
+            &__question-background,
+            &__interaction-background,
+            &__feedback-background {
+                @include grid-cell-offset('complete', 'page', $m-interaction-breakpoint-desktop, 'above');
+            }
+
+            &__background--viewport {
+                @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+            }
+
+        }
+
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="new region Modifier">
+    @at-root .module#{$module} {
+
+        &--type-default {
+
+            #{$module} {
+
+                &__question {
+                    @include above($m-interaction-breakpoint-desktop) {
+                        @include grid-cell-size($m-interaction-question-column-size - 1);
+                        @include grid-cell-position(1, 1);
+                    }
+                }
+
+                &__question-background {
+                    @include grid-cell-offset('start', 'page', $m-interaction-breakpoint-desktop, 'above');
+
+                    @include above($m-interaction-breakpoint-desktop) {
+                        @include grid-cell-size($m-interaction-question-column-size);
+                        @include grid-cell-position(1, 1);
+                    }
+                }
+
+                //&__interaction,
+                //&__feedback {
+                //    @include grid-cell-offset('end', 'page', $m-interaction-breakpoint-desktop, 'above');
+                //
+                //    @include above($m-interaction-breakpoint-desktop) {
+                //        @include grid-cell-size($m-interaction-interaction-column-size);
+                //        @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                //        @include grid-cell-push-gap('left', $m-interaction-interaction-column-size);
+                //    }
+                //}
+
+                &__interaction-background,
+                &__feedback-background {
+                    @include grid-cell-offset('end', 'page', $m-interaction-breakpoint-desktop, 'above');
+
+                    @include above($m-interaction-breakpoint-desktop) {
+                        @include grid-cell-size($m-interaction-interaction-column-size);
+                        @include grid-cell-position($m-interaction-question-column-size + 1, 1);
+                        @include grid-cell-push-gap('left', $m-interaction-interaction-column-size);
+                    }
+                }
+
+                ////&__interaction-wrapper,
+                //&__interaction-background-wrapper,
+                ////&__feedback-wrapper,
+                //&__feedback-background-wrapper {
+
+                //&__interaction-wrapper,
+                &__interaction,
+
+                &__interaction-background-wrapper,
+
+                    //&__feedback-wrapper,
+                &__feedback,
+
+                &__feedback-background-wrapper {
+                    @include above($m-interaction-breakpoint-desktop) {
+                        @include grid-cell-row-start(1);
+                    }
+                }
+
+
+                &__background--viewport {
+                    &[class*=question-] {
+                        @include grid-cell-offset('start', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                    }
+                    &[class*=interaction-] {
+                        @include grid-cell-offset('end', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                    }
+
+                    &[class*=feedback-] {
+                        @include grid-cell-offset('end', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                    }
+                }
+            }
+        }
+
+        &--type-stacked {
+
+            #{$module} {
+
+                //&__background--viewport {
+                //    &[class*=question-],
+                //    &[class*=interaction-],
+                //    &[class*=feedback-] {
+                //        @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                //    }
+                //}
+            }
+        }
+    }
+
+    &--layoutArea-viewport {
+
+        &#{$module}--type-default {
+
+            #{$module} {
+
+                &__question-background {
+                    @include grid-cell-offset('start', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                }
+
+                &__interaction-background,
+                &__feedback-background {
+                    @include grid-cell-offset('end', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                }
+            }
+        }
+
+        &#{$module}--type-stacked {
+
+            #{$module} {
+
+                &__question-background {
+                    @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                }
+
+                &__interaction-background,
+                &__feedback-background {
+                    @include grid-cell-offset('complete', 'viewport', $m-interaction-breakpoint-desktop, 'above');
+                }
+            }
+        }
+    }
+    // </editor-fold>
+
+
     // #endregion
 
     // #region [Overwrites]

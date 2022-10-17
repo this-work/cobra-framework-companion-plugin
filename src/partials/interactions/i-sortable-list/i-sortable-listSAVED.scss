@@ -1,0 +1,154 @@
+////
+///
+/// i-sortable-list
+///
+/// @group Interactions
+///
+////
+
+$i-sortable-list-breakpoint-desktop: 's' !default;
+$i-sortable-list-button-responsive-spacing: 'small' !default;
+$i-sortable-list-list-wrapper-10-columns-breakpoint: 'xs' !default;
+$i-sortable-list-list-wrapper-8-columns-breakpoint--type-stacked: 'm' !default;
+$i-sortable-list-spacing-map--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
+$i-sortable-list-text-margin-bottom: 'xsmall' !default;
+$i-sortable-list-transition-duration: 0.5s !default;
+
+.i-sortable-list {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    &__list {
+        padding: 0;
+    }
+
+    &__list-wrapper {
+        width: 100%;
+        @include grid-cell-size(12);
+
+        @include above($i-sortable-list-list-wrapper-10-columns-breakpoint) {
+            @include grid-cell-size(10);
+            @include grid-cell-position(2, 1);
+        }
+    }
+
+    &__item {
+        display: flex;
+        margin-bottom: spacing('10');
+        padding: spacing('6');
+        transition: background $i-sortable-list-transition-duration;
+        border-radius: 5px;
+        @include color-theme('drag-item');
+
+        &.sortable-chosen {
+            opacity: 0.8;
+        }
+    }
+
+    &__item-handle {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: rem(30px);
+        margin-right: spacing('10');
+        cursor: grab;
+        @include color-theme('drag-indicator')
+    }
+
+    &__functions {
+        margin-top: spacing('20');
+    }
+
+    &__button {
+        @include responsive-spacing($i-sortable-list-button-responsive-spacing, margin-top);
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &#{$module}--readonly {
+
+        #{$module}__item-handle {
+            cursor: not-allowed;
+        }
+    }
+
+    &__item {
+
+        &--selected {
+            visibility: hidden;
+            box-shadow: unset !important;
+        }
+
+        &.is--correct {
+            background: color('success');
+            cursor: default;
+
+            &:hover {
+                background: color('success');
+            }
+        }
+
+        &.is--incorrect {
+            background: color('error');
+            cursor: default;
+
+            &:hover {
+                background: color('error');
+            }
+        }
+    }
+
+    &__item-label--left {
+        margin-right: spacing('10');
+    }
+
+    &__item-handle--right {
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    @at-root.m-interaction {
+
+        &--type-stacked {
+
+            #{$module}__list-wrapper {
+
+                @include above($i-sortable-list-list-wrapper-8-columns-breakpoint--type-stacked) {
+                    @include grid-cell-size(8);
+                    @include grid-cell-position(3, 1);
+                }
+            }
+        }
+
+        &--type-default {
+
+            #{$module}__list-wrapper {
+
+                @include above($i-sortable-list-breakpoint-desktop) {
+                    @include grid-cell-size(12);
+                    @include grid-cell-position(1, 1);
+                }
+            }
+
+            #{$module} {
+                @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $i-sortable-list-spacing-map--type-default);
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(i-sortable-list) {
+        @include i-sortable-list;
+    }
+    // #endregion
+
+}

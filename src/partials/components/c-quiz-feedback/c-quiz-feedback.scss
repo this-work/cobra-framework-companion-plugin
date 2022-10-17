@@ -1,0 +1,107 @@
+////
+///
+/// c-quiz-feedback
+///
+/// @group Components
+///
+////
+
+$c-quiz-feedback-breakpoint-desktop: 's' !default;
+$c-quiz-feedback-icon-size: unitize(140px) !default;
+$c-quiz-feedback-icon-margin-y: spacing('44') !default;
+$c-quiz-feedback-spacing: 'small' !default;
+$c-quiz-feedback-text-responsive-font: 'copytext--big' !default;
+
+.c-quiz-feedback {
+    // #region [Block]
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    // #endregion
+
+    // #region [Element]
+    > * + * {
+        @include responsive-spacing($c-quiz-feedback-spacing, margin-top);
+    }
+
+    &__heading {
+        @include below($c-quiz-feedback-breakpoint-desktop) {
+            margin-top: spacing('16');
+        }
+    }
+
+    &__text {
+        text-align: center;
+        max-width: 100vw;
+        @include responsive-font($c-quiz-feedback-text-responsive-font);
+    }
+
+    &__progress-indicator {
+        width: 100%;
+    }
+
+    &__icon {
+        $c-quiz-feedback-icon-default-size: unitize(44px) !default;
+
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: $c-quiz-feedback-icon-default-size;
+        height: $c-quiz-feedback-icon-default-size;
+        padding: spacing('10');
+        border-radius: 50%;
+        scale: calc($c-quiz-feedback-icon-default-size / $c-quiz-feedback-icon-size * 10);
+
+        margin-top: $c-quiz-feedback-icon-margin-y;
+        margin-bottom: $c-quiz-feedback-icon-margin-y;
+
+        svg {
+            display: block;
+            width: unitize(24px);
+            height:unitize(24px);
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &__icon {
+
+        &--correct {
+            background: color('success');
+            color: color('white');
+            animation: jump .3s linear 300ms alternate;
+
+            @keyframes jump {
+                0% { transform: translate3d(0, 0, 0); }
+                40% { transform: translate3d(0, -20px, 0); }
+                70% { transform: translate3d(0, 0, 0); }
+                85% { transform: translate3d(0, -10px, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+            }
+        }
+
+        &--wrong {
+            background: color('error');
+            color: color('white');
+            animation: shake .3s linear 300ms alternate;
+
+            @keyframes shake {
+                0% { transform: translate3d(0, 0, 0); }
+                16.6666% { transform: translate3d(10px, 0, 0); }
+                50% { transform: translate3d(-10px, 0, 0); }
+                83.333% { transform: translate3d(10px, 0, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+            }
+        }
+
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-quiz-feedback) {
+        @include c-quiz-feedback;
+    }
+    // #endregion
+}
+

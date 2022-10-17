@@ -1,0 +1,157 @@
+<component :is="`module-${'page'}`" :class="element('interaction-wrapper')">
+
+    <module-content>
+
+        <c-grid>
+
+            <component :is="tag" :class="blockClasses">
+
+                <div :class="[element('questions-wrapper')]" ref="questionsWrapper">
+
+                    <layout layout="l-12" :class="element('layout')">
+
+                        <div :class="[element('questions-wrapper-question')]">
+
+                            <draggable
+                                v-for="(questionList, listIndex) in _shuffledItems.questions"
+                                :key="'listIndex-question-' + listIndex"
+                                v-bind="draggableOptions"
+                                :class="element('list')"
+                                :group="{ name: 'answers', put: false }"
+                                sort="false"
+                                :list="questionList.question"
+                                :disabled="true">
+
+                                <div
+                                    v-for="(question, index) in questionList.question"
+                                    :key="'question-' + index"
+                                    :class="[element('item'), elementModifier('item','question'), (question.image) ? elementModifier('item', 'with-image') : '']">
+
+                                    <div :class="[element('item-content')]">
+
+                                        <c-image
+                                            :class="element('item-image')"
+                                            v-if="question.image"
+                                            v-bind="configurateImages(question.image)"
+                                        />
+
+                                        <c-text v-if="question.text" :class="element('label')" :text="question.text"/>
+
+                                    </div>
+
+                                </div>
+
+                            </draggable>
+
+                        </div>
+
+                        <div :class="element('questions-wrapper-answer')">
+
+                            <draggable
+                                v-for="(selectedAnswerList, listIndex) in _shuffledItems.selectedAnswers"
+                                :key="'listIndex-answer-' + listIndex"
+                                :class="element('list')"
+                                v-bind="draggableOptions"
+                                :group="{ name: 'answers', put: (to) => to.el.children.length < 2 }"
+                                :handle="`.${$options.name}__item-handle`"
+                                :draggable="`.${element('draggable')}`"
+                                sort="false"
+                                :list="selectedAnswerList.answer"
+                                :animation="0"
+                                :disabled="resolved"
+                                @change="onChange"
+                                @start="onStart"
+                                @end="onEnd">
+
+                                <div
+                                    v-for="(answer, index) in selectedAnswerList.answer"
+                                    :key="'index-answer-' + index"
+                                    :class="[element('item'), elementModifier('item','answer'), element(answer.type), (answer.image) ? elementModifier('item', 'with-image') : '']">
+
+                                <span :class="element('item-handle')">
+                                    <c-icon name="drag-indicator"/>
+                                </span>
+
+                                    <div :class="element('item-content')">
+
+                                        <c-image
+                                            v-if="answer.image"
+                                            :class="element('item-image')"
+                                            v-bind="configurateImages(answer.image)"
+                                        />
+
+                                        <c-text v-if="answer.text" :class="element('label')" :text="answer.text"/>
+
+                                    </div>
+
+                                </div>
+
+                            </draggable>
+
+                        </div>
+
+                        <div :class="[element('questions-wrapper-question'), element('possible-answer')]">
+
+                            <draggable
+                                v-for="(answer, index) in _shuffledItems.answers"
+                                :key="'a' + index"
+                                :class="element('answer')"
+                                :handle="`.${$options.name}__item-handle`"
+                                :list="answer.answer"
+                                :group="{ name: 'answers', put: to => to.el.children.length < 2 }"
+                                v-bind="draggableOptions"
+                                :animation="0"
+                                :draggable="`.${element('draggable')}`"
+                                @start="onStart"
+                                @end="onEnd">
+
+                                <div
+                                    v-for="(item, itemIndex) in answer.answer"
+                                    :key="'itemIndex-' + itemIndex"
+                                    :class="[element('item'), elementModifier('item','answer'), element(item.type), (item.image) ? elementModifier('item', 'with-image') : '']">
+
+                                <span :class="element('item-handle')">
+                                    <c-icon name="drag-indicator"/>
+                                </span>
+
+                                    <div :class="element('item-content')">
+
+                                        <c-image
+                                            v-if="item.image"
+                                            :class="element('item-image')"
+                                            v-bind="configurateImages(item.image)"
+                                        />
+
+                                        <c-text v-if="item.text" :class="element('label')" :text="item.text"/>
+
+                                    </div>
+
+                                </div>
+
+                            </draggable>
+
+                        </div>
+
+                    </layout>
+
+                </div>
+
+                <div :class="element('button-wrapper')">
+
+                    <c-button
+                        :class="element('button')"
+                        :label="buttonLabelEvaluate"
+                        :disabled="resolved || !evaluationPermitted"
+                        @click.native="evaluate"
+                        @touchend.native.prevent="evaluate"
+                    />
+
+                </div>
+
+            </component>
+
+        </c-grid>
+
+    </module-content>
+
+</component>

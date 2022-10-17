@@ -1,4 +1,4 @@
-<interactions-c-range-interaction
+<deprecated-interactions-c-range-interaction
     :points="points"
     :retries="retries"
     :min-value="minValue"
@@ -17,7 +17,7 @@
     @change="$emit('change', $event )"
 >
 
-    <m-interaction
+    <deprecated-m-interaction
         :layout="layout"
         :heading-layout="headingLayout"
         :interaction-layout="interactionLayout"
@@ -76,13 +76,13 @@
 
         <template #feedbacks="{ scrollTo }">
 
-            <interactions-c-feedback
+            <deprecated-interactions-c-feedback
                 feedback-type="positive"
                 v-if="feedbacks && feedbacks.positive"
                 v-bind="feedbacks.positive"
             />
 
-            <interactions-c-feedback
+            <deprecated-interactions-c-feedback
                 feedback-type="negative"
                 v-if="feedbacks && feedbacks.negative"
                 v-bind="feedbacks.negative"
@@ -101,9 +101,9 @@
                     @click.native="solve();"
                     @touchend.native.prevent="solve();"
                 />
-            </interactions-c-feedback>
+            </deprecated-interactions-c-feedback>
 
-            <interactions-c-feedback
+            <deprecated-interactions-c-feedback
                 feedback-type="solution"
                 v-if="feedbacks && feedbacks.solution"
                 v-bind="feedbacks.solution"
@@ -111,6 +111,6 @@
 
         </template>
 
-    </m-interaction>
+    </deprecated-m-interaction>
 
-</interactions-c-range-interaction>
+</deprecated-interactions-c-range-interaction>
