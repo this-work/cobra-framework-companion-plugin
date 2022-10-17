@@ -3,7 +3,7 @@
  */
 
 import { common, background, theme } from '@this/cobra-framework/src/plugins/mixins';
-import { cloneDeep, shuffleArray } from '@this/cobra-framework/src/plugins/vanilla/helperFunctions';
+import { cloneDeep, shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
 import { spacingClass, spacingProps } from '@this/cobra-framework/src/plugins/mixins/spacing';
 
 export default {

@@ -4,7 +4,7 @@
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import interaction from '../../../plugins/mixins/interaction';
-import { shuffleArray } from '@this/cobra-framework/src/plugins/vanilla/helperFunctions';
+import { shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
 
 export default {
 

@@ -41,6 +41,7 @@ export default function() {
      */
     const plugins = {
         'tags-input': { mode: 'client' },
+        'vuedraggable': { mode: 'client' },
     };
 
 

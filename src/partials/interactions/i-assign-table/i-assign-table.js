@@ -7,8 +7,8 @@ import interaction from '../../../plugins/mixins/interaction';
 import {
     cloneDeep,
     shuffleArray
-} from '@this/cobra-framework/src/plugins/vanilla/helperFunctions';
-import { disableCursorGrabbing, enableCursorGrabbing } from "@this/cobra-framework/src/plugins/vanilla/cursor-grabbing";
+} from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
+import { disableCursorGrabbing, enableCursorGrabbing } from "@this/cobra-framework-companion-plugin/src/plugins/vanilla/cursor-grabbing";
 
 export default {
 
