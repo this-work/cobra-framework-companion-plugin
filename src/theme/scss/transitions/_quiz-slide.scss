@@ -1,0 +1,35 @@
+///
+/// Quiz slide transition classes
+///
+/// @group Transitions
+///
+
+.quiz-slide--right {
+    &-enter-active, &-leave-active {
+        transition: transform 350ms;
+    }
+    &-leave, &-enter-to {
+        transform: translateX(0);
+    }
+    &-leave-to {
+        transform: translateX(100%);
+    }
+    &-enter {
+        transform: translateX(-100%);
+    }
+}
+
+.quiz-slide--left {
+    &-enter-active,  &-leave-active {
+        transition: transform 350ms;
+    }
+    &-leave, &-enter-to {
+        transform: translateX(0);
+    }
+    &-leave-to {
+        transform: translateX(-100%);
+    }
+    &-enter {
+        transform: translateX(100%);
+    }
+}
