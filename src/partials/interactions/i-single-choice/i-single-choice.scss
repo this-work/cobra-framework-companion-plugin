@@ -54,20 +54,15 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 .i-single-choice {
     // #region [Block]
     $module: &;
-    //@include responsive-spacing(false, padding-left padding-right, $i-single-choice-padding);
+    pointer-events: auto;
     @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
 
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
     &--without-images {
@@ -108,6 +103,18 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
             &:nth-child(2n) {
                 margin-right: 0;
+            }
+
+            &:nth-child(2n) {
+                margin-right: 0;
+            }
+
+            &:nth-child(n+3) {
+                margin-top: $i-single-choice-choice-spacing--mobile;
+
+                @include above($i-single-choice-breakpoint-desktop) {
+                    margin-top: $i-single-choice-choice-spacing--desktop;
+                }
             }
         }
 

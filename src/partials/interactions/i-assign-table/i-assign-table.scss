@@ -137,22 +137,19 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
     // #region [Block]
     $module: &;
+    pointer-events: auto;
     @include grid-cell-size(12);
     @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'below');  // @CW - NEU
     // #endregion
 
     // #region [Element]
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
     &__label {
+        user-select: none;
         @include responsive-font($i-assign-table-label-responsive-font);
 
         & * {
@@ -179,13 +176,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
             }
         }
 
-        &-image {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
+        &-image.c-image {
             width: 100%;
         }
 
@@ -336,9 +327,20 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
     // #region [Modifier]
     &#{$module}--readonly {
 
-        #{$module}__item-handle {
-            cursor: not-allowed;
+        #{$module} {
+
+            &__item {
+                box-shadow: none !important;
+            }
+
+            &__item-handle {
+                cursor: not-allowed;
+            }
         }
+
+        //#{$module}__item-handle {
+        //    cursor: not-allowed;
+        //}
     }
 
     &__item#{$module}__item--selected {
@@ -398,9 +400,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
         &--type-stacked {
 
             #{$module} {
-                //&__interaction-wrapper {
-                    @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'above');  // @CW - NEU
-                //}
+                @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'above');
             }
 
             #{$module}__questions-wrapper-question {
@@ -474,7 +474,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
             #{$module} {
                 &__interaction-wrapper {
-                    @include grid-cell-offset('complete', 'page', $i-assign-table-breakpoint-desktop, 'above');  // @CW - NEU
+                    //@include grid-cell-offset('end', 'page', $i-assign-table-breakpoint-desktop, 'above');
                 }
             }
 

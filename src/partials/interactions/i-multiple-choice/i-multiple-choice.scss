@@ -56,19 +56,15 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
 .i-multiple-choice {
     // #region [Block]
     $module: &;
+    pointer-events: auto;
     @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
 
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
     &--without-images {
@@ -110,6 +106,14 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
 
             &:nth-child(2n) {
                 margin-right: 0;
+            }
+
+            &:nth-child(n+3) {
+                margin-top: $i-multiple-choice-choice-spacing--mobile;
+
+                @include above($i-multiple-choice-breakpoint-desktop) {
+                    margin-top: $i-multiple-choice-choice-spacing--desktop;
+                }
             }
         }
 

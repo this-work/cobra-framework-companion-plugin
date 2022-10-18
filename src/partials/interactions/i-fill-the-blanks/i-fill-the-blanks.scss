@@ -26,6 +26,7 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
 .i-fill-the-blanks {
     // #region [Block]
     $module: &;
+    pointer-events: auto;
     @include grid-cell-size(12);
     // #endregion
 
@@ -33,13 +34,8 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
 
 
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
 

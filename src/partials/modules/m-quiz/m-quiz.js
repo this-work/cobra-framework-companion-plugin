@@ -21,22 +21,35 @@ export default {
     props: {
         tag: { type: String, default: 'div' },
         id: { type: [ Number, String ], required: true },
-        limit: { type: Number, default: Number.POSITIVE_INFINITY, validator(value) { return value >= 0; } },
-        passThreshold: { type: Number, default: 0.75 },
         heading: Object,
         feedbacks: Object,
-        interactions: Array,        // questions: Array,
-        backgroundPosition: {   // layoutArea: {
+        interactions: Array,
+        backgroundPosition: {
             type: String,
             default: 'page'
         },
-        mode: {     // 'default' or 'stacked'
+        mode: { // 'default' or 'stacked'
             type: String,
             default: 'default'
         },
+        text: String,
         scroll: { type: Boolean, default: true },
         keyvisual: Object,
-        ...spacingProps
+        ...spacingProps,
+
+        props: { type: Object, default: () => ({}) },
+        randomize: {
+            type: Boolean,
+            default: function () {return this.props.randomize || true }
+        },
+        limit: {
+            type: Number,
+            default: function() { return this.props.limit || Number.POSITIVE_INFINITY }
+        },
+        passThreshold: {
+            type: Number,
+            default: function () { return this.props.passThreshold || 0.75 }
+        },
     },
 
     data() {
@@ -65,7 +78,6 @@ export default {
 
         blockClasses() {
             return [
-                // { [`${this.block}--layout-area-${this.backgroundPosition}`]: true },
                 spacingClass('margin', 'top', this.spacingMarginTop),
                 spacingClass('margin', 'bottom', this.spacingMarginBottom)
             ];
@@ -78,10 +90,6 @@ export default {
             ];
         },
 
-        backgroundSizeClass() {
-            return this.elementModifier('background', this.backgroundPosition);
-        },
-
         transitionName() {
             return this.status === 'start' ? 'slide--right' : 'slide--left';
         },
@@ -91,45 +99,7 @@ export default {
         },
 
         shuffeledQuestions() {
-            return shuffleArray(this.interactions);
-        },
-
-        startProps() {
-            const test = {
-
-                heading: {
-                    ...this.heading,
-                    subline: this.quizDescription(),
-                    headlineTag: 'span',
-                    headlineType: 'h1',
-                    alignment: 'center'
-                },
-                theme: this.theme,
-                mode: this.mode,
-                backgroundPosition: this.backgroundPosition, // this.layoutArea,
-                backgroundImage: this.backgroundImage,
-                ...this.spacingObj
-            };
-
-            return test;
-        },
-
-        // questionProps() {
-        //     return {
-        //         isQuiz: true,
-        //         ...this.shuffeledQuestions[this.selectedQuestionIndex].data.props,
-        //         mode: this.mode,
-        //         backgroundPosition: this.backgroundPosition
-        //
-        //         // theme: this.theme,
-        //         // interactionLayout: this.interactionLayout,
-        //         // layoutArea: this.layoutArea,
-        //         // ...this.spacingObj
-        //     };
-        // },
-
-        buttonLabelStartQuiz() {
-            return this.$t('m-quiz--button-start-quiz');
+            return shuffleArray(this.interactions).slice(0, this.limit);
         },
 
         questionSlots() {

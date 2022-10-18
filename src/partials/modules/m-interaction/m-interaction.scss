@@ -83,8 +83,16 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
     }
 
-    &__progress {
-        @include responsive-spacing($m-interaction-question-spacing, margin-bottom);
+    @at-root #{$module} {
+
+        #{$module}__actions {
+            @include responsive-spacing($m-interaction-question-spacing, margin-top margin-bottom);
+        }
+
+        #{$module}__progress {
+            @include responsive-spacing($m-interaction-question-spacing, margin-bottom);
+        }
+
     }
 
     //&__interaction-wrapper {
@@ -117,13 +125,7 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
 
     &__feedback {
-        display: flex;
-        align-items: center;
         z-index: zindex(800);
-
-        & > * {
-            flex-grow: 1;
-        }
     }
 
     &__feedback-wrapper {

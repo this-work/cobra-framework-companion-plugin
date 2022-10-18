@@ -9,6 +9,8 @@
 $i-true-false-breakpoint-desktop: 's' !default;
 $i-true-false-button-margin: spacing('27') !default;
 
+$i-true-false-min-height: unitize(300px) !default;
+
 $i-true-false-padding--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
 
 
@@ -28,20 +30,15 @@ $i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interactio
     align-items: center;
     flex-wrap: wrap;
     text-align: center;
-
+    pointer-events: auto;
+    min-height: $i-true-false-min-height;
     @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
-
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
 

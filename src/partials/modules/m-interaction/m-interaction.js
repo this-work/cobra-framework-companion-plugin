@@ -25,10 +25,6 @@ export default {
         },
         feedbacks: Object,
         heading: Object,
-        // layoutArea: {
-        //     type: String,
-        //     default: 'page'
-        // },
 
         backgroundPosition: {   // @CW - layoutArea oder backgroundPosition ?!?!?!? (erstmal per computed umgesetzt) !!!!!!!!
             type: String,
@@ -81,6 +77,7 @@ export default {
             return {
                 ...this.heading,
                 headline: this.heading?.headline?.replaceAll(/<[^>]*p>/g, ''),
+                headlineType: 'h3',
                 alignment: 'custom'
             };
         },

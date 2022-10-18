@@ -4,15 +4,14 @@
         style="position: relative">
 
     <transition-group :name="transitionNameQuiz" :class="element('transition')">
-<!--    <transition-replace-slide :direction="status === 'start' ? 'right' : 'left'" >-->
-
-<!--        <template >-->
 
             <m-interaction
                 v-show="status === 'start'"
                 key="start"
-                v-bind="startProps"
-            >
+                v-bind="$props"
+                :heading="{ ...this.heading, alignment: 'center' }"
+                spacingMarginTop="none"
+                spacingMarginBottom="none">
 
                 <template #default>
 
@@ -22,7 +21,7 @@
 
                             <c-grid :class="element('image-grid')">
 
-                                <div :class="[element('image-container'), backgroundSizeClass]">
+                                <div :class="[element('image-container'), elementModifier('background', backgroundPosition)]">
 
                                     <c-image  v-bind="keyvisual"
                                               :inline="true"
@@ -39,17 +38,14 @@
 
                 </template>
 
-                <template #assets>
+                <template #actions>
                     <c-button :class="element('button')"
-                              :label="buttonLabelStartQuiz"
+                              :label="$t('m-quiz--button-start-quiz')"
                               icon="play-circle-outline"
                               @click.native="startQuiz" />
                 </template>
+
             </m-interaction>
-
-<!--        </template>-->
-
-<!--        <template>-->
 
             <template v-for="(question, index) in shuffeledQuestions">
 
@@ -75,10 +71,6 @@
 
             </template>
 
-<!--        </template>-->
-
-<!--        <template >-->
-
             <component v-show="status === 'end'" :is="`module-${backgroundPosition}`" key="end" :class="element('end-wrapper')">
 
                 <module-content >
@@ -94,9 +86,6 @@
 
             </component>
 
-<!--        </template>-->
-
-<!--    </transition-replace-slide>-->
     </transition-group>
 
 </module>

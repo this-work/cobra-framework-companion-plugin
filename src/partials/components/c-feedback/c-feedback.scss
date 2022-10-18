@@ -36,12 +36,8 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
     justify-content: center;
     align-items: center;
     height: 100%;
-    //padding: 0;
     pointer-events: auto;
-
-    //@include color-theme('feedback-background');
-
-    @include grid-cell-size(12);        // @CW - NEU
+    @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
@@ -59,6 +55,10 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
     &__feedback-wrapper {
         overflow: hidden;
         pointer-events: none;
+    }
+
+    &__feedback-grid {
+        height: 100%;
     }
 
     &__icon-heading {

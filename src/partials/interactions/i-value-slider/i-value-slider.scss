@@ -20,18 +20,14 @@ $i-value-slider-interaction-column-size: _get-grid-data('columns') - $m-interact
     $module: &;
     display: flex;
     flex-flow: column nowrap;
+    pointer-events: auto;
     @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
     &__slider {

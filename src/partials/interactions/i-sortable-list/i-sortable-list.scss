@@ -21,18 +21,14 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
 .i-sortable-list {
     // #region [Block]
     $module: &;
+    pointer-events: auto;
     @include grid-cell-size(12);
     // #endregion
 
     // #region [Element]
     &__interaction-wrapper {
-        //display: flex;
-        //align-items: stretch;
         z-index: zindex(700);
-
-        //& > * {
-        //    width: 100%;
-        //}
+        pointer-events: none;
     }
 
     &__list {
@@ -92,8 +88,15 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
     // #region [Modifier]
     &#{$module}--readonly {
 
-        #{$module}__item-handle {
-            cursor: not-allowed;
+        #{$module} {
+
+            &__item {
+                box-shadow: none !important;
+            }
+
+            &__item-handle {
+                cursor: not-allowed;
+            }
         }
     }
 
@@ -123,8 +126,8 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
         }
     }
 
-    &__item-label--left {
-        margin-right: spacing('10');
+    &__item-label {
+        user-select: none;
     }
 
     &__item-handle--right {

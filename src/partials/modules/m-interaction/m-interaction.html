@@ -30,6 +30,10 @@
 
                 <c-text v-if="text" :text="text"/>
 
+                <div v-if="slotHasContent('actions')" :class="element('actions')">
+                    <slot name="actions"/>
+                </div>
+
             </div>
 
         </c-grid>
@@ -59,8 +63,6 @@
 
     </slot>
 
-
-<!--    <component v-if="status === 'feedback'" :is="`module-${layoutArea}`" :class="element('feedback-background-wrapper')">-->
     <component :is="`module-${layoutArea}`" :class="element('feedback-background-wrapper')">
         <module-content>
             <c-grid :class="element('background-grid')">
@@ -69,31 +71,11 @@
         </module-content>
     </component>
 
-<!--    <transition-feedback :moduleElement="`.${$options.name}`"-->
-<!--                         :affectedElementSizeSource="`.interaction`"-->
-<!--                         :backgroundElement="`.${element('feedback-background')}`"-->
-<!--                         :feedback="`.c-feedback`">-->
-<!--&lt;!&ndash;        :affectedElementSizeSource="`.${element('interaction-wrapper')}`"&ndash;&gt;-->
-
-<!--        <c-feedback v-if="status === 'feedback'"-->
-<!--                    v-bind="feedbackProps"-->
-<!--                    :class="element('feedback')"-->
-<!--                    @retry="retry"-->
-<!--                    @resolve="resolveQuestion" />-->
-
-<!--    </transition-feedback>-->
-
-<!--    <transition-feedback :moduleElement="`.${$options.name}`"-->
-<!--                         :affectedElementSizeSource="`.interaction`"-->
-<!--                         :backgroundElement="`.${element('feedback-background')}`"-->
-<!--                         :feedback="`.c-feedback`">-->
 
         <c-feedback v-bind="feedbackProps"
                     :class="element('feedback')"
                     :status="status"
                     @retry="retry"
                     @resolve="resolveQuestion" />
-
-<!--    </transition-feedback>-->
 
 </module>
