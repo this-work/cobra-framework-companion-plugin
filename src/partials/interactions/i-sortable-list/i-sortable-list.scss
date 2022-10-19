@@ -14,6 +14,8 @@ $i-sortable-list-spacing-map--type-default: ('s': '44', 'l': '71', 'xxxl': '115'
 $i-sortable-list-text-margin-bottom: 'xsmall' !default;
 $i-sortable-list-transition-duration: 0.5s !default;
 
+$i-sortable-list-drag-indicator-color: color('black') !default;
+
 $m-interaction-question-column-size: 5 !default;
 
 $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
@@ -68,7 +70,8 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
         width: rem(30px);
         margin-right: spacing('10');
         cursor: grab;
-        @include color-theme('drag-indicator')
+        color: $i-sortable-list-drag-indicator-color;
+        opacity: .15;
     }
 
     &__functions {
@@ -92,10 +95,11 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
 
             &__item {
                 box-shadow: none !important;
-            }
 
-            &__item-handle {
-                cursor: not-allowed;
+                &-handle {
+                    cursor: not-allowed;
+                    opacity: .05;
+                }
             }
         }
     }

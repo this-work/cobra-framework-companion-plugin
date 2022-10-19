@@ -40,7 +40,7 @@ export default {
         props: { type: Object, default: () => ({}) },
         randomize: {
             type: Boolean,
-            default: function () {return this.props.randomize || true }
+            default: function () {return this.props.randomize || false }
         },
         limit: {
             type: Number,
@@ -70,7 +70,11 @@ export default {
                 spacingPaddingTop: this.spacingPaddingTop,
                 spacingMarginBottom: 'none',
                 spacingPaddingBottom: this.spacingPaddingBottom
-            }
+            },
+
+
+
+            shuffeledQuestions: this.getQuestions()
         };
     },
 
@@ -98,9 +102,9 @@ export default {
             return this.status === 'start' ? 'quiz-slide--right' : 'quiz-slide--left';
         },
 
-        shuffeledQuestions() {
-            return shuffleArray(this.interactions).slice(0, this.limit);
-        },
+        // shuffeledQuestions() {
+        //     return shuffleArray(this.interactions).slice(0, this.limit);
+        // },
 
         questionSlots() {
             return this.shuffeledQuestions[this.selectedQuestionIndex]?.data.slots;
@@ -152,10 +156,19 @@ export default {
 
     methods: {
 
+
+        getQuestions() {
+            const questions = this.randomize ? shuffleArray(this.interactions)  : this.interactions;
+            return questions.slice(0, this.limit);
+        },
+
+
+
+
+
         getQuestionProps(index) {
             return {
                 isQuiz: true,
-                // ...this.shuffeledQuestions[this.selectedQuestionIndex].data.props,
                 ...this.shuffeledQuestions[index].data.props,
                 mode: this.mode,
                 backgroundPosition: this.backgroundPosition
@@ -181,9 +194,9 @@ export default {
 
             this.quizStates.push(cloneDeep({ result: state }));
 
-            this.questionKey++;
+            this.selectedQuestionIndex++;
 
-            if (++this.selectedQuestionIndex >= this.shuffeledQuestions.length) {
+            if (this.selectedQuestionIndex >= this.shuffeledQuestions.length) {
                 this.selectedQuestionIndex = undefined;
                 this.status = 'end';
                 const score = this.score / this.maxScore;
@@ -203,16 +216,19 @@ export default {
         },
 
         retry() {
+
             this.quizStates = [];
             this.$store.commit('interaction/reset', {
                 id: this.id,
                 instance: this.$route.path.replaceAll('/', ''), // besserer hash code wäre besser
             });
 
-            shuffleArray(this.interactions);
-
+            // this.shuffeledQuestions = shuffleArray(this.interactions).slice(0, this.limit);
+            this.shuffeledQuestions = this.getQuestions();
             this.status = 'start';
+
             this.$nextTick(() => {
+                this.$refs.interactions.forEach( interaction => interaction.retry());
                 this.scrollToTop();
             });
         },

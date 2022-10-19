@@ -15,7 +15,7 @@
 ///
 /// @return {string} Hexcode
 ///
-@function _base-color($color-name) {
+@function _color($color-name) {
     @return map-get(map-merge($color-base, $color-derivates), $color-name);
 }
 
@@ -78,7 +78,7 @@ $color-palettes: map-merge((
     'tag-pill': (
         light: (
             background-color: (
-                'default': rgba(_base-color('primary'), .15),
+                'default': rgba(_color('primary'), .15),
                 ':hover': 'primary',
             ),
             color: (
@@ -88,7 +88,7 @@ $color-palettes: map-merge((
         ),
         medium: (
             background-color: (
-                'default': rgba(_base-color('primary'), .15),
+                'default': rgba(_color('primary'), .15),
                 ':hover': 'primary',
             ),
             color: (
@@ -98,7 +98,7 @@ $color-palettes: map-merge((
         ),
         dark: (
             background-color: (
-                'default': lighten(_base-color('primary'), 25%),
+                'default': lighten(_color('primary'), 25%),
                 ':hover': 'primary',
             ),
             color: (
@@ -221,25 +221,25 @@ $color-palettes: map-merge((
         light: (
             background: 'light',
             box-shadow: (
-                '__draggable': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
-                '.sortable-chosen': #{'0px 5px 25px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
-                ':hover': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha')
+                'default': #{'0px 1px 4px'} _color('black:10:alpha'),
+                ':hover': #{'0px 8px 15px'} _color('black:05:alpha')#{', 0px 1px 4px'} _color('black:10:alpha'),
+                '.sortable-chosen': #{'0px 15px 20px'} _color('black:10:alpha')#{', 0px 1px 4px'} _color('black:10:alpha')
             )
         ),
         medium: (
             background: 'medium',
             box-shadow: (
-                '__draggable': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
-                '.sortable-chosen': #{'0px 5px 25px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha'),
-                ':hover': #{'0px 5px 15px'} _base-color('black:05:alpha')#{', 0px 1px 4px'} _base-color('black:10:alpha')
+                'default': #{'0px 1px 4px'} _color('black:10:alpha'),
+                ':hover': #{'0px 8px 15px'} _color('black:05:alpha')#{', 0px 1px 4px'} _color('black:10:alpha'),
+                '.sortable-chosen': #{'0px 15px 20px'} _color('black:10:alpha')#{', 0px 1px 4px'} _color('black:10:alpha')
             )
         ),
         dark: (
             background: 'dark',
             box-shadow: (
-                '__draggable': #{'0px 5px 15px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha'),
-                '.sortable-chosen': #{'0px 5px 25px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha'),
-                ':hover': #{'0px 5px 15px'} _base-color('white:05:alpha')#{', 0px 1px 4px'} _base-color('white:10:alpha')
+                'default': #{'0px 1px 4px'} _color('white:10:alpha'),
+                ':hover': #{'0px 8px 15px'} _color('white:05:alpha')#{', 0px 1px 4px'} _color('white:10:alpha'),
+                '.sortable-chosen': #{'0px 15px 20px'} _color('white:10:alpha')#{', 0px 1px 4px'} _color('white:10:alpha')
             )
         )
     ),
@@ -267,13 +267,13 @@ $color-palettes: map-merge((
     ),
     'drag-placeholder--answers-slot': (
         light: (
-            box-shadow: inset 0px 1px 2px _base-color('black:25:alpha')
+            box-shadow: inset 0px 1px 2px _color('black:25:alpha')
         ),
         medium: (
-            background: inset 0px 1px 2px _base-color('black:25:alpha')
+            background: inset 0px 1px 2px _color('black:25:alpha')
         ),
         dark: (
-            background: inset 0px 1px 2px _base-color('white:25:alpha')
+            background: inset 0px 1px 2px _color('white:25:alpha')
         )
     ),
     'drag-indicator': (
@@ -454,6 +454,19 @@ $color-palettes: map-merge((
         dark: (
             background: 'error',
             border-color: 'error'
+        )
+    ),
+
+    // True-False Color Themes
+    'true-false--selected': (
+        light: (
+            background-color: 'disabled-selected'
+        ),
+        medium: (
+            background-color: 'disabled-selected'
+        ),
+        dark: (
+            background-color: 'white:25:alpha'
         )
     ),
 

@@ -20,10 +20,10 @@
  */
 export function completed(id) {
 
-    if (!localStorage || !localStorage.getItem('completed') || !id) {
+    if (!sessionStorage || !sessionStorage.getItem('completed') || !id) {
         return false;
     }
 
-    return localStorage.getItem('completed').indexOf(id + '') >= 0;
+    return sessionStorage.getItem('completed').indexOf(id + '') >= 0;
 
 }

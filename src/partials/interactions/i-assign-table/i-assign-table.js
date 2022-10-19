@@ -4,10 +4,7 @@
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import interaction from '../../../plugins/mixins/interaction';
-import {
-    cloneDeep,
-    shuffleArray
-} from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
+import { cloneDeep, shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
 import { disableCursorGrabbing, enableCursorGrabbing } from "@this/cobra-framework-companion-plugin/src/plugins/vanilla/cursor-grabbing";
 
 export default {
@@ -68,6 +65,12 @@ export default {
         answersHaveImages() {
             return this._shuffledItems.answers.some( answer => {
                 return answer.answer.some(item => item.image);
+            });
+        },
+
+        answersHaveImagesOnly() {
+            return this._shuffledItems.answers.every( answer => {
+                return answer.answer.every(item => item.image);
             });
         }
 
@@ -179,7 +182,7 @@ export default {
         configurateImages(image) {
             return {
                 ...image,
-                aspectRatios: this.imageAspectRatios,
+                aspectRatios: this.answersHaveImagesOnly ? this.imageAspectRatios : image.aspectRatios,
                 inline: true,
                 objectFit: 'cover',
                 lazyload: false

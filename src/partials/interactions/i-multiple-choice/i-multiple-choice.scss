@@ -194,8 +194,19 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
 
     &--readonly {
 
-        #{$module}__choice-wrapper {
-            pointer-events: none;
+        #{$module} {
+
+            &__choice-wrapper {
+                pointer-events: none;
+            }
+
+            &__image.c-image {
+                opacity: 0.5;
+
+                &#{$module}--selected {
+                    opacity: 1;
+                }
+            }
         }
     }
 

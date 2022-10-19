@@ -22,7 +22,8 @@ export default {
 
         blockClasses() {
             return {
-                [`interaction`]: true
+                [`interaction`]: true,
+                [`${this.$options.name}--readonly`]: this.resolved,
             };
         },
 

@@ -8,6 +8,7 @@
 
 $i-assign-table-breakpoint-desktop: 's' !default;
 $i-assign-table-breakpoint--size-smaller: 'm' !default;
+$i-assign-table-drag-indicator-color: color('black') !default;
 $i-assign-table-drag-indicator-color--with-image: color('white') !default;
 $i-assign-table-label-responsive-font: 'copytext--small' !default;
 $i-assign-table-possible-answer-spacing: 'small' !default;
@@ -17,6 +18,10 @@ $i-assign-table-transition-duration: 0.5s !default;
 
 $m-interaction-question-column-size: 5 !default;
 $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
+
+
+$i-assign-table-columns-breakpoint--3-items: 'xs' !default;
+
 
 @mixin i-assign-table-add-grid-gutter-spacing (
     $properties,
@@ -132,7 +137,6 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
     }
 }
 
-
 .i-assign-table {
 
     // #region [Block]
@@ -173,11 +177,21 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
                 left: 6px;
                 z-index: 2;
                 color: $i-assign-table-drag-indicator-color--with-image !important;
+                opacity: 1;
             }
         }
 
         &-image.c-image {
             width: 100%;
+            height: inherit;
+
+            .c-image__wrapper {
+                height: inherit;
+
+                .c-image__canvas {
+                    height: inherit !important;
+                }
+            }
         }
 
         &--question {
@@ -197,6 +211,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
             display: flex;
             align-items: center;
             flex-grow: 1;
+            height: 100%;
         }
 
         &--answer {
@@ -217,7 +232,8 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
             width: rem(30px);
             margin-right: spacing('10');
             cursor: grab;
-            @include color-theme('drag-indicator')
+            color: $i-assign-table-drag-indicator-color;
+            opacity: .15;
         }
     }
 
@@ -252,6 +268,8 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
     &__possible-answer {
         @include responsive-spacing($i-assign-table-possible-answer-spacing, margin-top);
+
+        padding-bottom: 27px;
     }
 
     @mixin i-assign-table-answer-and-list-addition {
@@ -277,6 +295,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
     &__answer {
         width: grid-column-width-percentage(6);
+        //width: grid-column-width-percentage(4);
         flex-shrink: 0;
         flex-grow: 0;
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
@@ -294,6 +313,7 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
     &__list {
         padding: 0;
         width: grid-column-width-percentage(6);
+        //width: grid-column-width-percentage(4);
         flex-shrink: 0;
         flex-grow: 0;
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
@@ -331,16 +351,20 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
             &__item {
                 box-shadow: none !important;
-            }
 
-            &__item-handle {
-                cursor: not-allowed;
+                &-handle {
+                    cursor: not-allowed;
+                    opacity: .05;
+                }
+
+                &#{$module}__item--with-image {
+
+                    #{$module}__item-handle {
+                        opacity: .33;
+                    }
+                }
             }
         }
-
-        //#{$module}__item-handle {
-        //    cursor: not-allowed;
-        //}
     }
 
     &__item#{$module}__item--selected {
@@ -355,7 +379,8 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
     &--size-small {
 
-        @include above($i-assign-table-breakpoint-desktop) {
+        //@include above($i-assign-table-breakpoint-desktop) {
+        @include above($i-assign-table-columns-breakpoint--3-items) {
 
             #{$module}__answer {
                 width: grid-column-width-percentage(4);
@@ -455,6 +480,15 @@ $i-assign-table-interaction-column-size: _get-grid-data('columns') - $m-interact
 
                 #{$module}__questions-wrapper-question:after {
                     display: none !important;
+                }
+            }
+
+            #{$module}--answer-count-3 {
+
+                @include below($i-assign-table-breakpoint-desktop) {
+                    #{$module}__questions-wrapper-question:after {
+                        display: block !important;
+                    }
                 }
             }
         }

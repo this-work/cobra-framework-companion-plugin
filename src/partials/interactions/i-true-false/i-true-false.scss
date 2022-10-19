@@ -41,8 +41,6 @@ $i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interactio
         pointer-events: none;
     }
 
-
-
     &__actions {
         margin-top: $i-true-false-button-margin * -1;
         margin-right: $i-true-false-button-margin * -1;
@@ -58,6 +56,18 @@ $i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interactio
     // #endregion
 
     // #region [Modifier]
+    @at-root .module #{$module} {
+
+        #{$module}--selected {
+
+            @debug &;
+
+            &.c-button {
+                @include color-theme('true-false--selected');
+            }
+        }
+    }
+
     @at-root.m-interaction {
 
         &--type-default {

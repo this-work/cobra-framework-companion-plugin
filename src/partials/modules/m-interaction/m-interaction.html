@@ -28,7 +28,7 @@
                     <slot name="assets"/>
                 </div>
 
-                <c-text v-if="text" :text="text"/>
+                <c-text v-if="text" :class="element('text')" :text="text"/>
 
                 <div v-if="slotHasContent('actions')" :class="element('actions')">
                     <slot name="actions"/>

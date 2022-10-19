@@ -52,9 +52,10 @@
             <m-interaction
                 v-show="status === 'in progress' && selectedQuestionIndex === index"
                 :key="index"
+                ref="interactions"
                 v-bind="getQuestionProps(index)"
-                @change="questionChange"
-            >
+                @change="questionChange">
+
                 <template #progress>
                     <c-quiz-progress-indicator
                         :class="element('progress-indicator')"

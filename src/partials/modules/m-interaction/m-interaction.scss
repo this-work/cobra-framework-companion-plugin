@@ -86,13 +86,18 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
     @at-root #{$module} {
 
         #{$module}__actions {
-            @include responsive-spacing($m-interaction-question-spacing, margin-top margin-bottom);
+            @include responsive-spacing($m-interaction-question-spacing, margin-top);
         }
 
         #{$module}__progress {
             @include responsive-spacing($m-interaction-question-spacing, margin-bottom);
         }
 
+    }
+
+    &__text.c-text {
+        width: 100%;
+        text-align: center;
     }
 
     //&__interaction-wrapper {
@@ -243,6 +248,12 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
                     .component-loader {
                         align-items: flex-start;
                     }
+                }
+            }
+
+            &__text.c-text {
+                @include above($m-interaction-breakpoint-desktop) {
+                    text-align: left;
                 }
             }
 
