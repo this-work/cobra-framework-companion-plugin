@@ -7,7 +7,7 @@ import interaction from '../../../plugins/mixins/interaction';
 import {
     cloneDeep,
     shuffleArray
-} from '../../../plugins/vanilla/helperFunctions';
+} from '../../../plugins/vanilla/interaction-helper';
 import { disableCursorGrabbing, enableCursorGrabbing } from '../../../plugins/vanilla/cursor-grabbing';
 
 export default {
