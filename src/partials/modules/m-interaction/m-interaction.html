@@ -76,6 +76,20 @@
                     :class="element('feedback')"
                     :status="status"
                     @retry="retry"
-                    @resolve="resolveQuestion" />
+                    @resolve="resolveQuestion">
+
+            <template v-if="interaction === 'true-false'" #actions>
+
+                <slot name="actions">
+
+                    <c-button class="'c-feedback__resolve')"
+                              :label="$t('c-feedback--button-close')"
+                              @click.native="resolveQuestion"/>
+
+                </slot>
+
+            </template>
+
+        </c-feedback>
 
 </module>

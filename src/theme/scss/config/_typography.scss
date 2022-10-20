@@ -24,7 +24,7 @@ $responsive-font-types: map-merge((
         'l':       ( $default-font-family, 'regular', '51' )
     ),
     'value-slider-current-unit': (
-        'default': ( $default-font-family, 'bold', '12' )
+        'default': ( $default-font-family, 'bold', '16' )
     )
 ), $responsive-font-types);
 

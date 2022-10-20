@@ -300,9 +300,29 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
                 #{$module}__wrapper {
 
                     @include above($i-single-choice-breakpoint-desktop) {
-                        justify-content: center;
+                        justify-content: flex-start;
                     }
                 }
+
+
+                #{$module}__choice-wrapper {
+
+                    @include above($i-single-choice-breakpoint-desktop) {
+                        margin-top: 0;
+                        width: grid-column-width-percentage(3);
+                        @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+                        &:nth-child(n+5) {
+                            margin-top: $i-single-choice-choice-spacing--desktop;
+                        }
+
+                        &:nth-child(4n),
+                        &:last-of-type {
+                            margin-right: 0;
+                        }
+                    }
+                }
+
 
                 &#{$module}--image-count-2 {
 
@@ -327,21 +347,6 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
                         @include above($i-single-choice-breakpoint-desktop) {
 
                             width: grid-column-width-percentage(4);
-                            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
-
-                            &:last-of-type {
-                                margin-right: 0;
-                            }
-                        }
-                    }
-                }
-
-                &#{$module}--image-count-4 {
-
-                    @include above($i-single-choice-breakpoint-desktop) {
-
-                        #{$module}__choice-wrapper {
-                            width: grid-column-width-percentage(3);
                             @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
 
                             &:last-of-type {

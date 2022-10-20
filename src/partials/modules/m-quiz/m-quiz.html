@@ -1,9 +1,9 @@
 <module :class="blockClasses"
         :backgroundImage="null"
-        ref="quiz"
-        style="position: relative">
+        :background="false"
+        ref="quiz">
 
-    <transition-group :name="transitionNameQuiz" :class="element('transition')">
+    <transition-group name="quiz-fade" :class="element('transition')">
 
             <m-interaction
                 v-show="status === 'start'"

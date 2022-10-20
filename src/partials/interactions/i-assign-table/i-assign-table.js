@@ -4,8 +4,11 @@
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import interaction from '../../../plugins/mixins/interaction';
-import { cloneDeep, shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
-import { disableCursorGrabbing, enableCursorGrabbing } from "@this/cobra-framework-companion-plugin/src/plugins/vanilla/cursor-grabbing";
+import {
+    cloneDeep,
+    shuffleArray
+} from '../../../plugins/vanilla/helperFunctions';
+import { disableCursorGrabbing, enableCursorGrabbing } from '../../../plugins/vanilla/cursor-grabbing';
 
 export default {
 
@@ -18,6 +21,10 @@ export default {
 
     props: {
         items: Array,
+        disableShuffle: {
+            type: Boolean,
+            default: false
+        },
         layoutArea: {
             type: String,
             default: 'page'
@@ -145,7 +152,10 @@ export default {
                     }
                 ]
             }));
-            shuffleArray(questions);
+
+            if (!this.disableShuffle) {
+                shuffleArray(questions);
+            }
 
             const answers = array.map(({ drop, drag }, index) => ({
                 answer: [

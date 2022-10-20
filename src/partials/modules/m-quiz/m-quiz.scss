@@ -9,7 +9,6 @@
 $m-quiz-breakpoint-desktop: 's' !default;
 $m-quiz-spacing: 'small' !default;
 $m-quiz-text-responsive-font: 'copytext--big' !default;
-
 $m-interaction-question-column-size: 5 !default;
 
 $m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
@@ -53,7 +52,6 @@ $m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-ques
     @at-root .module {
         .m-interaction,
         #{$module}__end-wrapper {
-            //height: 100%;
             @include grid-cell-position(1);
             @include grid-cell-row-start(1);
             @include grid-cell-size(12);
@@ -115,22 +113,11 @@ $m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-ques
     &__end-wrapper {
         @include color-theme('quiz-background');
 
-
-
-        // @CW NEU - start
         & > * {
             display: flex;
             align-items: center;
             justify-content: center;
-
-            & > * {
-                flex-shrink: 0;
-                flex-grow: 1;
-            }
-
         }
-        // @CW NEU - end
-
     }
 
     &__heading {
@@ -192,4 +179,20 @@ $m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-ques
         @include m-quiz;
     }
     // #endregion
+}
+
+
+.quiz-fade {
+    &-enter-active,
+    &-leave-active {
+        transition: opacity 150ms;
+    }
+    &-enter-to,
+    &-fade-leave {
+        opacity: 1;
+    }
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+    }
 }

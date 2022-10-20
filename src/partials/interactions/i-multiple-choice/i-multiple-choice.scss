@@ -119,8 +119,7 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
 
         &#{$module} {
             //@include add-page-spacing($i-multiple-choice-breakpoint-desktop, margin-top margin-bottom, $offsetVisbilityDirection: 'below');
-            @include grid-cell-offset('complete', 'page', $i-multiple-choice-breakpoint-desktop, 'below');
-
+            //@include grid-cell-offset('complete', 'page', $i-multiple-choice-breakpoint-desktop, 'below');
         }
 
         #{$module}__actions {
@@ -299,7 +298,25 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
                 #{$module}__wrapper {
 
                     @include above($i-multiple-choice-breakpoint-desktop) {
-                        justify-content: center;
+                        justify-content: flex-start;
+                    }
+                }
+
+                #{$module}__choice-wrapper {
+
+                    @include above($i-multiple-choice-breakpoint-desktop) {
+                        margin-top: 0;
+                        width: grid-column-width-percentage(3);
+                        @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+
+                        &:nth-child(n+5) {
+                            margin-top: $i-multiple-choice-choice-spacing--desktop;
+                        }
+
+                        &:nth-child(4n),
+                        &:last-of-type {
+                            margin-right: 0;
+                        }
                     }
                 }
 
@@ -326,21 +343,6 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
                         @include above($i-multiple-choice-breakpoint-desktop) {
 
                             width: grid-column-width-percentage(4);
-                            @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
-
-                            &:last-of-type {
-                                margin-right: 0;
-                            }
-                        }
-                    }
-                }
-
-                &#{$module}--image-count-4 {
-
-                    @include above($i-multiple-choice-breakpoint-desktop) {
-
-                        #{$module}__choice-wrapper {
-                            width: grid-column-width-percentage(3);
                             @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
 
                             &:last-of-type {

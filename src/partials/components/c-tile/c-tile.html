@@ -1,6 +1,6 @@
 <component :is="tag" :class="blockClasses">
 
-    <c-link :url="url" :externalUrl="externalUrl" @click.native="checkForModal" :class="element('link')">
+    <c-link :url="this.locked ? undefined : url" :externalUrl="this.locked ? 'javascript:void(0)' : externalUrl" @click.native="checkForModal" :class="element('link')">
 
         <c-image :src="!image ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : image.src"
                  v-bind="image ? image : null"
@@ -11,7 +11,9 @@
                  :class="element('image')"
         >
             <span v-if="locked" :class="element('lock')">
-                <c-icon :class="element('lock-icon')" name="lock" />
+                <span :class="element('lock-border')">
+                    <c-icon :class="element('lock-icon')" name="lock" />
+                </span>
             </span>
         </c-image>
 
@@ -31,9 +33,9 @@
 
         <div :class="element('popup')">
 
-            <h3 v-if="popup.headline" :class="element('popup-headline')" v-html="popup.headline" />
+            <h4 v-if="popup.headline" :class="element('popup-headline')" v-html="popup.headline" />
 
-            <h3 v-if="popup.text" :class="element('popup-text')" v-html="popup.text" />
+            <p v-if="popup.text" :class="element('popup-text')" v-html="popup.text" />
 
             <div :class="element('popup-footer')" v-if="popup.buttonLabel && popup.url">
                 <c-button tag="a" :href="popup.url" target="_blank" :label="popup.buttonLabel" />

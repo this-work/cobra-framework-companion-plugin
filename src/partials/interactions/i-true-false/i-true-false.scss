@@ -8,19 +8,12 @@
 
 $i-true-false-breakpoint-desktop: 's' !default;
 $i-true-false-button-margin: spacing('27') !default;
-
 $i-true-false-min-height: unitize(300px) !default;
-
 $i-true-false-padding--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
-
 
 $m-interaction-question-column-size: 5 !default;
 
 $i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
-
-
-
-
 
 .i-true-false {
     // #region [Block]
@@ -59,8 +52,6 @@ $i-true-false-interaction-column-size: _get-grid-data('columns') - $m-interactio
     @at-root .module #{$module} {
 
         #{$module}--selected {
-
-            @debug &;
 
             &.c-button {
                 @include color-theme('true-false--selected');

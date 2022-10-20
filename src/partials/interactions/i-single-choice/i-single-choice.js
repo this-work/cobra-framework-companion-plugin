@@ -4,7 +4,7 @@
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import interaction from '../../../plugins/mixins/interaction';
-import { shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
+import { shuffleArray } from '../../../plugins/vanilla/helperFunctions';
 
 export default {
 
@@ -17,6 +17,10 @@ export default {
 
     props: {
         answers: Array,
+        disableShuffle: {
+            type: Boolean,
+            default: false
+        },
         layoutArea: {
             type: String,
             default: 'page'
@@ -26,7 +30,7 @@ export default {
     data() {
         return {
             buttonLabelEvaluate: this.$t('interactions--button-evaluate'),
-            shuffledAnswers: shuffleArray([...this.answers])
+            shuffledAnswers: this.shuffleAnswers([...this.answers])
         };
     },
 
@@ -82,6 +86,10 @@ export default {
 
     methods: {
 
+        shuffleAnswers(answers) {
+            return this.disableShuffle ? answers : shuffleArray(answers);
+        },
+
         selectionChanged(answer) {
             this.$store.commit('interaction/update', {
                 id: this.id,
@@ -95,7 +103,7 @@ export default {
 
         retry() {
             this.evaluationPermitted = false;
-            this.shuffledAnswers = shuffleArray([...this.answers]);
+            this.shuffledAnswers = this.shuffleAnswers([...this.answers]);
 
             this.$store.commit('interaction/update', {
                 id: this.id,

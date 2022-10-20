@@ -23,8 +23,9 @@ $c-tile-readbox-mark-size: unitize(16px) !default;
 $c-tile-lock-padding-mobile: spacing('16') !default;
 $c-tile-lock-padding-desktop: spacing('20') !default;
 $c-tile-lock-border-radius: 50% !default;
-$c-tile-lock-background-theme: 'background' !default;
+$c-tile-lock-background: color('primary:75:alpha') !default;
 $c-tile-lock-color: color('disabled-selected') !default;
+$c-tile-lock-icon-background-theme: 'background' !default;
 $c-tile-lock-icon-size-mobile: unitize(24px) !default;
 $c-tile-lock-icon-size-desktop: unitize(24px) !default;
 
@@ -65,14 +66,23 @@ $c-tile-headline-line-clamp: 3 !default;
         display: flex;
         position: absolute;
         z-index: zindex(300);
-        top: 50%;
-        left: 50%;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
         align-items: center;
-        padding: $c-tile-lock-padding-mobile;
-        transform: translate(-50%, -50%);
-        border-radius: $c-tile-lock-border-radius;
-        @include color-theme($c-tile-lock-background-theme);
-        color: $c-tile-lock-color;
+        justify-content: center;
+        background: $c-tile-lock-background;
+        &-border {
+            display: flex;
+            padding: $c-tile-lock-padding-mobile;
+            border-radius: $c-tile-lock-border-radius;
+            color: $c-tile-lock-color;
+            @include color-theme($c-tile-lock-icon-background-theme);
+            @include above('s') {
+                padding: $c-tile-lock-padding-desktop;
+            }
+        }
         &-icon {
             width: $c-tile-lock-icon-size-mobile;
             height: $c-tile-lock-icon-size-mobile;
@@ -80,9 +90,6 @@ $c-tile-headline-line-clamp: 3 !default;
                 width: $c-tile-lock-icon-size-desktop;
                 height: $c-tile-lock-icon-size-desktop;
             }
-        }
-        @include above('s') {
-            padding: $c-tile-lock-padding-desktop;
         }
     }
 
@@ -122,6 +129,7 @@ $c-tile-headline-line-clamp: 3 !default;
 
     &__popup {
         max-width: unitize(440px);
+        text-align: center;
 
         &-text {
             font: font($default-font-family, 'regular', '16');
@@ -133,7 +141,7 @@ $c-tile-headline-line-clamp: 3 !default;
             text-align: center;
         }
         &-headline + &-text{
-            margin-top: spacing('16');
+            margin-top: spacing('20');
         }
         &-headline + &-footer, &-text + &-footer {
             margin-top: spacing('44');
@@ -151,7 +159,7 @@ $c-tile-headline-line-clamp: 3 !default;
         }
     }
 
-    &:hover {
+    &:not(#{$module}--locked):hover {
         #{$module}__image img {
             transform: $c-tile-hover-transform;
         }

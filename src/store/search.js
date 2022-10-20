@@ -86,9 +86,44 @@ export default ({ store }) => {
                 }
 
                 if (response && response.hits && response.hits.hits) {
-                    commit('setSearchResults', response.hits.hits.map(hit => {
-                        return hit._source;
-                    }));
+
+                    const accessgroups = Object.keys(JSON.parse(sessionStorage.getItem('accessgroups')));
+                    const userGroups = Object.values(JSON.parse(sessionStorage.getItem('usergroups')));
+
+                    let searchResults;
+
+                    if (userGroups.indexOf('admin') >= 0 && userGroups.indexOf('editor') >= 0) {
+
+                        searchResults = response.hits.hits.map(hit => {
+                            const tile = hit._source;
+                            delete tile.accessgroupVisibility;
+                            delete tile.accessgroupPopup;
+                            return tile;
+                        });
+
+                    } else {
+
+                        searchResults = response.hits.hits.filter(hit => {
+                            return accessgroups.some(id => hit._source.accessgroups.includes(parseInt(id)))
+                                || (!accessgroups.some(id => hit._source.accessgroups.includes(parseInt(id)))
+                                    && hit._source.accessgroupVisibility === 'locked');
+                        }).map(hit => {
+                            const tile = hit._source;
+                            if (!accessgroups.some(id => tile.accessgroups.includes(parseInt(id)))) {
+                                tile.locked = true;
+                                tile.popup = JSON.parse(tile.accessgroupPopup);
+                            }
+
+                            delete tile.accessgroupVisibility;
+                            delete tile.accessgroupPopup;
+
+                            return tile;
+                        });
+
+                    };
+
+                    commit('setSearchResults', searchResults);
+
                 }
 
                 return response;

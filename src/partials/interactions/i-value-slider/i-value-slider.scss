@@ -48,7 +48,7 @@ $i-value-slider-interaction-column-size: _get-grid-data('columns') - $m-interact
     &__slider-current {
         display: inline-flex;
         flex-flow: row;
-        align-items: flex-end;
+        align-items: baseline;
         margin: auto;
         line-height: 0;
         @include responsive-spacing($properties: margin-bottom, $spacing-map: $i-value-slider-slider-current-spacing-map);
