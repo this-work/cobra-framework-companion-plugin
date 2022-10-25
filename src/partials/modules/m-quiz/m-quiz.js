@@ -3,7 +3,7 @@
  */
 
 import { common, background, theme } from '@this/cobra-framework/src/plugins/mixins';
-import { cloneDeep, shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
+import { cloneDeep, shuffleArray } from '../../../plugins/vanilla/helperFunctions';
 import { spacingClass, spacingProps } from '@this/cobra-framework/src/plugins/mixins/spacing';
 
 export default {
@@ -71,9 +71,6 @@ export default {
                 spacingMarginBottom: 'none',
                 spacingPaddingBottom: this.spacingPaddingBottom
             },
-
-
-
             shuffeledQuestions: this.getQuestions()
         };
     },
@@ -93,18 +90,6 @@ export default {
                 spacingClass('padding', 'bottom', this.spacingPaddingBottom)
             ];
         },
-
-        transitionName() {
-            return this.status === 'start' ? 'slide--right' : 'slide--left';
-        },
-
-        transitionNameQuiz() {
-            return this.status === 'start' ? 'quiz-slide--right' : 'quiz-slide--left';
-        },
-
-        // shuffeledQuestions() {
-        //     return shuffleArray(this.interactions).slice(0, this.limit);
-        // },
 
         questionSlots() {
             return this.shuffeledQuestions[this.selectedQuestionIndex]?.data.slots;
@@ -135,7 +120,7 @@ export default {
                 score: this.score,
                 maxScore: this.questionLength,
                 activeIndex: this.selectedQuestionIndex,
-                labelTemplate: this.$t(`m-quiz--result`),    //this.$t(`${this.$options.name}--result`),
+                labelTemplate: this.$t(`m-quiz--result`),
                 states: this.quizStates,
                 questionLength: this.questionLength,
                 theme: this.theme
@@ -151,20 +136,14 @@ export default {
                 progressIndicator: this.progressIndicator
             };
         }
-
     },
 
     methods: {
-
 
         getQuestions() {
             const questions = this.randomize ? shuffleArray(this.interactions)  : this.interactions;
             return questions.slice(0, this.limit);
         },
-
-
-
-
 
         getQuestionProps(index) {
             return {
@@ -191,9 +170,7 @@ export default {
         },
 
         questionChange(state) {
-
             this.quizStates.push(cloneDeep({ result: state }));
-
             this.selectedQuestionIndex++;
 
             if (this.selectedQuestionIndex >= this.shuffeledQuestions.length) {
@@ -207,7 +184,6 @@ export default {
                     passThreshold: this.passThreshold,
                     evaluationResult: this.quizPassed
                 });
-
             }
 
             this.$nextTick(() => {
@@ -222,8 +198,6 @@ export default {
                 id: this.id,
                 instance: this.$route.path.replaceAll('/', ''), // besserer hash code wäre besser
             });
-
-            // this.shuffeledQuestions = shuffleArray(this.interactions).slice(0, this.limit);
             this.shuffeledQuestions = this.getQuestions();
             this.status = 'start';
 
@@ -253,9 +227,7 @@ export default {
         },
 
         reportResult({ id, score, passThreshold, evaluationResult }) {
-
             return this.trackAttempt({ id, score, passThreshold, evaluationResult });
-
         },
         async trackAttempt({ id, score, passThreshold, evaluationResult }) {
 

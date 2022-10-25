@@ -1,18 +1,17 @@
 <div :class="blockClasses">
+
     <c-text
         v-if="labelTemplate && !!labelTemplate.length"
         :class="element('label')"
         :text="labelText"
     />
-    <div
-        :class="element('state-row')"
-        v-for="(stateChunk, row) in stateChunks"
-        :key="row"
-    >
+
+    <div :class="element('state-row')">
         <div
             :class="stateClasses(state)"
-            v-for="(state, index) in stateChunk"
+            v-for="(state, index) in indicatorStates"
             :key="index"
         />
     </div>
+
 </div>

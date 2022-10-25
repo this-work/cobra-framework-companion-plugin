@@ -16,7 +16,6 @@ export default {
         activeIndex: { type: Number, default: 0 },
         labelTemplate: { type: String },
         states: { type: Array, required: true },
-        chunkSize: { type: Number, default: 10 },
         questionLength: { type: Number, required: true }
     },
 
@@ -41,10 +40,6 @@ export default {
             }
 
             return indicatorStates;
-        },
-
-        stateChunks() {
-            return _chunk(this.indicatorStates, this.chunkSize);
         },
 
         labelText() {

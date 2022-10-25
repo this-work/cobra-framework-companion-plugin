@@ -83,25 +83,13 @@ export default {
             return '';
         },
 
-        buttonLabelRetry() {
-            return this.$t('c-feedback--button-retry');
-        },
-
-        buttonLabelSolution() {
-            return this.$t('c-feedback--button-solution');
-        },
-
-        buttonLabelClose() {
-            return this.$t('c-feedback--button-close');
+        solutionLabel() {
+            return this.hasSolution ? this.$t('c-feedback--button-solution') : this.$t('c-feedback--button-close');
         }
 
     },
 
     methods: {
-
-        close() {
-            this.$emit('resolve');
-        },
 
         retry() {
             this.$emit('retry');

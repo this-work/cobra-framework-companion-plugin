@@ -6,6 +6,7 @@
 ///
 ////
 
+$c-quiz-progress-indicator-breakpoint: 's' !default;
 $c-quiz-progress-indicator-border-width: unitize(1px) !default;
 $c-quiz-progress-indicator-height: unitize(10px) !default;
 $c-quiz-progress-indicator-margin-x: unitize(10px) !default;
@@ -14,6 +15,7 @@ $c-quiz-progress-indicator-width: unitize(10px) !default;
 .c-quiz-progress-indicator {
 
     // #region [Block]
+    $module: &;
     display: flex;
     flex-flow: column nowrap;
     justify-items: center;
@@ -28,17 +30,14 @@ $c-quiz-progress-indicator-width: unitize(10px) !default;
 
     &__state-row {
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-items: center;
-        width: 100%;
         justify-content: center;
+        margin-top: $c-quiz-progress-indicator-margin-x * -1;
 
         .c-text + & {
-            margin-top: spacing('16');
-        }
-
-        & + & {
-            margin-top: spacing('3');
+            margin-top: $c-quiz-progress-indicator-margin-x * -1;
+            padding-top: spacing('16');
         }
     }
 
@@ -48,10 +47,9 @@ $c-quiz-progress-indicator-width: unitize(10px) !default;
         max-width: $c-quiz-progress-indicator-width;
         min-width: $c-quiz-progress-indicator-width;
         height: $c-quiz-progress-indicator-height;
-        margin: 0 calc($c-quiz-progress-indicator-margin-x / 2);
+        margin: $c-quiz-progress-indicator-margin-x calc($c-quiz-progress-indicator-margin-x / 2) 0;
         border-radius: 50%;
         transition: transition-appear(background);
-
         border-width: $c-quiz-progress-indicator-border-width;
         border-style: solid;
         border-color: transparent;
@@ -74,6 +72,26 @@ $c-quiz-progress-indicator-width: unitize(10px) !default;
     // #endregion
 
     // #region [Modifier]
+    @at-root.m-interaction {
+
+        &--type-default {
+
+            #{$module} {
+
+                &__state-row {
+                    @include above($c-quiz-progress-indicator-breakpoint) {
+                        margin-left: calc($c-quiz-progress-indicator-margin-x / 2 * -1);
+                    }
+                }
+
+                &__state-row {
+                    @include above($c-quiz-progress-indicator-breakpoint) {
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
+    }
     // #endregion
 
     // #region [Overwrites]

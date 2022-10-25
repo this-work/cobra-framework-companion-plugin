@@ -62,19 +62,19 @@
                                         <template v-if="feedbackType === 'positive'">
 
                                             <c-button :class="element('resolve')"
-                                                      :label="buttonLabelClose"
-                                                      @click.native="close"/>
+                                                      :label="$t('c-feedback--button-close')"
+                                                      @click.native="resolve"/>
 
                                         </template>
 
                                         <template v-if="feedbackType === 'negative'">
 
                                             <c-button :class="element('retry')"
-                                                      :label="buttonLabelRetry"
+                                                      :label="$t('c-feedback--button-retry')"
                                                       @click.native="retry"/>
 
                                             <c-button :class="element('solution')"
-                                                      :label="buttonLabelSolution"
+                                                      :label="solutionLabel"
                                                       @click.native="solution"/>
 
                                         </template>
@@ -82,7 +82,7 @@
                                         <template v-if="feedbackType === 'solution'">
 
                                             <c-button :class="element('resolve')"
-                                                      :label="buttonLabelClose"
+                                                      :label="$t('c-feedback--button-close')"
                                                       @click.native="resolve"/>
 
                                         </template>
