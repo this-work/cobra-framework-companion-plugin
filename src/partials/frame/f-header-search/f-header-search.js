@@ -53,6 +53,9 @@ export default {
             this.$nextTick(() => {
                 this.checkExpandedTagsToogleVisibility();
             });
+            setTimeout(() => {
+                this.checkExpandedTagsToogleVisibility
+            }, 350);
             window.addEventListener('resize', this.checkExpandedTagsToogleVisibility);
             window.addEventListener('resize', this.forceTagTransition);
         }

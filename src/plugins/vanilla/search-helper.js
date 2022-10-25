@@ -19,7 +19,9 @@ export function getUriParams() {
 
     if (window && window.location) {
 
-        return window.location.search.substring(1).split('&').reduce((a, v) => ({ ...a, [decodeURI(v.split('=')[0])]: decodeURI(v.split('=')[1]) }), {});
+        return window.location.search.substring(1).split('&').reduce((a, v) =>
+                ({ ...a, [decodeURIComponent(decodeURIComponent(v.split('=')[0]))]: decodeURIComponent(decodeURIComponent(v.split('=')[1])) }),
+            {});
 
     }
 
