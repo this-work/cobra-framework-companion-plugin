@@ -50,12 +50,14 @@ export default {
     },
     mounted() {
         if (process.client) {
+
             this.$nextTick(() => {
                 this.checkExpandedTagsToogleVisibility();
             });
-            setTimeout(() => {
-                this.checkExpandedTagsToogleVisibility
-            }, 350);
+
+            setTimeout(() => { this.checkExpandedTagsToogleVisibility() }, 350);
+            setTimeout(() => { this.checkExpandedTagsToogleVisibility() }, 1000);
+
             window.addEventListener('resize', this.checkExpandedTagsToogleVisibility);
             window.addEventListener('resize', this.forceTagTransition);
         }
