@@ -81,10 +81,6 @@ export default {
             if (this.feedbackType === 'solution') return 'visibility';
 
             return '';
-        },
-
-        solutionLabel() {
-            return this.hasSolution ? this.$t('c-feedback--button-solution') : this.$t('c-feedback--button-close');
         }
 
     },

@@ -58,7 +58,8 @@ export default {
             return [
                 { [this.modifier('type-' + this.mode)]: true },
                 spacingClass('margin', 'top', this.spacingMarginTop),
-                spacingClass('margin', 'bottom', this.spacingMarginBottom)
+                spacingClass('margin', 'bottom', this.spacingMarginBottom),
+                { [this.modifier('choice-question')]: ['single-choice', 'multiple-choice'].includes(this.interaction) }
             ];
         },
         backgroundSizeClass() {
@@ -93,9 +94,7 @@ export default {
         },
         feedbackProps() {
             return { feedbacks: this.feedbacks, ...{
-                type: this.questionResult,
-                spacingPaddingTop: this.spacingPaddingTop,
-                spacingPaddingBottom: this.spacingPaddingBottom
+                type: this.questionResult
             } };
         }
 

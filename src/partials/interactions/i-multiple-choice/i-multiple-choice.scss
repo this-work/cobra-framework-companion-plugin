@@ -258,16 +258,6 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
 
             #{$module}--without-images {
 
-                #{$module}__choice {
-                    @include above($i-multiple-choice-breakpoint-desktop) {
-                        @include grid-cell-size(6);
-
-                        &:nth-child(2) {
-                            margin-top: 0;
-                        }
-                    }
-                }
-
                 #{$module}__actions {
 
                     @include above($i-multiple-choice-breakpoint-desktop) {

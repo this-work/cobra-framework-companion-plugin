@@ -260,16 +260,6 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
             #{$module}--without-images {
 
-                #{$module}__choice {
-                    @include above($i-single-choice-breakpoint-desktop) {
-                        @include grid-cell-size(6);
-
-                        &:nth-child(2) {
-                            margin-top: 0;
-                        }
-                    }
-                }
-
                 #{$module}__actions {
 
                     @include above($i-single-choice-breakpoint-desktop) {

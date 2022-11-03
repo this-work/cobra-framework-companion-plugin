@@ -73,8 +73,9 @@
                                                       :label="$t('c-feedback--button-retry')"
                                                       @click.native="retry"/>
 
-                                            <c-button :class="element('solution')"
-                                                      :label="solutionLabel"
+                                            <c-button v-if="hasSolution"
+                                                      :class="element('solution')"
+                                                      :label="$t('c-feedback--button-solution')"
                                                       @click.native="solution"/>
 
                                         </template>
