@@ -45,11 +45,11 @@ export default {
 
                 try {
 
-                    const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
+                    const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
                     const response = await this.$axios.$post('/api/reset-password', {
                         loginName: this.$refs.loginName.value,
-                        [csrfTokenName]: csrfTokenValue
+                        'CRAFT_CSRF_TOKEN': csrfTokenValue
                     });
 
                     if (response.success) {
