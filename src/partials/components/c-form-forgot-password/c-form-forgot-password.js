@@ -47,16 +47,13 @@ export default {
 
                     const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
-                    const response = await this.$axios.$post('/api/reset-password', {
+                    await this.$axios.$post('/api/reset-password', {
                         loginName: this.$refs.loginName.value,
                         'CRAFT_CSRF_TOKEN': csrfTokenValue
                     });
 
-                    if (response.success) {
-                        this.loading = false;
-                        this.message = this.$i18n.t('c-form-forgot-password--success');
-
-                    }
+                    this.loading = false;
+                    this.message = this.$i18n.t('c-form-forgot-password--success');
 
                 } catch (err) {
                     this.loading = false;
