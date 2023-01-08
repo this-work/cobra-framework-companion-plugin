@@ -163,6 +163,10 @@ $c-anchor-dropdown-item-headline-color: 'dark' !default;
 
 			#{$module}__toggle-headline + .c-timebox {
 				margin-left: spacing('10');
+                @include rtl() {
+                    margin-left: 0;
+                    margin-right: spacing('10');
+                }
 			}
 		}
 

@@ -92,7 +92,7 @@ export default ({ store }) => {
 
                     let searchResults;
 
-                    if (userGroups.indexOf('admin') >= 0 && userGroups.indexOf('editor') >= 0) {
+                    if (userGroups.indexOf('admin') >= 0 || userGroups.indexOf('editor') >= 0) {
 
                         searchResults = response.hits.hits.map(hit => {
                             const tile = hit._source;

@@ -22,6 +22,10 @@
 
             > * + * {
                 margin-left: spacing('16');
+                @include rtl() {
+                    margin-left: 0;
+                    margin-right: spacing('16');
+                }
             }
 
             &--left {
