@@ -45,16 +45,24 @@ export default {
         },
 
         text() {
-            return this.feedbacks[this.feedbackType]?.text;
+            if (this.feedbacks[this.feedbackType]) {
+                return this.feedbacks[this.feedbackType].text;
+            }
         },
         heading() {
-            return this.feedbacks[this.feedbackType]?.heading;
+            if (this.feedbacks[this.feedbackType]) {
+                return this.feedbacks[this.feedbackType].heading;
+            }
         },
         icon() {
-            return this.feedbacks[this.feedbackType]?.icon;
+            if (this.feedbacks[this.feedbackType]) {
+                return this.feedbacks[this.feedbackType].icon;
+            }
         },
         image() {
-            return this.feedbacks[this.feedbackType]?.image;
+            if (this.feedbacks[this.feedbackType]) {
+                return this.feedbacks[this.feedbackType].image;
+            }
         },
 
         feedbackType() {

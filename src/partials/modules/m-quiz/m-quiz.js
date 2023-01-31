@@ -92,7 +92,9 @@ export default {
         },
 
         questionSlots() {
-            return this.shuffeledQuestions[this.selectedQuestionIndex]?.data.slots;
+            if (this.shuffeledQuestions[this.selectedQuestionIndex]) {
+                return this.shuffeledQuestions[this.selectedQuestionIndex].data.slots;
+            }
         },
 
         questionLength() {
@@ -104,7 +106,9 @@ export default {
         },
 
         score() {
-            return this.quizStates?.filter( question => question.result).length;
+            if (this.quizStates) {
+                return this.quizStates.filter(question => question.result).length;
+            }
         },
 
         minScore() {

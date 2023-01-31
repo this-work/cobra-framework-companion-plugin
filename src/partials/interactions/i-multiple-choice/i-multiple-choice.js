@@ -46,7 +46,7 @@ export default {
         },
 
         withImages() {
-            return this.answers[0].image || this.answers[0].asset?.image;
+            return this.answers[0].image || this.answers[0].asset ? this.answers[0].asset.image : false;
         },
 
         markedAnswers() {

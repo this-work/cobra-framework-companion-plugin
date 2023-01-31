@@ -294,6 +294,7 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
                 &__feedback-background-wrapper {
                     @include above($m-interaction-breakpoint-desktop) {
                         @include grid-cell-row-start(1);
+                        @include grid-cell-height(1);
                     }
                 }
 

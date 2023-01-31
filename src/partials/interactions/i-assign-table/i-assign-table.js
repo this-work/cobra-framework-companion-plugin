@@ -247,7 +247,9 @@ export default {
         },
 
         resetScrollbar() {
-            this.$refs.questionsWrapper?.scrollTo(0, 0);
+            if (this.$refs.questionsWrapper) {
+                this.$refs.questionsWrapper.scrollTo(0, 0);
+            }
         }
 
     },

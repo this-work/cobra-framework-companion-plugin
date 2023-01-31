@@ -75,14 +75,25 @@ export default {
         },
 
         getValue(resolved) {
-            return resolved
-                ? this.correctValue
-                : this.initialValue ?? this.minValue ?? 0;
+            if (resolved) return this.correctValue;
+            if (this.initialValue) return this.initialValue;
+            if (this.minValue) return this.minValue;
+
+            return 0;
         },
 
         retry() {
             this.evaluationPermitted = false;
-            this.value = this.initialValue ?? this.minValue ?? 0;
+
+            if (this.initialValue) {
+                this.value = this.initialValue;
+            }
+            else if (this.minValue) {
+                this.value = this.minValue;
+            }
+            else {
+                this.value = 0;
+            }
 
             this.$store.commit('interaction/update', {
                 id: this.id,

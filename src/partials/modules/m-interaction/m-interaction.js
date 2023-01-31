@@ -75,9 +75,14 @@ export default {
             ];
         },
         _heading() {
+            const headline =
+                this.heading && this.heading.headline
+                ? this.heading.headline.replaceAll(/<[^>]*p>/g, '')
+                : undefined;
+
             return {
                 ...this.heading,
-                headline: this.heading?.headline?.replaceAll(/<[^>]*p>/g, ''),
+                headline,
                 headlineType: 'h3',
                 alignment: 'custom'
             };

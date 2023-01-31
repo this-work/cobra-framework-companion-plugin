@@ -56,7 +56,7 @@ export default {
                 if (typeof dropdown.text === 'string') return true;
 
                 const selectedAnswer = dropdown.dropdown.find(option => option.label === dropdown.selectedAnswerLabel);
-                return dropdown.hasSelectedAnswer && selectedAnswer?.correct;
+                return dropdown.hasSelectedAnswer && selectedAnswer && selectedAnswer.correct;
             });
         }
 
@@ -111,13 +111,15 @@ export default {
         },
 
         isOpen(index) {
-            return this.dropdownStatus[index]?.open;
+            if (this.dropdownStatus[index]) {
+                return this.dropdownStatus[index].open;
+            }
         },
 
         toggleOpen(index) {
             if (this.resolved) return;
 
-            const dropdownOpening = !this.dropdownStatus[index]?.open;
+            const dropdownOpening = !(this.dropdownStatus[index] && this.dropdownStatus[index].open);
             this.dropdownStatus.forEach((item, _index) => item.open = (_index === index) ? dropdownOpening : false );
 
             if (dropdownOpening) {
