@@ -227,7 +227,7 @@ $color-palettes: map-merge((
             )
         ),
         medium: (
-            background: 'medium',
+            background: 'light',
             box-shadow: (
                 'default': #{'0px 1px 4px'} _color('black:10:alpha'),
                 ':hover': #{'0px 8px 15px'} _color('black:05:alpha')#{', 0px 1px 4px'} _color('black:10:alpha'),
@@ -235,11 +235,12 @@ $color-palettes: map-merge((
             )
         ),
         dark: (
-            background: 'dark',
+            color: 'light-font',
+            background: 'light',
             box-shadow: (
-                'default': #{'0px 1px 4px'} _color('white:10:alpha'),
-                ':hover': #{'0px 8px 15px'} _color('white:05:alpha')#{', 0px 1px 4px'} _color('white:10:alpha'),
-                '.sortable-chosen': #{'0px 15px 20px'} _color('white:10:alpha')#{', 0px 1px 4px'} _color('white:10:alpha')
+                'default': #{'0px 1px 4px'} _color('black:10:alpha'),
+                ':hover': #{'0px 8px 15px'} _color('black:05:alpha')#{', 0px 1px 4px'} _color('black:10:alpha'),
+                '.sortable-chosen': #{'0px 15px 20px'} _color('black:10:alpha')#{', 0px 1px 4px'} _color('black:10:alpha')
             )
         )
     ),

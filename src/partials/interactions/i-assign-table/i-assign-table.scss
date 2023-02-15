@@ -10,6 +10,7 @@ $i-assign-table-breakpoint-desktop: 's' !default;
 $i-assign-table-breakpoint--size-smaller: 'm' !default;
 $i-assign-table-drag-indicator-color: color('black') !default;
 $i-assign-table-drag-indicator-color--with-image: color('white') !default;
+$i-assign-table-item-draggable-box-shadow--readonly: 0px 1px 2px rgb(0 0 0 / 10%) !default;
 $i-assign-table-label-responsive-font: 'copytext--small' !default;
 $i-assign-table-possible-answer-spacing: 'small' !default;
 $i-assign-table-possible-button-spacing: 'small' !default;
@@ -351,6 +352,10 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
 
             &__item {
                 box-shadow: none !important;
+
+                &#{$module}__draggable {
+                    box-shadow: $i-assign-table-item-draggable-box-shadow--readonly  !important;
+                }
 
                 &-handle {
                     cursor: not-allowed;

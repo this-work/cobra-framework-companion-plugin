@@ -8,6 +8,7 @@
 
 $i-sortable-list-breakpoint-desktop: 's' !default;
 $i-sortable-list-button-responsive-spacing: 'small' !default;
+$i-sortable-list-item-box-shadow--readonly: 0px 1px 2px rgb(0 0 0 / 10%) !default;
 $i-sortable-list-list-wrapper-10-columns-breakpoint: 'xs' !default;
 $i-sortable-list-list-wrapper-8-columns-breakpoint--type-stacked: 'm' !default;
 $i-sortable-list-spacing-map--type-default: ('s': '44', 'l': '71', 'xxxl': '115') !default;
@@ -94,7 +95,7 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
         #{$module} {
 
             &__item {
-                box-shadow: none !important;
+                box-shadow: $i-sortable-list-item-box-shadow--readonly !important;
 
                 &-handle {
                     cursor: not-allowed;
