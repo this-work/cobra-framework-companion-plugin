@@ -236,6 +236,16 @@ export default {
         async trackAttempt({ id, score, passThreshold, evaluationResult }) {
 
             try {
+
+                document.dispatchEvent(new CustomEvent('track-quiz-attempt', { detail: {
+                        id: id,
+                        score: score,
+                        success: evaluationResult
+                    } })
+                );
+
+                if (!process.client) return;
+
                 const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
 
                 const result = await this.$axios.$post('/api/v1/quiz/track-attempt', {

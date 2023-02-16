@@ -138,7 +138,9 @@ export default {
         },
 
         checkClickOutside(event) {
-            if (!event.path.some( item => this.$refs.dropsdowns.includes(item))) {
+            const path = event.composedPath ? event.composedPath() : event.path;
+
+            if (!path.some( element => this.$refs.dropsdowns.includes(element))) {
                 this.dropdownStatus.forEach(item => item.open = false);
                 this.removeEventClickOutside();
             }
