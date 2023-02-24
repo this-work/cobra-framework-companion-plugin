@@ -88,6 +88,12 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
     &--with-images {
 
+        .c-input-checkbox__wrapper {
+            @include rtl() {
+                justify-content: flex-end;
+            }
+        }
+
         #{$module}__wrapper {
             display: flex;
             justify-content: flex-start;
@@ -100,13 +106,16 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
             flex-grow: 0;
             width: grid-column-width-percentage(6);
             @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
-
-            &:nth-child(2n) {
+            @include rtl() {
+                @include i-dragg-drop-add-grid-gutter-spacing(margin-left);
                 margin-right: 0;
             }
 
             &:nth-child(2n) {
                 margin-right: 0;
+                @include rtl() {
+                    margin-left: 0;
+                }
             }
 
             &:nth-child(n+3) {
@@ -132,10 +141,18 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
             position: absolute;
             top: $i-single-choice-choice-spacing--mobile;
             right: $i-single-choice-choice-spacing--mobile;
+            @include rtl() {
+                right: 0;
+                left: $i-single-choice-choice-spacing--mobile;
+            }
 
             @include above($i-single-choice-breakpoint-desktop) {
                 top: $i-single-choice-choice-spacing--desktop;
                 right: $i-single-choice-choice-spacing--desktop;
+                @include rtl() {
+                    right: 0;
+                    left: $i-single-choice-choice-spacing--desktop;
+                }
             }
         }
 
@@ -233,6 +250,9 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
                 #{$module}__actions {
                     @include above($i-single-choice-breakpoint-desktop) {
                         text-align: left;
+                        @include rtl() {
+                            text-align: right;
+                        }
                     }
                 }
             }
@@ -264,6 +284,9 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
                     @include above($i-single-choice-breakpoint-desktop) {
                         text-align: left;
+                        @include rtl() {
+                            text-align: right;
+                        }
                     }
                 }
             }
@@ -301,6 +324,10 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
                         margin-top: 0;
                         width: grid-column-width-percentage(3);
                         @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+                        @include rtl() {
+                            @include i-dragg-drop-add-grid-gutter-spacing(margin-left);
+                            margin-right: 0;
+                        }
 
                         &:nth-child(n+5) {
                             margin-top: $i-single-choice-choice-spacing--desktop;
@@ -309,6 +336,9 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
                         &:nth-child(4n),
                         &:last-of-type {
                             margin-right: 0;
+                            @include rtl() {
+                                margin-left: 0;
+                            }
                         }
                     }
                 }
@@ -322,9 +352,16 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
                             width: grid-column-width-percentage(5);
                             @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+                            @include rtl() {
+                                @include i-dragg-drop-add-grid-gutter-spacing(margin-left);
+                                margin-right: 0;
+                            }
 
                             &:last-of-type {
                                 margin-right: 0;
+                                @include rtl() {
+                                    margin-left: 0;
+                                }
                             }
                         }
                     }
@@ -338,9 +375,16 @@ $i-single-choice-interaction-column-size: _get-grid-data('columns') - $m-interac
 
                             width: grid-column-width-percentage(4);
                             @include i-dragg-drop-add-grid-gutter-spacing(margin-right);
+                            @include rtl() {
+                                @include i-dragg-drop-add-grid-gutter-spacing(margin-left);
+                                margin-right: 0;
+                            }
 
                             &:last-of-type {
                                 margin-right: 0;
+                                @include rtl() {
+                                    margin-left: 0;
+                                }
                             }
                         }
                     }

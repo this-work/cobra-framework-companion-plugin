@@ -91,12 +91,6 @@ export default {
             ];
         },
 
-        questionSlots() {
-            if (this.shuffeledQuestions[this.selectedQuestionIndex]) {
-                return this.shuffeledQuestions[this.selectedQuestionIndex].data.slots;
-            }
-        },
-
         questionLength() {
             return this.shuffeledQuestions.length;
         },
@@ -156,6 +150,12 @@ export default {
                 mode: this.mode,
                 backgroundPosition: this.backgroundPosition
             };
+        },
+
+        getQuestionSlots(index) {
+            if (index === this.selectedQuestionIndex && this.shuffeledQuestions[index]) {
+                return this.shuffeledQuestions[index].slots;
+            }
         },
 
         quizDescription() {

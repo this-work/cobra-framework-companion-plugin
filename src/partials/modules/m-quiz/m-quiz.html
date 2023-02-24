@@ -64,7 +64,7 @@
                     />
                 </template>
 
-                <slot v-for="(_, name) in questionSlots" :name="name" :slot="name">
+                <slot v-for="(_, name) in getQuestionSlots(index)" :name="name" :slot="name">
                     <component-loader :components="_" />
                 </slot>
 

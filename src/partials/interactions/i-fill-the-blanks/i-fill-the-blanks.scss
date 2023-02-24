@@ -47,19 +47,27 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
 
     &__text {
         margin-right: $i-fill-the-blanks-spacing;
-        line-height: ($i-fill-the-blanks-dropdown-height + $i-fill-the-blanks-dropdown-margin-bottom) * 1.2 !important;     // @CW - 1.2 für text-line-height ?!?!?
+        line-height: ($i-fill-the-blanks-dropdown-height + $i-fill-the-blanks-dropdown-margin-bottom) * 1.2 !important;
+        @include rtl() {
+            margin-left: $i-fill-the-blanks-spacing;
+            margin-right: 0;
+        }
     }
 
     &__dropdown {
         display: inline-flex;
         position: relative;
         margin-bottom: $i-fill-the-blanks-dropdown-margin-bottom;
+        margin-right: $i-fill-the-blanks-spacing;
+        @include rtl() {
+            margin-left: $i-fill-the-blanks-spacing;
+            margin-right: 0;
+        }
     }
 
     &__dropdown-button {
         &.c-button {
             height: $i-fill-the-blanks-dropdown-height;
-            margin-right: $i-fill-the-blanks-spacing;
             @include color-theme('fill-the-blanks-dropdown-button');
 
             .c-button__label {
@@ -79,6 +87,10 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
         list-style: none;
         white-space: nowrap;
         @include color-theme('fill-the-blanks-dropdown-list');
+        @include rtl() {
+            left: unset;
+            right: 0;
+        }
     }
 
     &__dropdown-list-item {
@@ -161,6 +173,9 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
                 &__actions {
                     @include above($i-fill-the-blanks-breakpoint-desktop) {
                         text-align: left;
+                        @include rtl() {
+                            text-align: right;
+                        }
                     }
                 }
 

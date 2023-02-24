@@ -10,8 +10,6 @@ $m-interaction-breakpoint-desktop: 's' !default;
 $m-interaction-question-spacing: 'xsmall' !default;
 $m-interaction-question-column-size: 5 !default;
 $m-interaction-question-padding-bottom--stacked: 'xxsmall' !default;
-$m-interaction-assets-image-max-height: unitize(330px) !default;
-$m-interaction-assets-image-max-width: unitize(500px) !default;
 $m-interaction-interaction-padding-top--stacked: 'xsmall' !default;
 
 $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interaction-question-column-size;
@@ -20,7 +18,6 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
     // #region [Block]
     $module: &;
-    overflow: hidden;
     // #endregion
 
     // #region [Element]
@@ -77,8 +74,6 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
         .c-image {
             width: 100%;
-            max-height: $m-interaction-assets-image-max-height;
-            max-width: $m-interaction-assets-image-max-width;
         }
 
     }
@@ -203,6 +198,9 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
                     .c-heading {
                         text-align: left;
+                        @include rtl() {
+                            text-align: right;
+                        }
                     }
                 }
             }
@@ -221,6 +219,9 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
             &__text.c-text {
                 @include above($m-interaction-breakpoint-desktop) {
                     text-align: left;
+                    @include rtl() {
+                        text-align: right;
+                    }
                 }
             }
 
@@ -331,6 +332,14 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
                         }
                     }
                 }
+
+                &__assets {
+                    .c-image {
+                        @include above($m-interaction-breakpoint-desktop) {
+                            width: grid-column-width-percentage(10);
+                        }
+                    }
+                }
             }
         }
     }
@@ -380,6 +389,9 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
                 .c-heading {
                     text-align: left;
+                    @include rtl() {
+                        text-align: right;
+                    }
                 }
             }
 
@@ -394,6 +406,9 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
 
             &__text.c-text {
                 text-align: left;
+                @include rtl() {
+                    text-align: right;
+                }
             }
 
         }
