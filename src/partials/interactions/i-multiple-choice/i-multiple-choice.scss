@@ -146,7 +146,7 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
             top: $i-multiple-choice-choice-spacing--mobile;
             right: $i-multiple-choice-choice-spacing--mobile;
             @include rtl() {
-                right: 0;
+                right: unset;
                 left: $i-multiple-choice-choice-spacing--mobile;
             }
 
@@ -154,7 +154,7 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
                 top: $i-multiple-choice-choice-spacing--desktop;
                 right: $i-multiple-choice-choice-spacing--desktop;
                 @include rtl() {
-                    right: 0;
+                    right: unset;
                     left: $i-multiple-choice-choice-spacing--desktop;
                 }
             }
@@ -345,6 +345,12 @@ $i-multiple-choice-interaction-column-size: _get-grid-data('columns') - $m-inter
                 }
 
                 &#{$module}--image-count-2 {
+
+                    #{$module}__wrapper {
+                        @include above($i-multiple-choice-breakpoint-desktop) {
+                            justify-content: center;
+                        }
+                    }
 
                     #{$module}__choice-wrapper {
 

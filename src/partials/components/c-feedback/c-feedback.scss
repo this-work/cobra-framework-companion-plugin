@@ -42,6 +42,8 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
 
     // #region [Element]
     &__solution {
+        align-items: center;
+
         @include above($c-feedback-breakpoint-desktop) {
             display: flex;
             justify-content: center;
@@ -49,7 +51,10 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
     }
 
     &__feedback {
-        width: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
     &__feedback-wrapper {
@@ -148,6 +153,8 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
 
     &__text-wrapper {
         text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     // #endregion
 
@@ -189,55 +196,8 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
         }
     }
 
-    //@at-root.m-interaction {
-    //
-    //    @mixin c-feedback-before-and-after-addition {
-    //        content: '';
-    //        position: absolute;
-    //        top: 0;
-    //        width: unitize(999999px);
-    //        height: 100%;
-    //        @include color-theme('feedback-background');
-    //    }
-    //
-    //    &--type-default {
-    //
-    //        #{$module} {
-    //
-    //            @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $c-feedback-spacing-map--type-standard);
-    //        }
-    //
-    //        &.m-interaction--layout-area-viewport {
-    //
-    //            #{$module}:after {
-    //                right: unitize(-999999px);
-    //                @include c-feedback-before-and-after-addition;
-    //            }
-    //        }
-    //    }
-    //
-    //    &--type-stacked {
-    //
-    //        &.m-interaction--layout-area-viewport {
-    //
-    //            #{$module}:before {
-    //                left: unitize(-999999px);
-    //                @include c-feedback-before-and-after-addition;
-    //            }
-    //
-    //            #{$module}:after {
-    //                right: unitize(-999999px);
-    //                @include c-feedback-before-and-after-addition;
-    //            }
-    //        }
-    //    }
-    //}
-
-
     @at-root.m-interaction {
-
         &--type-default {
-
             #{$module} {
 
                 @include responsive-spacing($properties: padding-left padding-right, $spacing-map: $c-feedback-padding--type-default);
@@ -249,12 +209,19 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
                     @include grid-cell-position($m-interaction-question-column-size + 1, 1);
                     @include grid-cell-push-gap('left', $c-feedback-interaction-column-size);
                 }
+
             }
         }
 
         &--type-stacked {
-
             #{$module} {
+
+                &__solution {
+                    @include above($c-feedback-breakpoint-desktop) {
+                        width: grid-column-width-percentage(10);
+                    }
+                }
+
             }
         }
     }
@@ -265,4 +232,5 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
         @include c-feedback;
     }
     // #endregion
+
 }

@@ -26,6 +26,7 @@
     "@this/cobra-framework-elastic-plugin": "^1.0.4",
     "vuedraggable": "^2.24.3",
     "lodash.chunk": "^4.2.0",
+    "lodash.debounce": "^4.0.8",
     "@voerro/vue-tagsinput": "^2.4.1"
   },
   "devDependencies": {

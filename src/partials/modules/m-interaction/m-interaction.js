@@ -59,7 +59,7 @@ export default {
                 { [this.modifier('type-' + this.mode)]: true },
                 spacingClass('margin', 'top', this.spacingMarginTop),
                 spacingClass('margin', 'bottom', this.spacingMarginBottom),
-                { [this.modifier('choice-question')]: ['single-choice', 'multiple-choice'].includes(this.interaction) }
+                { [this.modifier('choice-question')]: ['single-choice', 'multiple-choice'].includes(this.interaction) && this.interactionProps.answers.every(answer => !answer.asset) }
             ];
         },
         backgroundSizeClass() {
@@ -77,8 +77,8 @@ export default {
         _heading() {
             const headline =
                 this.heading && this.heading.headline
-                ? this.heading.headline.replaceAll(/<[^>]*p>/g, '')
-                : undefined;
+                    ? this.heading.headline.replaceAll(/<[^>]*p>/g, '')
+                    : undefined;
 
             return {
                 ...this.heading,

@@ -321,6 +321,8 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
                 &__question {
                     @include above($m-interaction-breakpoint-desktop) {
                         @include responsive-spacing ($m-interaction-question-padding-bottom--stacked, padding-bottom);
+                        @include grid-cell-size(10);
+                        @include grid-cell-column-start(2);
                     }
                 }
 
@@ -379,7 +381,23 @@ $m-interaction-interaction-column-size: _get-grid-data('columns') - $m-interacti
     // </editor-fold>
 
 
+    @at-root .module#{$module} {
+
+        &--type-stacked#{$module}--choice-question {
+
+            #{$module} {
+
+                &__question {
+                    @include above($m-interaction-breakpoint-desktop) {
+                        @include grid-cell-column-start(1);
+                    }
+                }
+            }
+        }
+    }
+
     &--choice-question {
+
         #{$module} {
 
             &__question {

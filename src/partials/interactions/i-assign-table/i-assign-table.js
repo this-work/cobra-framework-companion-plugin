@@ -9,6 +9,8 @@ import {
     shuffleArray
 } from '../../../plugins/vanilla/interaction-helper';
 import { disableCursorGrabbing, enableCursorGrabbing } from '../../../plugins/vanilla/cursor-grabbing';
+import debounce from 'lodash.debounce';
+import Vue from "vue";
 
 export default {
 
@@ -35,15 +37,60 @@ export default {
         return {
             buttonLabelEvaluate: this.$t('interactions--button-evaluate'),
             draggableOptions: {
-                animation: 200,
+                animation: 300,
                 sort: true,
                 forceFallback: true,
-                ghostClass: `${this.$options.name}__item--selected`
+                ghostClass: `${this.$options.name}__item--selected`,
+                scrollSensitivity: 150,
+                fallbackTolerance: 1
             },
             shuffledItems: this.createDraggableObject(this.items),
-
-            imageAspectRatios: { 0: '531:398' }
+            imageAspectRatios: { 0: '531:398' },
+            resizeFunction: null,
+            observer: null
         };
+    },
+
+    mounted() {
+        setTimeout(() => {
+            this.resizeElements();
+
+            this.observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    this.resizeElements();
+                });
+            });
+
+            this.observer.observe(this.$el);
+
+            if (this.$refs.questionsWrapper) {
+                setTimeout(() => this.fixAutoScrollBug(this.$refs.questionsWrapper, 200));
+                this.$refs.questionsWrapper.addEventListener("scroll", this.fixAutoScrollBug);
+            }
+
+            setTimeout(() => {
+                this.resizeElements();
+            }, 200);
+
+        }, 20);
+
+        this.resizeFunction = debounce(this.resizeElements, 0);
+        window.addEventListener('resize', this.resizeFunction);
+    },
+
+    updated() {
+        this.resizeElements();
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.resizeFunction);
+        if (this.$refs.questionsWrapper) {
+            this.$refs.questionsWrapper.removeEventListener("scroll", this.fixAutoScrollBug);
+        }
+
+        if (this.observer) {
+            this.observer.unobserve(this.$el);
+        }
     },
 
     computed: {
@@ -65,25 +112,31 @@ export default {
 
         evaluatedResult() {
             return this._shuffledItems.questions.every(({ question }, index) => {
-                return parseInt(question[0].id) === parseInt(this._shuffledItems.selectedAnswers[index].answer[1].id);
+                return parseInt(question[0].id) === parseInt(this._shuffledItems.selectedAnswers[index].answer[0].id);
             });
         },
 
         answersHaveImages() {
-            return this._shuffledItems.answers.some( answer => {
-                return answer.answer.some(item => item.image);
-            });
+            return this.items.some(item => item.drag.image);
         },
 
         answersHaveImagesOnly() {
-            return this._shuffledItems.answers.every( answer => {
-                return answer.answer.every(item => item.image);
-            });
+            return this.items.every(item => item.drag.image);
         }
 
     },
 
     methods: {
+
+        fixAutoScrollBug(eventOrTarget) {
+            const target = eventOrTarget.target || eventOrTarget;
+
+            if (target.scrollWidth > target.offsetWidth && target.scrollLeft === 0) {
+                target.scrollLeft -= 1;
+            } else if (target.scrollWidth > target.offsetWidth && target.scrollLeft === target.scrollWidth) {
+                target.scrollLeft += 1;
+            }
+        },
 
         createResolvedDraggableObject(questions) {
             const newQuestions = questions.map(({ question }) => {
@@ -105,14 +158,7 @@ export default {
                 const answer = this.items.find( ({ drop, drag }) => drop.text === questionItem.text && drop.image === questionItem.image );
 
                 return {
-                    answer: [
-                        {
-                            id: questionItem.id,
-                            text: answer.drag.text,
-                            image: answer.drag.image,
-                            type: 'placeholder'
-                        }
-                    ]
+                    answer: []
                 };
             });
 
@@ -122,12 +168,6 @@ export default {
 
                 return {
                     answer: [
-                        {
-                            id: questionItem.id,
-                            text: answer.drag.text,
-                            image: answer.drag.image,
-                            type: 'placeholder'
-                        },
                         {
                             id: questionItem.id,
                             text: answer.drag.text,
@@ -163,12 +203,6 @@ export default {
                         id: index + 1,
                         text: drag.text,
                         image: drag.image,
-                        type: 'placeholder'
-                    },
-                    {
-                        id: index + 1,
-                        text: drag.text,
-                        image: drag.image,
                         type: 'draggable'
                     }
                 ]
@@ -176,14 +210,7 @@ export default {
             shuffleArray(answers);
 
             const selectedAnswers = array.map(({ drop, drag }, index) => ({
-                answer: [
-                    {
-                        id: index + 1,
-                        text: drag.text,
-                        image: drag.image,
-                        type: 'placeholder'
-                    }
-                ]
+                answer: []
             }));
 
             return { questions, answers, selectedAnswers };
@@ -215,7 +242,7 @@ export default {
                 }
             });
 
-            this.evaluationPermitted = this._shuffledItems.selectedAnswers.every(({ answer }) => answer.length === 2);
+            this.evaluationPermitted = this._shuffledItems.selectedAnswers.every(({ answer }) => answer.length > 0);
         },
 
         evaluate() {
@@ -250,8 +277,25 @@ export default {
             if (this.$refs.questionsWrapper) {
                 this.$refs.questionsWrapper.scrollTo(0, 0);
             }
-        }
+        },
 
+        resizeElements() {
+
+            if (!this.$refs.answerlists || this.$refs.answerlists.length === 0) {
+                return;
+            }
+
+            let answerlist = this.$refs.answerlists;
+            if (this.$refs.answerlists.length && this.$refs.answerlists[0] instanceof Vue) {
+                answerlist = this.$refs.answerlists.map( element => element.$el );
+            }
+
+            const elememts = [ ...answerlist, ...this.$refs.answeritems ];
+            elememts.forEach(element => element.style.removeProperty('height'));
+
+            const highestOffsetHeight = Math.max(...this.$refs.answeritems.map(element => element.offsetHeight));
+            elememts.forEach(element => element.style.height = highestOffsetHeight + 'px');
+        }
     },
 
     watch: {

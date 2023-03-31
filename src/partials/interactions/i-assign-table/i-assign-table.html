@@ -50,9 +50,9 @@
                             <draggable
                                 v-for="(selectedAnswerList, listIndex) in _shuffledItems.selectedAnswers"
                                 :key="'listIndex-answer-' + listIndex"
-                                :class="element('list')"
+                                :class="[element('list'), element('answer-list')]"
                                 v-bind="draggableOptions"
-                                :group="{ name: 'answers', put: (to) => to.el.children.length < 2 }"
+                                :group="{ name: 'answers', put: (to) => to.el.children.length < 1 }"
                                 :handle="`.${$options.name}__item-handle`"
                                 :draggable="`.${element('draggable')}`"
                                 sort="false"
@@ -61,12 +61,14 @@
                                 :disabled="resolved"
                                 @change="onChange"
                                 @start="onStart"
-                                @end="onEnd">
+                                @end="onEnd"
+                                ref="answerlists">
 
                                 <div
                                     v-for="(answer, index) in selectedAnswerList.answer"
                                     :key="'index-answer-' + index"
-                                    :class="[element('item'), elementModifier('item','answer'), element(answer.type), (answer.image) ? elementModifier('item', 'with-image') : '']">
+                                    :class="[element('item'), elementModifier('item','answer'), element(answer.type), (answer.image) ? elementModifier('item', 'with-image') : '']"
+                                    ref ="answeritems">
 
                                 <span :class="element('item-handle')">
                                     <c-icon name="drag-indicator"/>
@@ -98,17 +100,19 @@
                                 :class="element('answer')"
                                 :handle="`.${$options.name}__item-handle`"
                                 :list="answer.answer"
-                                :group="{ name: 'answers', put: to => to.el.children.length < 2 }"
+                                :group="{ name: 'answers', put: to => to.el.children.length < 1 }"
                                 v-bind="draggableOptions"
                                 :animation="0"
                                 :draggable="`.${element('draggable')}`"
                                 @start="onStart"
-                                @end="onEnd">
+                                @end="onEnd"
+                                ref="answerlists">
 
                                 <div
                                     v-for="(item, itemIndex) in answer.answer"
                                     :key="'itemIndex-' + itemIndex"
-                                    :class="[element('item'), elementModifier('item','answer'), element(item.type), (item.image) ? elementModifier('item', 'with-image') : '']">
+                                    :class="[element('item'), elementModifier('item','answer'), element(item.type), (item.image) ? elementModifier('item', 'with-image') : '']"
+                                    ref ="answeritems">
 
                                 <span :class="element('item-handle')">
                                     <c-icon name="drag-indicator"/>

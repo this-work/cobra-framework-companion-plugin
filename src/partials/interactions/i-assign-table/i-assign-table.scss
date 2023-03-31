@@ -179,6 +179,11 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
                 z-index: 2;
                 color: $i-assign-table-drag-indicator-color--with-image !important;
                 opacity: 1;
+
+                @include rtl() {
+                    left: unset;
+                    right: 6px;
+                }
             }
         }
 
@@ -235,6 +240,11 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
             cursor: grab;
             color: $i-assign-table-drag-indicator-color;
             opacity: .15;
+
+            @include rtl() {
+                margin-right: 0;
+                margin-left: spacing('10');
+            }
         }
     }
 
@@ -247,6 +257,7 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
             align-items: stretch;
             width: 100%;
             padding-bottom: 10px;
+            //justify-content: center;
         }
 
         &-question {
@@ -260,10 +271,22 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
         &-answer {
             @include i-assign-table-question-and-answer-addition;
 
-            #{$module}__placeholder {
-                flex-shrink: 1;
-                @include color-theme('drag-placeholder--answers-slot');
+
+
+
+            #{$module}__list {
+                border-radius: 5px;
+
             }
+
+
+
+
+
+            //#{$module}__placeholder {
+            //    flex-shrink: 1;
+            //    @include color-theme('drag-placeholder--answers-slot');
+            //}
         }
     }
 
@@ -273,37 +296,33 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
         padding-bottom: 27px;
     }
 
-    @mixin i-assign-table-answer-and-list-addition {
-        position: relative;
-
-        #{$module}__placeholder {
-            @include color-theme('drag-placeholder');
-
-            & > * {
-                visibility: hidden;
-            }
-
-        }
-
-        #{$module}__draggable {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-    }
-
     &__answer {
+        position: relative;
         width: grid-column-width-percentage(6);
-        //width: grid-column-width-percentage(4);
         flex-shrink: 0;
         flex-grow: 0;
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
-        @include i-assign-table-answer-and-list-addition;
+
+        @include rtl() {
+            margin-right: unset;
+            @include i-assign-table-add-grid-gutter-spacing(margin-left);
+        }
+
+        border-radius: 5px;
+        @include color-theme('drag-placeholder');
+
+        &-list {
+            border-radius: 5px;
+            @include color-theme('drag-placeholder');
+            @include color-theme('drag-placeholder--answers-slot');
+        }
 
         &:last-child {
             margin-right: 0;
+
+            @include rtl() {
+                margin-left: 0;
+            }
         }
 
         #{$module}__placeholder {
@@ -312,16 +331,24 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
     }
 
     &__list {
+        position: relative;
         padding: 0;
         width: grid-column-width-percentage(6);
-        //width: grid-column-width-percentage(4);
         flex-shrink: 0;
         flex-grow: 0;
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
-        @include i-assign-table-answer-and-list-addition;
+
+        @include rtl() {
+            margin-right: unset;
+            @include i-assign-table-add-grid-gutter-spacing(margin-left);
+        }
 
         &:last-child {
             margin-right: 0;
+
+            @include rtl() {
+                margin-left: 0;
+            }
         }
     }
 
