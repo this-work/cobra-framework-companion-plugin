@@ -73,7 +73,7 @@ export default function() {
         'footer',
         'navigation',
         'search',
-        'interaction'
+        'quiz'
     ];
 
 
