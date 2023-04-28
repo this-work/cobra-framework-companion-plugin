@@ -23,7 +23,7 @@ export default {
         blockClasses() {
             return {
                 [`interaction`]: true,
-                [`${this.$options.name}--readonly`]: this.resolved,
+                [`${this.$options.name}--readonly`]: this.resolved
             };
         },
 
@@ -32,7 +32,7 @@ export default {
                 return this.answers.map(answer => !!answer.correct);
             }
 
-            return this.answers.map(answer => this.$store.getters['interaction/selection'](this.id).includes(answer));
+            return this.answers.map(answer => this.$store.getters['quiz/interactionSelection'](this.id).includes(answer));
         }
 
     },
@@ -40,25 +40,17 @@ export default {
     methods: {
 
         evaluate(answer) {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: [answer],
-                    result: !!answer.correct
-                }
+                selection: [answer],
+                result: !!answer.correct
             });
 
             this.$emit('evaluated', !!answer.correct);
         },
 
         retry() {
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
         }
     }
 

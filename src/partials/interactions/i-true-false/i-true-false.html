@@ -1,26 +1,26 @@
 
-    <module-content :class="element('interaction-wrapper')">
-        <c-grid>
+<module-content :class="element('interaction-wrapper')">
+    <c-grid>
 
-            <component :is="tag" :class="blockClasses">
+        <component :is="tag" :class="blockClasses">
 
-                <div :class="element('actions')">
+            <div :class="element('actions')">
 
-                    <c-button v-for="(answer, index) in answers"
-                              :key="index"
-                              :class="[element('button'), (markedAnswers[index]) ? modifier('selected') : '']"
-                              size="big"
-                              :label="answer.text"
-                              :selected="markedAnswers[index]"
-                              :disabled="resolved"
-                              @click.native="evaluate(answer)" />
+                <c-button v-for="(answer, index) in answers"
+                          :key="index"
+                          :class="[element('button'), (markedAnswers[index]) ? modifier('selected') : '']"
+                          size="big"
+                          :label="answer.text"
+                          :selected="markedAnswers[index]"
+                          :disabled="resolved"
+                          @click.native="evaluate(answer)" />
 
-                </div>
+            </div>
 
-            </component>
+        </component>
 
-        </c-grid>
-    </module-content>
+    </c-grid>
+</module-content>
 
 
 <!--<component :is="tag" :class="blockClasses">-->

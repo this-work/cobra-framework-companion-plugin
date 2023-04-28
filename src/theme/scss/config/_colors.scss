@@ -482,6 +482,30 @@ $color-palettes: map-merge((
         dark: (
             background-color: 'dark-interaction-background'
         )
+    ),
+
+    'quiz-feedback-questions-background': (
+        light: (
+            background-color: 'white'
+        ),
+        medium: (
+            background-color: 'medium'
+        ),
+        dark: (
+            background-color: 'dark'
+        )
+    ),
+
+    'quiz-feedback-question': (
+        light: (
+            border-bottom: 1px solid _color('black:33:alpha')
+        ),
+        medium: (
+            border-bottom: 1px solid _color('black:33:alpha')
+        ),
+        dark: (
+            border-bottom: 1px solid _color('white:33:alpha')
+        )
     )
 
 ), $color-palettes);

@@ -27,24 +27,15 @@ export default {
     },
 
     mounted() {
-        this.$store.commit('interaction/add', {
-            id: this.id,
-            instance: this.$route.path.replaceAll('/', ''), // besserer hash code wäre besser
-            state: {
-                options: {
-                    ...this.$props
-                },
-                selection: null     // []
-            }
-        });
+        this.$store.commit('quiz/addInteraction', { id: this.id });
     },
 
     computed: {
         blockClasses() {
-            return {
-                [spacingClass('padding', 'top', this.spacingPaddingTop)]: true,
-                [spacingClass('padding', 'bottom', this.spacingPaddingBottom)]: true
-            };
+            return [
+                spacingClass('padding', 'top', this.spacingPaddingTop),
+                spacingClass('padding', 'bottom', this.spacingPaddingBottom)
+            ];
         }
     }
 

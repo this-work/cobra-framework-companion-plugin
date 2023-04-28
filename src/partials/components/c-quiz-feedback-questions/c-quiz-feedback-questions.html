@@ -1,0 +1,13 @@
+<ol :class="blockClasses">
+    <li
+        v-for="({ id, questionText, result }) in questions"
+        v-bind:key="id"
+        :class="element('answer')"
+    >
+        <span :class="getQuestionClasses(result)">
+            <c-icon :name="getQuestionIcon(result)" />
+        </span>
+
+        <div v-html="questionText" />
+    </li>
+</ol>

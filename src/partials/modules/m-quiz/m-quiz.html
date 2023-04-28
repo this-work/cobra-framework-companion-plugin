@@ -5,49 +5,49 @@
 
     <transition-group name="fade" :class="element('transition')">
 
-            <m-interaction
-                v-show="status === 'start'"
-                key="start"
-                v-bind="$props"
-                :heading="{ ...this.heading, alignment: 'center' }"
-                spacingMarginTop="none"
-                spacingMarginBottom="none">
+        <m-interaction
+            v-show="status === 'start'"
+            key="start"
+            v-bind="$props"
+            :heading="{ ...this.heading, alignment: 'center' }"
+            spacingMarginTop="none"
+            spacingMarginBottom="none">
 
-                <template #default>
+            <template #default>
 
-                    <component :is="`module-${backgroundPosition}`" :class="element('image-wrapper')">
+                <component :is="`module-${backgroundPosition}`" :class="element('image-wrapper')">
 
-                        <module-content>
+                    <module-content>
 
-                            <c-grid :class="element('image-grid')">
+                        <c-grid :class="element('image-grid')">
 
-                                <div :class="[element('image-container'), elementModifier('background', backgroundPosition)]">
+                            <div :class="[element('image-container'), elementModifier('background', backgroundPosition)]">
 
-                                    <c-image  v-bind="keyvisual"
-                                              :inline="true"
-                                              :objectFit="'cover'"
-                                              :lazyload="false" />
+                                <c-image  v-bind="keyvisual"
+                                            :inline="true"
+                                            :objectFit="'cover'"
+                                            :lazyload="false" />
 
-                                </div>
+                            </div>
 
-                            </c-grid>
+                        </c-grid>
 
-                        </module-content>
+                    </module-content>
 
-                    </component>
+                </component>
 
-                </template>
+            </template>
 
-                <template #actions>
-                    <c-button :class="element('button')"
-                              :label="$t('m-quiz--button-start-quiz')"
-                              icon="play-circle-outline"
-                              @click.native="startQuiz" />
-                </template>
+            <template #actions>
+                <c-button :class="element('button')"
+                            :label="$t('m-quiz--button-start-quiz')"
+                            icon="play-circle-outline"
+                            @click.native="startQuiz" />
+            </template>
 
-            </m-interaction>
+        </m-interaction>
 
-            <template v-for="(question, index) in shuffeledQuestions">
+        <template v-for="(question, index) in questions">
 
             <m-interaction
                 v-show="status === 'in progress' && selectedQuestionIndex === index"
@@ -64,29 +64,31 @@
                     />
                 </template>
 
-                <slot v-for="(_, name) in getQuestionSlots(index)" :name="name" :slot="name">
+                <slot v-for="(_, name) in questionSlots" :name="name" :slot="name">
                     <component-loader :components="_" />
                 </slot>
 
             </m-interaction>
 
-            </template>
+        </template>
 
-            <component v-show="status === 'end'" :is="`module-${backgroundPosition}`" key="end" :class="element('end-wrapper')">
-
-                <module-content >
-
+        <template v-if="status === 'end'">
+            <component :is="`module-${backgroundPosition}`" key="end" :class="element('end-wrapper')">
+                <module-content>
                     <div :class="[ element('end-description'), descriptionSpacingClasses ]">
-
-                        <c-quiz-feedback v-bind="feedbackProps"
-                                         @retry="retry" />
-
+                        <c-quiz-feedback v-bind="feedbackProps" @retry="retry" />
                     </div>
-
                 </module-content>
-
             </component>
 
+            <component :is="`module-${backgroundPosition}`" key="questions" :class="element('questions-wrapper')">
+                <module-content>
+                    <div :class="[ questionSpacingClasses ]">
+                        <c-quiz-feedback-questions :questions="quizStates" />
+                    </div>
+                </module-content>
+            </component>
+        </template>
     </transition-group>
 
 </module>

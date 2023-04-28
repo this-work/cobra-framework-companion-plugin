@@ -10,7 +10,7 @@ import {
 } from '../../../plugins/vanilla/interaction-helper';
 import { disableCursorGrabbing, enableCursorGrabbing } from '../../../plugins/vanilla/cursor-grabbing';
 import debounce from 'lodash.debounce';
-import Vue from "vue";
+import Vue from 'vue';
 
 export default {
 
@@ -65,7 +65,7 @@ export default {
 
             if (this.$refs.questionsWrapper) {
                 setTimeout(() => this.fixAutoScrollBug(this.$refs.questionsWrapper, 200));
-                this.$refs.questionsWrapper.addEventListener("scroll", this.fixAutoScrollBug);
+                this.$refs.questionsWrapper.addEventListener('scroll', this.fixAutoScrollBug);
             }
 
             setTimeout(() => {
@@ -85,7 +85,7 @@ export default {
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeFunction);
         if (this.$refs.questionsWrapper) {
-            this.$refs.questionsWrapper.removeEventListener("scroll", this.fixAutoScrollBug);
+            this.$refs.questionsWrapper.removeEventListener('scroll', this.fixAutoScrollBug);
         }
 
         if (this.observer) {
@@ -235,22 +235,18 @@ export default {
         },
 
         onChange() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: [cloneDeep(this._shuffledItems)]
-                }
+                selection: [cloneDeep(this._shuffledItems)]
             });
 
             this.evaluationPermitted = this._shuffledItems.selectedAnswers.every(({ answer }) => answer.length > 0);
         },
 
         evaluate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    result: this.evaluatedResult
-                }
+                result: this.evaluatedResult
             });
 
             this.$emit('evaluated', this.evaluatedResult);
@@ -258,14 +254,7 @@ export default {
 
         retry() {
             this.shuffledItems = this.createDraggableObject(this.items);
-
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
 
             this.$nextTick(() => {
                 this.resetScrollbar();

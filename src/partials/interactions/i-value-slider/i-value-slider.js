@@ -87,30 +87,20 @@ export default {
 
             if (this.initialValue) {
                 this.value = this.initialValue;
-            }
-            else if (this.minValue) {
+            } else if (this.minValue) {
                 this.value = this.minValue;
-            }
-            else {
+            } else {
                 this.value = 0;
             }
 
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
         },
 
         evaluate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: [this.value],
-                    result: this.evaluatedResult
-                }
+                selection: [this.value],
+                result: this.evaluatedResult
             });
 
             this.$emit('evaluated', this.evaluatedResult);

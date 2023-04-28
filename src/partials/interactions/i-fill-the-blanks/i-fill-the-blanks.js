@@ -20,7 +20,7 @@ export default {
         layoutArea: {
             type: String,
             default: 'page'
-        },
+        }
     },
 
     data() {
@@ -156,33 +156,22 @@ export default {
             this.evaluationPermitted = this.allDropdownsAnswered;
             this.removeEventClickOutside();
 
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: cloneDeep(this._content)
-                }
+                selection: cloneDeep(this._content)
             });
         },
 
         retry() {
             this.evaluationPermitted = false;
             this.content = this.createContent();
-
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
         },
 
         evaluate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    result: this.evaluatedResult
-                }
+                result: this.evaluatedResult
             });
 
             this.$emit('evaluated', this.evaluatedResult);

@@ -3,7 +3,7 @@
  */
 
 import { common, background, theme } from '@this/cobra-framework/src/plugins/mixins';
-import { cloneDeep, shuffleArray } from '../../../plugins/vanilla/interaction-helper';
+import { shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
 import { spacingClass, spacingProps } from '@this/cobra-framework/src/plugins/mixins/spacing';
 
 export default {
@@ -19,37 +19,51 @@ export default {
     ],
 
     props: {
-        tag: { type: String, default: 'div' },
-        id: { type: [ Number, String ], required: true },
+        tag: {
+            type: String,
+            default: 'div'
+        },
+        id: {
+            type: [ Number, String ],
+            required: true
+        },
         heading: Object,
         feedbacks: Object,
         interactions: Array,
-        backgroundPosition: {
-            type: String,
-            default: 'page'
-        },
         mode: { // 'default' or 'stacked'
             type: String,
             default: 'default'
         },
         text: String,
-        scroll: { type: Boolean, default: true },
+        scroll: {
+            type: Boolean,
+            default: true
+        },
         keyvisual: Object,
         ...spacingProps,
 
-        props: { type: Object, default: () => ({}) },
+        props: {
+            type: Object,
+            default: () => ({})
+        },
         randomize: {
             type: Boolean,
-            default: function () {return this.props.randomize || false }
+            default: function() {
+                return this.props.randomize || false;
+            }
         },
         limit: {
             type: Number,
-            default: function() { return this.props.limit || Number.POSITIVE_INFINITY }
+            default: function() {
+                return this.props.limit || Number.POSITIVE_INFINITY;
+            }
         },
         passThreshold: {
             type: Number,
-            default: function () { return this.props.passThreshold || 0.75 }
-        },
+            default: function() {
+                return this.props.passThreshold || 0.75;
+            }
+        }
     },
 
     data() {
@@ -65,13 +79,7 @@ export default {
                 force: true,
                 cancelable: false
             },
-            spacingObj: {
-                spacingMarginTop: 'none',
-                spacingPaddingTop: this.spacingPaddingTop,
-                spacingMarginBottom: 'none',
-                spacingPaddingBottom: this.spacingPaddingBottom
-            },
-            shuffeledQuestions: this.getQuestions()
+            questions: this.getQuestions()
         };
     },
 
@@ -91,8 +99,19 @@ export default {
             ];
         },
 
+        questionSpacingClasses() {
+            return [
+                spacingClass('padding', 'top', 'medium'),
+                spacingClass('padding', 'bottom', this.spacingPaddingBottom)
+            ];
+        },
+
+        questionSlots() {
+            return this.questions[this.selectedQuestionIndex]?.data.slots;
+        },
+
         questionLength() {
-            return this.shuffeledQuestions.length;
+            return this.questions.length;
         },
 
         maxScore() {
@@ -100,9 +119,7 @@ export default {
         },
 
         score() {
-            if (this.quizStates) {
-                return this.quizStates.filter(question => question.result).length;
-            }
+            return this.quizStates?.filter( question => question.result).length;
         },
 
         minScore() {
@@ -137,25 +154,19 @@ export default {
     },
 
     methods: {
-
         getQuestions() {
-            const questions = this.randomize ? shuffleArray(this.interactions)  : this.interactions;
+            const questions = this.randomize ? shuffleArray(this.interactions) : this.interactions;
+
             return questions.slice(0, this.limit);
         },
 
         getQuestionProps(index) {
             return {
+                ...this.questions[index].data.props,
                 isQuiz: true,
-                ...this.shuffeledQuestions[index].data.props,
                 mode: this.mode,
                 backgroundPosition: this.backgroundPosition
             };
-        },
-
-        getQuestionSlots(index) {
-            if (index === this.selectedQuestionIndex && this.shuffeledQuestions[index]) {
-                return this.shuffeledQuestions[index].slots;
-            }
         },
 
         quizDescription() {
@@ -173,18 +184,21 @@ export default {
             });
         },
 
-        questionChange(state) {
-            this.quizStates.push(cloneDeep({ result: state }));
+        questionChange(result) {
+            const selectedQuestion = this.questions[this.selectedQuestionIndex] || {};
+            const questionText = selectedQuestion?.data?.props?.heading?.headline;
+            const quizState = { questionText, result };
+
+            this.quizStates.push(quizState);
             this.selectedQuestionIndex++;
 
-            if (this.selectedQuestionIndex >= this.shuffeledQuestions.length) {
-                this.selectedQuestionIndex = undefined;
+            if (this.selectedQuestionIndex >= this.questions.length) {
                 this.status = 'end';
-                const score = this.score / this.maxScore;
+                this.selectedQuestionIndex = undefined;
 
                 this.reportResult({
                     id: this.id,
-                    score,
+                    score: this.score / this.maxScore,
                     passThreshold: this.passThreshold,
                     evaluationResult: this.quizPassed
                 });
@@ -196,17 +210,12 @@ export default {
         },
 
         retry() {
-
             this.quizStates = [];
-            this.$store.commit('interaction/reset', {
-                id: this.id,
-                instance: this.$route.path.replaceAll('/', ''), // besserer hash code wäre besser
-            });
-            this.shuffeledQuestions = this.getQuestions();
+            this.questions = this.getQuestions();
             this.status = 'start';
 
             this.$nextTick(() => {
-                this.$refs.interactions.forEach( interaction => interaction.retry());
+                this.$refs.interactions.forEach(interaction => interaction.retry());
                 this.scrollToTop();
             });
         },
@@ -216,7 +225,9 @@ export default {
         },
 
         scrollToTop() {
-            if (!this.scroll) return;
+            if (!this.scroll) {
+                return;
+            }
 
             const { duration, offset, ...scrollOptions } = this.scrollOptions;
 
@@ -233,35 +244,23 @@ export default {
         reportResult({ id, score, passThreshold, evaluationResult }) {
             return this.trackAttempt({ id, score, passThreshold, evaluationResult });
         },
+
         async trackAttempt({ id, score, passThreshold, evaluationResult }) {
-
             try {
-
-                document.dispatchEvent(new CustomEvent('track-quiz-attempt', { detail: {
-                        id: id,
-                        score: score,
-                        success: evaluationResult
-                    } })
-                );
-
-                if (!process.client) return;
-
                 const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
 
                 const result = await this.$axios.$post('/api/v1/quiz/track-attempt', {
-                    'quizId': id,
-                    'score': score,
-                    'threshold': passThreshold,
-                    'evaluationResult': evaluationResult,
+                    quizId: id,
+                    score: score,
+                    threshold: passThreshold,
+                    evaluationResult: evaluationResult,
                     [csrfTokenName]: csrfTokenValue
                 });
 
                 if (!result.success) {
                     console.log(result.error);
                 }
-
             } catch (err) {
-
                 if (err.response.data.error) {
                     console.log(err.response.data.error);
                 } else {
@@ -269,7 +268,11 @@ export default {
                 }
             }
         }
+    },
 
+    created() {
+        this.$store.commit('quiz/init', {
+            instance: this.$route.path.replaceAll('/', '') // besserer hash code wäre besser
+        });
     }
-
 };

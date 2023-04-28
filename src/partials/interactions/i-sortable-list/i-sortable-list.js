@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import interaction from '../../../plugins/mixins/interaction';
 import { shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
-import { disableCursorGrabbing, enableCursorGrabbing } from "@this/cobra-framework-companion-plugin/src/plugins/vanilla/cursor-grabbing";
+import { disableCursorGrabbing, enableCursorGrabbing } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/cursor-grabbing';
 
 export default {
 
@@ -76,22 +76,18 @@ export default {
         },
 
         onUpdate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: [...this.shuffledItems]
-                }
+                selection: [...this.shuffledItems]
             });
 
             this.evaluationPermitted = true;
         },
 
         evaluate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    result: this.evaluatedResult
-                }
+                result: this.evaluatedResult
             });
 
             this.$emit('evaluated', this.evaluatedResult);
@@ -99,15 +95,7 @@ export default {
 
         retry() {
             this.shuffledItems = this.createShuffledItems();
-
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
-
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
             this.evaluationPermitted = false;
         }
     }

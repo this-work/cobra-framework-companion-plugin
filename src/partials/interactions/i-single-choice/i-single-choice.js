@@ -24,7 +24,7 @@ export default {
         layoutArea: {
             type: String,
             default: 'page'
-        },
+        }
     },
 
     data() {
@@ -51,7 +51,7 @@ export default {
 
         markedAnswers() {
             return this.correctSelection || this.shuffledAnswers.map(answer =>
-                this.$store.getters['interaction/selection'](this.id).includes(answer)
+                this.$store.getters['quiz/interactionSelection'](this.id).includes(answer)
             );
         },
 
@@ -64,19 +64,19 @@ export default {
         },
 
         correctAnswersSelected() {
-            return this.$store.getters['interaction/selection'](this.id).filter(answer => answer.correct);
+            return this.$store.getters['quiz/interactionSelection'](this.id).filter(answer => answer.correct);
         },
 
         evaluatedResult() {
-            return this.correctAnswersSelected.length === this.$store.getters['interaction/selection'](this.id).length
+            return this.correctAnswersSelected.length === this.$store.getters['quiz/interactionSelection'](this.id).length
                 && this.correctAnswersSelected.length === this.correctAnswers.length;
         },
 
         comparedSelection() {
-            if (!this.$store.getters['interaction/selection'](this.id) || !this.correctSelection) return;
+            if (!this.$store.getters['quiz/interactionSelection'](this.id) || !this.correctSelection) return;
 
             return this.shuffledAnswers.map(answer => {
-                const isSelected = this.$store.getters['interaction/selection'](this.id).includes(answer);
+                const isSelected = this.$store.getters['quiz/interactionSelection'](this.id).includes(answer);
                 const isCorrect = answer.correct;
                 return isCorrect && isSelected || !isCorrect && !isSelected;
             });
@@ -91,11 +91,9 @@ export default {
         },
 
         selectionChanged(answer) {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    selection: [answer]
-                }
+                selection: [answer]
             });
 
             this.evaluationPermitted = true;
@@ -104,22 +102,13 @@ export default {
         retry() {
             this.evaluationPermitted = false;
             this.shuffledAnswers = this.shuffleAnswers([...this.answers]);
-
-            this.$store.commit('interaction/update', {
-                id: this.id,
-                state: {
-                    selection: null,
-                    result: null
-                }
-            });
+            this.$store.commit('quiz/resetInteraction', { id: this.id });
         },
 
         evaluate() {
-            this.$store.commit('interaction/update', {
+            this.$store.commit('quiz/updateInteraction', {
                 id: this.id,
-                state: {
-                    result: this.evaluatedResult
-                }
+                result: this.evaluatedResult
             });
 
             this.$emit('evaluated', this.evaluatedResult);
