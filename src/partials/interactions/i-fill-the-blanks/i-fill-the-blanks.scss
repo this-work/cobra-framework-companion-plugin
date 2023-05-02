@@ -121,10 +121,10 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
 
                     width: $i-fill-the-blanks-dropdown-height;
                     height: $i-fill-the-blanks-dropdown-height;
-                    line-height: 0 !important;
 
                     .c-button__icon {
                         display: inline-block;
+                        line-height: 0 !important;
 
                         svg {
                             display: inline-block;
