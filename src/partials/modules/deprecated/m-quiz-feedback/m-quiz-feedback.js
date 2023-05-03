@@ -29,6 +29,8 @@ export default {
 
     props: {
         progressIndicator: { type: Object },
+        heading: { type: Object },
+        headline:{ type: String },
         button: { type: Object }
     },
 

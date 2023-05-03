@@ -63,7 +63,6 @@ export default function() {
 
     }
 
-
     /**
      * List all stores to inject
      * in parent project

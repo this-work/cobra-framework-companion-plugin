@@ -14,8 +14,8 @@
 
                     <c-heading
                         :class="element('heading')"
-                        v-if="headline"
-                        :headline="headline"
+                        v-if="headline || heading"
+                        :headline="headline || (heading.hasOwnProperty('headline') ? heading.headline : undefined)"
                         headline-tag="span"
                         headline-type="h1"
                         alignment="center"
