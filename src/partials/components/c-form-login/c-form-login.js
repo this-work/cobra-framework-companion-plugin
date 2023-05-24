@@ -48,6 +48,8 @@ export default {
 
                 try {
 
+                    sessionStorage.clear();
+
                     const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
                     await this.$auth.loginWith(this.$config.AUTH_STRATEGY, {

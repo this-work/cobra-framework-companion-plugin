@@ -25,7 +25,7 @@ export default {
             type: String,
             default: 'div'
         },
-        id: Number,
+        id: [String, Number],
         mainCategories: Array,
         type: {
             type: String,
@@ -74,7 +74,7 @@ export default {
             return {};
         },
         completed() {
-            return isPlaylistCompleted(this.id);
+            return isPlaylistCompleted(this.id  + '');
         }
     },
 

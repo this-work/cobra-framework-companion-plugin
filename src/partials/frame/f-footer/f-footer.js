@@ -29,6 +29,7 @@ export default {
 
     methods: {
         logout() {
+            sessionStorage.clear();
             this.$auth.logout(this.$config.AUTH_STRATEGY);
         }
     }

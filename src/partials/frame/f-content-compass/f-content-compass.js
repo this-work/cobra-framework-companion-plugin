@@ -16,7 +16,7 @@ export default {
 
     props: {
         id: {
-            type: String|Number
+            type: [String, Number]
         },
         title: {
             type: String
@@ -115,8 +115,8 @@ export default {
 
             document.dispatchEvent(new CustomEvent('playlist-completed', {
                 detail: {
-                    completed: this.id,
-                    allCompleted: completedPlaylists()
+                    id: this.id,
+                    completed: completedPlaylists()
                 }
             }));
 
