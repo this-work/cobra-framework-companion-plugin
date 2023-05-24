@@ -1,7 +1,9 @@
 <module :class="blockClasses"
-        :background="false"
+        :backgroundPosition="backgroundPosition"
+        :backgroundImage="backgroundImage"
 >
     <module-content>
+
         <div :class="element('tabs')" ref="stickyTabs">
             <ul :class="element('list')">
                 <li
@@ -34,5 +36,6 @@
 
             <span :class="element('selection-marker')" :style="getMarkerStyles" />
         </div>
+
     </module-content>
 </module>

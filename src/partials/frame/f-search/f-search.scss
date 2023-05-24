@@ -2,31 +2,17 @@
 ///
 /// f-search
 ///
-/// @group Modules
+/// @group Frame
 ///
 ////
 
-$f-header-search-field-padding: 0 spacing('20') !default;
 $f-header-search-field-border-radius: unitize(25px) !default;
-
 $f-header-search-button-spacing: spacing('6') !default;
 $f-header-search-button-icon-size: unitize(24px) !default;
 $f-header-search-button-icon-opacity: .33 !default;
-$f-header-search-button-icon-opacity-hover: .66 !default;
-
-$f-header-search-tag-padding: unitize(5px) unitize(12px) !default;
 $f-header-search-tag-border-radius: unitize(25px) !default;
-$f-header-search-tag-font: font($default-font-family, 'regular', '14', 25px) !default;
 $f-header-search-tag-height: unitize(35px) !default;
-
-$f-header-additional-tags-spacing: unitize(20px) !default;
 $f-header-tag-spacing: spacing('6') !default;
-
-$f-header-toggle-expanded-tags-space: 85px !default;
-$f-header-toggle-expanded-tags-bottom: unitize(5px) !default;
-
-$f-header-toggle-expanded-tags-opacity: .5 !default;
-$f-header-toggle-expanded-tags-icon-opacity: .33 !default;
 
 @mixin tag-badge-pill {
     display: flex;
@@ -57,8 +43,12 @@ $f-header-toggle-expanded-tags-icon-opacity: .33 !default;
     // #region [Block]
     $module: &;
     position: relative;
-    z-index: zindex(100);
+    z-index: zindex(999);
     min-height: 100%;
+    @include above('s') {
+        margin-bottom: spacing('44') * -1;
+    }
+
     // #endregion
 
     // #region [Element]

@@ -1,6 +1,6 @@
 <div :class="element('wrapper')">
 
-    <button :class="blockClasses" @click="toggleContentNavigation">
+    <component :is="contentNavigation ? 'button' : 'span'" :class="blockClasses" @click="toggleContentNavigation">
         <span>
             <c-icon v-if="contentNavigation || scrollCompleted" :class="element('compass-icon')" :name="compassIcon" />
             <svg
@@ -21,7 +21,7 @@
                 />
             </svg>
         </span>
-    </button>
+    </component>
 
     <f-content-navigation
         v-if="contentNavigation"

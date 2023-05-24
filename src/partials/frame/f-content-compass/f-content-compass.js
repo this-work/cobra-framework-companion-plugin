@@ -3,6 +3,7 @@
  */
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
+import { completePlaylist, completedPlaylists } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
 import throttle from 'lodash.throttle';
 
 export default {
@@ -14,6 +15,9 @@ export default {
     ],
 
     props: {
+        id: {
+            type: String|Number
+        },
         title: {
             type: String
         },
@@ -41,7 +45,7 @@ export default {
 
         return {
             showContentNavigation: false,
-            toastShowed: false,
+            completedOnced: false,
             completionProgress: 0,
             circumference,
             normalizedRadius,
@@ -61,11 +65,9 @@ export default {
         scrollCompleted() {
             const completed = this.completionProgress === 100;
             if (completed) {
-                if (!this.toastShowed) {
-                    this.toastShowed = true;
-                    this.$refs.toast.show();
+                if (!this.completedOnced) {
+                    this.completePlaylist();
                 }
-                this.$emit('completed');
             }
             return completed;
         },
@@ -104,14 +106,31 @@ export default {
     },
 
     methods: {
+        completePlaylist() {
+
+            this.completedOnced = true;
+            this.$refs.toast.show();
+
+            completePlaylist(this.id);
+
+            document.dispatchEvent(new CustomEvent('playlist-completed', {
+                detail: {
+                    completed: this.id,
+                    allCompleted: completedPlaylists()
+                }
+            }));
+
+        },
         toggleContentNavigation(event) {
-            event.stopPropagation();
-            if (!this.showContentNavigation) {
-                this.showContentNavigation = true;
-                this.$refs.contentNavigation.open();
-            } else {
-                this.showContentNavigation = false;
-                this.$refs.contentNavigation.close();
+            if (this.contentNavigation) {
+                event.stopPropagation();
+                if (!this.showContentNavigation) {
+                    this.showContentNavigation = true;
+                    this.$refs.contentNavigation.open();
+                } else {
+                    this.showContentNavigation = false;
+                    this.$refs.contentNavigation.close();
+                }
             }
         },
         getFooterHeight() {

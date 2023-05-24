@@ -89,14 +89,14 @@ $color-palettes: map-merge((
         ),
         dark: (
             background-color: (
-                'default': 'light',
-                ':hover': 'white:10:darken',
-                ':active': 'white:10:darken',
-                ':disabled': 'light',
+                'default': 'dark',
+                ':hover': 'black:75:alpha',
+                ':active': 'black:75:alpha',
+                ':disabled': 'black:15:alpha',
             ),
             color: (
                 'default': 'primary',
-                ':disabled': 'light-deco',
+                ':disabled': 'light:10:alpha',
             ),
         )
     ),
@@ -109,6 +109,18 @@ $color-palettes: map-merge((
         ),
         dark: (
             color: 'primary'
+        )
+    ),
+
+    'sticky-tabs': (
+        light: (
+            border-color: 'black:15:alpha'
+        ),
+        medium: (
+            border-color: 'black:15:alpha'
+        ),
+        dark: (
+            border-color: 'white:15:alpha'
         )
     ),
 
@@ -173,6 +185,22 @@ $color-palettes: map-merge((
         dark: (
             background-color: 'light',
             color: 'light-font'
+        )
+    ),
+
+    /// Toast Color Themes
+    'toast': (
+        light: (
+            color: 'white',
+            background: 'black:50:alpha'
+        ),
+        medium: (
+            color: 'white',
+            background: 'black:50:alpha'
+        ),
+        dark: (
+            color: 'black',
+            background: 'white:33:alpha'
         )
     ),
 

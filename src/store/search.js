@@ -17,9 +17,15 @@ export default ({ store }) => {
     };
 
     const prepareTile = (
-        { _source: tile },
+        {
+            _source: tile,
+            _id: id
+        },
         { lockWhenNoAccess = false }
     ) => {
+
+        tile['id'] = id;
+
         const userHasAccess = checkUserAccess(tile);
 
         if (lockWhenNoAccess && !userHasAccess) {
@@ -60,8 +66,6 @@ export default ({ store }) => {
     };
 
     const _extractSearchResults = (response) => {
-
-        console.log(user);
 
         const { hits } = response?.hits;
 

@@ -20,7 +20,6 @@ $f-content-compass-size: unitize(36px);
     background: transparent;
     border: none;
     color: color('white');
-    cursor: pointer;
     // #endregion
 
     // #region [Element]
@@ -67,8 +66,9 @@ $f-content-compass-size: unitize(36px);
     // #endregion
 
     // #region [Modifier]
-    &:hover {
+    &:hover:not(span) {
         background: color('white:15:alpha');
+        cursor: pointer;
     }
 
     &--scroll-completed {

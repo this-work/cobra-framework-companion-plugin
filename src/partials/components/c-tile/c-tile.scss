@@ -202,12 +202,6 @@ $c-tile-headline-line-clamp: 3 !default;
             }
         }
 
-        @include below('xs') {
-            #{$module}__lock {
-                top: 35%;
-            }
-        }
-
     }
 
     &--type-playlist {
@@ -240,12 +234,6 @@ $c-tile-headline-line-clamp: 3 !default;
             width: unitize(16px);
             height: unitize(16px);
             margin-right: spacing('10');
-        }
-
-        @include below('xs') {
-            #{$module}__lock {
-                top: 35%;
-            }
         }
 
     }
@@ -296,12 +284,6 @@ $c-tile-headline-line-clamp: 3 !default;
             width: unitize(16px);
             height: unitize(16px);
             margin-right: spacing('10');
-        }
-
-        @include below('xs') {
-            #{$module}__lock {
-                top: 35%;
-            }
         }
 
     }

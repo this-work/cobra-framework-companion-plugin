@@ -2,14 +2,15 @@
  * f-sticky-tabs
  */
 
-import { common } from '@this/cobra-framework/src/plugins/mixins';
+import { common, background } from '@this/cobra-framework/src/plugins/mixins';
 import throttle from 'lodash.throttle';
 
 export default {
     name: 'f-sticky-tabs',
 
     mixins: [
-        ...common
+        ...common,
+        background
     ],
 
     props: {

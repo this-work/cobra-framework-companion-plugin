@@ -13,6 +13,9 @@ export default {
     ],
 
     props: {
+        id: {
+            type: String|Number
+        },
         title: {
             type: String
         },
