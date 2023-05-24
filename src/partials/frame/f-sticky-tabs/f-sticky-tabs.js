@@ -80,6 +80,10 @@ export default {
         this.updateScrollPosition();
 
         setTimeout(() => {
+
+            console.log(this.$el);
+            console.log(this.$refs.stickyTabs);
+
             const stickyTabsHeight = this.$refs.stickyTabs.getBoundingClientRect().height;
 
             this.tabsScrollTops = this.tabs.map(({ type }) => {
