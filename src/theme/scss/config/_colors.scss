@@ -48,29 +48,67 @@ $color-palettes: map-merge((
     'search-field': (
         light: (
             background-color: 'light-deco',
+            border-color: 'light-deco',
             color: 'light-font'
         ),
         medium: (
             background-color: 'medium-deco',
+            border-color: 'medium-deco',
             color: 'medium-font'
         ),
         dark: (
             background-color: 'dark-deco',
+            border-color: 'dark-deco',
             color: 'dark-font'
         )
     ),
-    'search-button': (
+    'search-reset-tags': (
         light: (
-            background-color: 'light',
-            border-color: 'light-deco'
+            background-color: (
+                'default': 'light',
+                ':hover':  'white:10:darken',
+                ':active': 'white:10:darken',
+                ':disabled': 'light',
+            ),
+            color: (
+                'default': 'primary',
+                ':disabled': 'light-deco',
+            ),
         ),
         medium: (
-            background-color: 'light',
-            border-color: 'medium-deco'
+            background-color: (
+                'default': 'light',
+                ':hover': 'white:10:darken',
+                ':active': 'white:10:darken',
+                ':disabled': 'light',
+            ),
+            color: (
+                'default': 'primary',
+                ':disabled': 'light-deco',
+            ),
         ),
         dark: (
-            background-color: 'light',
-            border-color: 'dark-deco'
+            background-color: (
+                'default': 'light',
+                ':hover': 'white:10:darken',
+                ':active': 'white:10:darken',
+                ':disabled': 'light',
+            ),
+            color: (
+                'default': 'primary',
+                ':disabled': 'light-deco',
+            ),
+        )
+    ),
+    'search-icon': (
+        light: (
+            color: 'primary'
+        ),
+        medium: (
+            color: 'primary'
+        ),
+        dark: (
+            color: 'primary'
         )
     ),
 

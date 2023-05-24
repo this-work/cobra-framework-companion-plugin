@@ -1,0 +1,54 @@
+<transition name="transition-f-content-navigation">
+    <nav :key="visible" v-if="visible" :class="blockClasses">
+
+        <div v-if="collection" :class="element('collection')">
+            <nuxt-link :to="collection.href" :class="element('collection-link')">
+                <c-icon name="collection" :class="element('collection-icon')" />
+                <span :class="element('collection-label')" v-html="collection.label" />
+            </nuxt-link>
+        </div>
+
+        <ul :class="element('list')">
+            <li v-if="title" :class="element('list-headline')" v-html="title" />
+            <li v-for="(anchor, index) in anchors" :key="index">
+                <c-scrollto :target="'#' + anchor.id" :class="element('anchor')" @click.native="close()">
+                    <c-image v-if="anchor.image" v-bind="anchor.image" :class="element('anchor-image')" />
+                    <span v-if="anchor.text" :class="element('anchor-text')">
+                        <span v-if="anchor.text.overline" :class="element('anchor-overline')">{{ anchor.text.overline }}</span>
+                        <span v-if="anchor.text.headline" :class="element('anchor-headline')">{{ anchor.text.headline }}</span>
+                    </span>
+                </c-scrollto>
+            </li>
+
+
+            <li v-for="(anchor, index) in anchors" :key="index">
+                <c-scrollto :target="'#' + anchor.id" :class="element('anchor')" @click.native="close()">
+                    <c-image v-if="anchor.image" v-bind="anchor.image" :class="element('anchor-image')" />
+                    <span v-if="anchor.text" :class="element('anchor-text')">
+                        <span v-if="anchor.text.overline" :class="element('anchor-overline')">{{ anchor.text.overline }}</span>
+                        <span v-if="anchor.text.headline" :class="element('anchor-headline')">{{ anchor.text.headline }}</span>
+                    </span>
+                </c-scrollto>
+            </li>
+            <li v-for="(anchor, index) in anchors" :key="index">
+                <c-scrollto :target="'#' + anchor.id" :class="element('anchor')" @click.native="close()">
+                    <c-image v-if="anchor.image" v-bind="anchor.image" :class="element('anchor-image')" />
+                    <span v-if="anchor.text" :class="element('anchor-text')">
+                        <span v-if="anchor.text.overline" :class="element('anchor-overline')">{{ anchor.text.overline }}</span>
+                        <span v-if="anchor.text.headline" :class="element('anchor-headline')">{{ anchor.text.headline }}</span>
+                    </span>
+                </c-scrollto>
+            </li>
+            <li v-for="(anchor, index) in anchors" :key="index">
+                <c-scrollto :target="'#' + anchor.id" :class="element('anchor')" @click.native="close()">
+                    <c-image v-if="anchor.image" v-bind="anchor.image" :class="element('anchor-image')" />
+                    <span v-if="anchor.text" :class="element('anchor-text')">
+                        <span v-if="anchor.text.overline" :class="element('anchor-overline')">{{ anchor.text.overline }}</span>
+                        <span v-if="anchor.text.headline" :class="element('anchor-headline')">{{ anchor.text.headline }}</span>
+                    </span>
+                </c-scrollto>
+            </li>
+
+        </ul>
+    </nav>
+</transition>

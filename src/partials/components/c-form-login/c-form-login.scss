@@ -6,7 +6,7 @@
 ///
 ////
 
-$c-form-login-input-margin: spacing('44') 0 0 0 !default;
+$c-form-login-input-margin: spacing('27') 0 0 0 !default;
 $c-form-login-forgot-font: font($default-font-family, 'regular', '12') !default;
 $c-form-login-forgot-color-theme: 'copytext' !default;
 $c-form-login-submit-margin: spacing('27') 0 0 0 !default;
@@ -32,11 +32,14 @@ $c-form-login-submit-margin: spacing('27') 0 0 0 !default;
         }
     }
 
-    &__submit {
+    &__actions {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         margin: $c-form-login-submit-margin;
+        .c-button  + .c-button {
+            margin-left: spacing('16');
+        }
     }
     // #endregion
 

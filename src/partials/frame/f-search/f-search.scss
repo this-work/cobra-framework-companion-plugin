@@ -1,0 +1,227 @@
+////
+///
+/// f-search
+///
+/// @group Modules
+///
+////
+
+$f-header-search-field-padding: 0 spacing('20') !default;
+$f-header-search-field-border-radius: unitize(25px) !default;
+
+$f-header-search-button-spacing: spacing('6') !default;
+$f-header-search-button-icon-size: unitize(24px) !default;
+$f-header-search-button-icon-opacity: .33 !default;
+$f-header-search-button-icon-opacity-hover: .66 !default;
+
+$f-header-search-tag-padding: unitize(5px) unitize(12px) !default;
+$f-header-search-tag-border-radius: unitize(25px) !default;
+$f-header-search-tag-font: font($default-font-family, 'regular', '14', 25px) !default;
+$f-header-search-tag-height: unitize(35px) !default;
+
+$f-header-additional-tags-spacing: unitize(20px) !default;
+$f-header-tag-spacing: spacing('6') !default;
+
+$f-header-toggle-expanded-tags-space: 85px !default;
+$f-header-toggle-expanded-tags-bottom: unitize(5px) !default;
+
+$f-header-toggle-expanded-tags-opacity: .5 !default;
+$f-header-toggle-expanded-tags-icon-opacity: .33 !default;
+
+@mixin tag-badge-pill {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    max-width: 100%;
+    height: $f-header-search-tag-height;
+    margin-right: $f-header-tag-spacing;
+    padding: 0 unitize(12px);
+    overflow: hidden;
+    transition: transition-fade-in(all);
+    border-radius: $f-header-search-tag-border-radius;
+    font-size: 0;
+    white-space: nowrap;
+
+    span {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include responsive-font($type: 'copytext', $line-height-overwrite: 1.2);
+    }
+}
+
+.f-search {
+    // #region [Block]
+    $module: &;
+    position: relative;
+    z-index: zindex(100);
+    min-height: 100%;
+    // #endregion
+
+    // #region [Element]
+    &__field {
+        display: flex;
+        position: relative;
+        align-items: center;
+        height: unitize(48px);
+        padding: 0 spacing('44');
+        border-radius: $f-header-search-field-border-radius;
+        overflow: hidden;
+        @include color-theme('search-field');
+
+    }
+
+    &__reset-tags {
+        display: flex;
+        position: absolute;
+        z-index: zindex(200);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: unitize(48px);
+        height: unitize(48px);
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        border-width: $f-header-search-button-spacing;
+        border-style: solid;
+        border-color: inherit;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transition-fade-in(all);
+        @include color-theme('search-reset-tags');
+        svg {
+            display: block;
+            width: $f-header-search-button-icon-size;
+            height: $f-header-search-button-icon-size;
+        }
+    }
+
+    &__search-icon {
+        display: flex;
+        position: absolute;
+        z-index: zindex(200);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 spacing('16');
+        align-items: center;
+        justify-content: center;
+        background: inherit;
+        border-radius: 50%;
+        @include color-theme('search-icon');
+    }
+
+    &__scrollbar {
+        width: 100%;
+        align-self: center;
+        .simplebar-placeholder {
+            width: auto !important;
+        }
+    }
+
+    &__input {
+        input {
+            display: block;
+            width: 100%;
+            min-width: unitize(230px);
+            margin: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: inherit;
+            @include responsive-font($type: 'copytext', $line-height-overwrite: 1.2);
+
+        }
+    }
+
+    .tags-input {
+        display: flex;
+        align-items: center;
+
+        &-badge-pill {
+            @include tag-badge-pill;
+            padding-right: unitize(31px);
+            @include color-theme('selected-tag-pill');
+        }
+
+        &-remove {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: unitize(7px);
+            padding: unitize(8px);
+            overflow: hidden;
+            transform: translate( 0, -50%);
+            color: inherit;
+            cursor: pointer;
+
+            &:focus {
+                outline: none;
+            }
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: unitize(-1px);
+                width: 75%;
+                height: 1.5px;
+                margin-top: unitize(-1px);
+                background: currentColor;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+
+        > span:first-child,
+        > input:first-child {
+            margin-left: unitize(12px);
+        }
+    }
+
+    &__tags {
+        display: flex;
+        position: relative;
+        margin-top: unitize(4px);
+        flex-wrap: wrap;
+        align-items: flex-start;
+        height: auto;
+        overflow: hidden;
+    }
+
+    &__tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    &__tags-badge-pill {
+        @include tag-badge-pill;
+        margin-top: $f-header-tag-spacing;
+        cursor: pointer;
+        user-select: none;
+        @include color-theme('tag-pill');
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-search) {
+        @include f-search;
+    }
+    // #endregion
+
+}

@@ -15,25 +15,21 @@ $f-footer-list-entry-margin-left: spacing('27') !default;
     // #region [Block]
     @include color-theme('footer');
     @include responsive-spacing($f-footer-responsive-spacing, padding-top padding-bottom);
-    @include below('s') {
+    @include below('m') {
         padding-bottom: spacing('115');
     }
     // #endregion
 
     // #region [Element]
 
-    .l-5-1-6__column-1,
-    .l-5-1-6__column-2,
-    .l-5-1-6__column-3 {
+    .l-3-1-8__column-1,
+    .l-3-1-8__column-3 {
         align-self: center;
     }
 
     &__text {
         font: $f-footer-font;
         text-align: center;
-        span {
-            font: inherit;
-        }
         @include above('s') {
             text-align: left;
         }
@@ -42,26 +38,24 @@ $f-footer-list-entry-margin-left: spacing('27') !default;
     &__list {
         display: flex;
         flex-wrap: wrap;
-        margin-top: spacing('20');
         padding-left: 0;
         align-items: center;
         justify-content: center;
         @include above('s') {
-            margin-top: 0;
             justify-content: $f-footer-list-align-desktop;
         }
     }
 
     &__list-entry {
+        margin-top: spacing('20');
         list-style: none;
         font: $f-footer-font;
         white-space: nowrap;
-        &-title {
-            font: inherit;
-            white-space: inherit;
-        }
         & + & {
             margin-left: $f-footer-list-entry-margin-left;
+        }
+        @include above('s') {
+            margin-top: 0;
         }
     }
 

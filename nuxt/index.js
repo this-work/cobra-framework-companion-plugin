@@ -70,7 +70,8 @@ export default function() {
     const stores = [
         'header',
         'footer',
-        'navigation',
+        'companion',
+        'navigations',
         'search',
         'quiz'
     ];

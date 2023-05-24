@@ -1,0 +1,55 @@
+<module :class="blockClasses"
+        :background="false"
+>
+
+    <module-content>
+
+        <div :class="element('field')">
+
+            <button :class="element('reset-tags')" :disabled="selectedTags.length <= 0" @click="removeAllTags()" >
+                <c-icon name="close" />
+            </button>
+
+            <simplebar :class="element('scrollbar')">
+                <tags-input
+                    v-model="selectedTags"
+                    :existing-tags="this.$store.state.search.tags"
+                    @input="updateData"
+                    :class="element('input')"
+                    :add-tags-on-comma="true"
+                    :add-tags-on-blur="true"
+                    :placeholder="$t('f-header-search--placeholder')"
+                />
+            </simplebar>
+
+            <span :class="element('search-icon')">
+                <c-icon name="search" />
+            </span>
+
+        </div>
+
+        <transition-replace>
+            <div :key="tagTransitionKey">
+                <div
+                    v-if="tags.length > 0"
+                    :class="tagsClasses"
+                    ref="tags"
+                >
+                    <div :class="element('tags-container')">
+                        <span
+                            v-for="(item, index) in tags"
+                            :key="index"
+                            :class="element('tags-badge-pill')"
+                            data-search-tag-pill
+                            @click="addTag(item)"
+                        >
+                            <span>{{ item.value }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </transition-replace>
+
+    </module-content>
+
+</module>

@@ -1,0 +1,99 @@
+////
+///
+/// f-browse-item
+///
+/// @group Frame
+///
+////
+
+$f-browse-item-min-height: unitize(44px) !default;
+$f-browse-item-border-radius: unitize(22px) !default;
+$f-browse-item-padding: unitize(16px) !default;
+
+$f-browse-item-color: color('white') !default;
+$f-browse-item-background: color('white:05:alpha') !default;
+$f-browse-item-color--checked: color('dark') !default;
+$f-browse-item-background--checked: color('white') !default;
+$f-browse-item-outline-color: color('white:15:alpha') !default;
+
+$f-browse-item--big-responsive-heights: (
+    'default': unitize(120px),
+    'xs':      unitize(140px),
+    's':       unitize(170px),
+    'm':       unitize(180px)
+) !default;
+
+.f-browse-item {
+    // #region [Block]
+    display: block;
+    width: 100%;
+    height: $f-browse-item-min-height;
+    transition: transition(height);
+    border: 0;
+    background: none;
+    white-space: nowrap;
+    hyphens: none;
+    // #endregion
+
+    // #region [Element]
+    &__label {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: inherit;
+        padding: 0 $f-browse-item-padding;
+        overflow: hidden;
+        transition: transition(all);
+        border-radius: $f-browse-item-border-radius;
+        text-align: center;
+        color: $f-browse-item-color;
+        background: $f-browse-item-background;
+        @include responsive-font('browse-item');
+
+        &:hover {
+            color: $f-browse-item-color--checked;
+            background: $f-browse-item-background--checked;
+            cursor: pointer;
+        }
+
+        &--big {
+            @include responsive-font('browse-item--big');
+        }
+
+    }
+
+     > input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+
+        &:focus + span,
+        &:active + span,
+        &:checked + span {
+            color: $f-browse-item-color--checked;
+            background: $f-browse-item-background--checked;
+        }
+        &:focus-visible + span {
+            outline: 2px solid $f-browse-item-outline-color;
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    &--big {
+        white-space: normal;
+        @each $breakpoint, $height in $f-browse-item--big-responsive-heights {
+            @include possible-mediaquery($breakpoint) {
+                height: $height;
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-browse-item) {
+        @include f-browse-item;
+    }
+    // #endregion
+}

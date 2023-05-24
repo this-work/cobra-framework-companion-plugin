@@ -1,0 +1,112 @@
+////
+///
+/// m-stage
+///
+/// @group Modules
+///
+////
+
+$m-stage-stacked-text-spacing: 'small' !default;
+$m-stage-stacked-media-spacing: 'xsmall' !default;
+$m-stage-overflowed-text-color: 'white' !default;
+$m-stage-overflowed-text-spacing: '44' !default;
+$m-stage-overflowed-button-spacing: '44' !default;
+
+.m-stage {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    .module__background {
+        @include grid-cell-height(2);
+    }
+
+    &__media-column {
+        position: relative;
+        z-index: 50;
+        align-self: stretch;
+        justify-self: stretch;
+        > .c-image, > .c-video {
+            height: 100%;
+        }
+    }
+
+    &__heading-column {
+        position: relative;
+        z-index: 100;
+        align-self: center;
+        transition: transition-fade-in();
+        opacity: 1;
+    }
+
+    &__play-button.c-button {
+        display: none;
+
+        @include above('s') {
+            display: inline-flex;
+            margin-top: spacing($m-stage-overflowed-button-spacing);
+        }
+    }
+
+    // #endregion
+
+    // #region [Modifier]
+    &--order-media-first.module {
+        #{$module}__media-column {
+            @include grid-cell-row-start(1);
+            @include responsive-spacing($m-stage-stacked-media-spacing, margin-top);
+        }
+        #{$module}__heading-column {
+            @include grid-cell-row-start(2);
+            @include responsive-spacing($m-stage-stacked-text-spacing, margin-top);
+        }
+    }
+
+    &--order-text-first.module {
+        #{$module}__media-column {
+            @include grid-cell-row-start(2);
+        }
+        #{$module}__heading-column {
+            @include grid-cell-row-start(1);
+            @include responsive-spacing($m-stage-stacked-text-spacing, margin-top margin-bottom);
+        }
+    }
+
+    &--mode-overflow.module {
+        #{$module}__media-column {
+            margin: 0 !important;
+        }
+        @include above('s') {
+            #{$module}__media-column {
+                margin: 0;
+                @include grid-cell-row-start(1);
+                .c-video__play-button {
+                    display: none;
+                }
+            }
+            #{$module}__heading-column {
+                margin: spacing($m-stage-overflowed-text-spacing) 0;
+                @include grid-cell-row-start(1);
+                .c-heading__overline, .c-heading__headline, .c-heading__subline {
+                    color: color($m-stage-overflowed-text-color);
+                }
+            }
+        }
+    }
+
+    &--hide-heading &__heading-column{
+        opacity: 0;
+        @include below('s') {
+            opacity: 1;
+        }
+    }
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-stage) {
+        @include m-stage;
+    }
+    // #endregion
+
+}

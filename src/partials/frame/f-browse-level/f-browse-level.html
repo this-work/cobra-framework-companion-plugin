@@ -1,0 +1,26 @@
+<component :is="tag" :class="blockClasses">
+    <ul :class="getListClasses" role="listbox">
+        <li
+            v-for="item in menu"
+            v-bind:key="item.id"
+            role="option"
+            :class="getItemClasses"
+        >
+            <f-browse-item
+                :name="name"
+                :big="!hasSelectedItem"
+                :handleChange="() => selectItem(item)"
+            >
+                {{ item.label }}
+            </f-browse-item>
+        </li>
+    </ul>
+
+    <transition name="slide-up">
+        <f-browse-level v-if="selectedItemHasSubMenu && !selectedItemHasLinks" v-bind="getSubMenuProps" />
+    </transition>
+
+    <transition name="slide-up">
+        <f-browse-linklist v-if="selectedItemHasLinks" v-bind="getLinkListProps" />
+    </transition>
+</component>

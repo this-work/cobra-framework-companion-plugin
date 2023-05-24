@@ -1,47 +1,36 @@
-<footer :class="blockClasses" v-if="this.$auth.loggedIn">
+<transition name="footer">
+    <module tag="footer" :key="this.$store.getters['footer/visible'] + '' + this.$store.getters['footer/theme']" v-if="this.$store.getters['footer/visible']" :background="false" :class="blockClasses">
+        <module-content>
 
-    <module :background="false">
-        <module-page>
-            <module-content>
+            <layout layout="l-3-1-8">
 
-                <layout layout="l-5-1-6">
+                <template v-slot:column-1>
 
-                    <template v-slot:column-1>
+                    <p :class="element('text')">
+                        © <time v-html="new Date().getFullYear()" /> {{ $t('seo--default-author') }}
+                    </p>
 
-                        <p :class="element('text')">
-                            © Copyright <time v-html="new Date().getFullYear()" />
-                        </p>
+                </template>
 
-                    </template>
+                <template v-slot:column-3>
 
-                    <template v-slot:column-3>
+                    <ul :class="element('list')" v-if="navigation.length > 0 || $auth.loggedIn" :key="$auth.loggedIn + '' + navigation.length">
+
+                        <li :class="element('list-entry')" v-if="navigation" v-for="(item, index) in navigation" :key="index">
+                            <nuxt-link :to="localePath(item.href)" >{{ item.label }}</nuxt-link>
+                        </li>
 
                         <transition name="fade">
-
-                            <ul :class="element('list')">
-
-                                <li :class="element('list-entry')" v-for="(item, index) in list.items" :key="index">
-
-                                    <c-link :url="item.slug" :externalUrl="item.externalUrl">
-                                        <span :class="element('list-entry-title')" v-html="item.title" />
-                                    </c-link>
-
-                                </li>
-
-                                <li :class="element('list-entry')">
-                                    <c-button icon="powerSettingsNew" :label="$t('f-footer--logout')" @click.native="$auth.logout('local')" />
-                                </li>
-
-                            </ul>
-
+                            <li :class="[element('list-entry'), element('logout')]" v-if="$auth.loggedIn">
+                                <c-button appearance="secondary" icon="logout" :label="$t('f-footer--logout')" @click.native="logout" />
+                            </li>
                         </transition>
+                    </ul>
 
-                    </template>
+                </template>
 
-                </layout>
+            </layout>
 
-            </module-content>
-        </module-page>
+        </module-content>
     </module>
-
-</footer>
+</transition>

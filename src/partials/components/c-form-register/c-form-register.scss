@@ -1,0 +1,142 @@
+////
+///
+/// c-form-register
+///
+/// @group Components
+///
+////
+
+$c-form-register-input-margin: spacing('27') 0 0 0 !default;
+$c-form-register-submit-margin: spacing('27') 0 0 0 !default;
+$c-form-register-text-color-theme: 'input-boxed-text' !default;
+$c-form-register-responsive-small-font: 'form-label' !default;
+$c-form-register-icon-size: 20px !default;
+$c-form-register-border-radius: $basic-border-radius !default;
+$c-form-register-responsive-font: 'copytext' !default;
+
+.c-form-register {
+    // #region [Block]
+    $module: &;
+    // #endregion
+
+    // #region [Element]
+    .c-message {
+        &--error {
+            .c-message__box {
+                color: color('error') !important;
+                background: rgba(color('error'), .2) !important;
+                border: 1px solid currentColor;
+                & > .c-heading * {
+                    color: color('error') !important;
+                }
+            }
+        }
+
+        & .c-message__box {
+            @include responsive-spacing('xsmall', margin-bottom);
+        }
+    }
+
+    &__salutation {
+        width: grid-column-width-percentage(6);
+    }
+
+    &__input,
+    &__checkbox {
+        margin: 0 0 0 0;
+        & + & {
+            margin: $c-form-register-input-margin;
+        }
+        :first-child {
+            margin-top: 0;
+        }
+    }
+
+    &__input {
+        &.c-input-dropdown--boxed .c-input-dropdown__dropdown {
+            border-radius: $c-form-register-border-radius;
+            @include color-theme('input-boxed');
+        }
+
+        &.c-input-text--boxed .c-input-text__form-element {
+            transition: color, border-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        }
+
+        & .c-input-text__form-element[type=password] {
+            font: large Verdana, sans-serif;
+            font-size: inherit;
+            line-height: inherit;
+        }
+    }
+
+    &__visibility-wrapper {
+        cursor: pointer;
+    }
+
+    &__notice {
+        user-select: none;
+        @include responsive-spacing('xsmall', margin-top);
+        @include responsive-font('copytext--small');
+        @include color-theme($c-form-register-text-color-theme);
+    }
+
+    &__checkbox {
+        .c-input-checkbox__text {
+            @include responsive-font($c-form-register-responsive-font);
+        }
+    }
+
+    #{$module}__submit-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: $c-form-register-submit-margin;
+
+        .c-text {
+            user-select: none;
+            display: inline-block;
+            margin-right: 6px;
+            @include color-theme($c-form-register-text-color-theme);
+        }
+
+        .c-link {
+            white-space: nowrap;
+            border-bottom: 2px solid currentColor;
+            margin-right: 6px;
+            @include color-theme('copytext');
+        }
+
+        .c-button {
+            white-space: nowrap;
+        }
+    }
+
+    &__message-actions {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: spacing('16') * -1;
+        @include responsive-spacing('xsmall', margin-top);
+
+        .c-button {
+            margin-right: spacing('16');
+            margin-bottom: spacing('16');
+            flex-shrink: 0;
+            flex-grow: 0;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-form-register) {
+        @include c-form-register;
+    }
+    // #endregion
+
+}

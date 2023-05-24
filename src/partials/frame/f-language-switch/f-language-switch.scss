@@ -1,0 +1,87 @@
+////
+///
+/// f-language-switch
+///
+/// @group Components
+///
+////
+
+$f-language-switch-list-padding: spacing('16') !default;
+$f-language-switch-list-color: color('white') !default;
+$f-language-switch-list-background: color('contrasting-dark') !default;
+$f-language-switch-list-border-radius: $basic-border-radius !default;
+$f-language-switch-language-background: transparent !default;
+$f-language-switch-language-background-hover: color('white:15:alpha') !default;
+
+.f-language-switch {
+    // #region [Block]
+    position: relative;
+    // #endregion
+
+    // #region [Element]
+    &__button {
+        &:focus {
+            box-shadow: none!important;
+        }
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: absolute;
+        top: #{calc(100% + 3px)};
+        right: 0;
+        padding: $f-language-switch-list-padding;
+        color: $f-language-switch-list-color;
+        background: $f-language-switch-list-background;
+        border-radius: $f-language-switch-list-border-radius;
+        max-height: unitize(480px);
+        overflow: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        li {
+            list-style: none;
+            & + li {
+                margin-top: spacing('6');
+            }
+        }
+    }
+
+    &__language {
+        position: relative;
+        justify-content: center;
+        display: block;
+        padding: spacing('6') spacing('10');
+        background: $f-language-switch-language-background;
+        transition: transition-fade-in(background);
+        white-space: nowrap;
+        border-radius: $f-language-switch-list-border-radius;
+        text-align: right;
+        border: 0 solid transparent;
+        outline: none;
+        vertical-align: top;
+        cursor: pointer;
+        user-select: none;
+        color: inherit;
+        @include responsive-font('header-text');
+
+        &:hover {
+            background: $f-language-switch-language-background-hover;
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-language-switch) {
+        @include f-language-switch;
+    }
+    // #endregion
+
+}

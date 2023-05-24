@@ -1,0 +1,35 @@
+<div :class="blockClasses" v-if="languages.length > 1">
+
+    <c-button
+        :class="[element('button'), visibleList ? 'c-button--header-active' : undefined]"
+        @click.native="toggleListVisibility()"
+        id="languageSelectButton"
+        aria-haspopup="listbox"
+        aria-labelledby="languageSelectButton"
+        :aria-expanded="visibleList"
+        appearance="header"
+        icon="language" />
+
+    <transition name="language-switch">
+        <ul v-if="visibleList"
+            :key="visibleList"
+            :class="element('list')"
+            :aria-activedescendant="$i18n.locale"
+            role="listbox"
+            tabindex="-1"
+            aria-labelledby="languageSelectButton">
+            <li v-for="language in languages" role="option" :key="language.code">
+                <nuxt-link
+                    :class="element('language')"
+                    :id="language.code"
+                    :aria-selected="$i18n.locale === language.code"
+                    :to="switchLocalePath(language.code)"
+                    @click.native.prevent="changeLanguage(language.code)"
+                >
+                    {{ language.name }}
+                </nuxt-link>
+            </li>
+        </ul>
+    </transition>
+
+</div>

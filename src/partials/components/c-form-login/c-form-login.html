@@ -4,17 +4,21 @@
 
     <form accept-charset="UTF-8" @submit.prevent="login">
 
-        <c-input-text :class="element('input')" :valid="valid" name="loginName" ref="loginName" type="text" :label="$t('c-form-login--username')" />
+        <c-input-text :class="element('input')" :valid="valid" appearance="boxed" name="loginName" ref="loginName" type="text" :label="$t('c-form-login--username')" >
+            <template v-slot:prefix><c-icon name="alternate-email" /></template>
+        </c-input-text>
 
-        <c-input-text :class="element('input')" :valid="valid" name="password" ref="password" type="password" :label="$t('c-form-login--password')" />
+        <c-input-text :class="element('input')" :valid="valid" appearance="boxed" name="password" ref="password" type="password" :label="$t('c-form-login--password')">
+            <template v-slot:prefix><c-icon name="lock" /></template>
+        </c-input-text>
 
-        <div :class="element('forgot')">
-            <nuxt-link to="/forgot-password">{{ $t('c-form-login--password-lost') }}</nuxt-link>
+        <div :class="element('forgot')" v-if="$config.AUTH_OPTION_LOSTPASSWORD">
+            <nuxt-link :to="localePath('/forgot-password')">{{ $t('c-form-login--password-lost') }}</nuxt-link>
         </div>
 
-        <div :class="element('submit')">
+        <div :class="element('actions')">
 
-            <!-- <c-input-checkbox name="remember" :label="$t('c-form-login--remember-me')" />-->
+            <c-button tag="nuxt-link" v-if="$config.AUTH_OPTION_REGISTER" :to="localePath('/register')" appearance="secondary" :label="$t('c-form-login--register')" />
 
             <c-button type="submit" :loading="loading" :spinner="true" :label="$t('c-form-login--label')" />
 

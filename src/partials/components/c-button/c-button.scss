@@ -1,0 +1,61 @@
+////
+///
+/// c-button
+///
+/// @group Components
+///
+////
+
+$c-button-header-appearance-background: color('contrasting-dark') !default;
+$c-button-header-appearance-color: color('white') !default;
+$c-button-header-appearance-background-hover: color('contrasting-dark:hover') !default;
+
+@import "@this/cobra-framework/src/partials/components/c-button/c-button";
+
+.c-button {
+    $module: &;
+
+    &--header {
+        padding: spacing('6') spacing('10');
+        min-width: 44px;
+        border-radius: 44px;
+        border: none;
+        color: $c-button-header-appearance-color;
+        background: $c-button-header-appearance-background;
+        transition: transition-fade-in(background);
+
+        #{$module}__label {
+            @include responsive-font('header-text');
+        }
+
+        &:hover, &:active, &-active {
+            background: $c-button-header-appearance-background-hover;
+        }
+
+        @include below('m') {
+            padding: spacing('6') 0;
+            #{$module}__label {
+                display: none;
+            }
+        }
+
+        &#{$module}--icon-left {
+            #{$module}__label {
+                margin-right: spacing('6');
+
+                & + #{$module}__icon {
+                    margin-right: spacing('3');
+                    @include rtl() {
+                        margin-right: 0;
+                        margin-left: spacing('3');
+                    }
+                    @include below('s') {
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+
+}

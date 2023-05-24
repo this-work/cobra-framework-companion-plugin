@@ -1,17 +1,17 @@
-de_DE:
+deDE:
     c-form-login--username: "E-Mail"
     c-form-login--password: "Passwort"
     c-form-login--password-lost: "Passwort vergessen?"
-    c-form-login--remember-me: "Eingeloggt bleiben"
+    c-form-login--register: "Registrieren"
     c-form-login--label: "Login"
     c-form-login--success-new-password: "Wir haben Ihr Passwort erfolgreich geändert.<br>Bitte loggen Sie sich ein."
     c-form-login--failed: "Bitte überprüfen Sie Ihre Eingaben!"
 
-en_GB:
+enGB:
     c-form-login--username: "Email"
     c-form-login--password: "Password"
     c-form-login--password-lost: "Forgot password?"
-    c-form-login--remember-me: "Remember me"
+    c-form-login--register: "Register"
     c-form-login--label: "Login"
     c-form-login--success-new-password: "We have successfully changed your password. <br> Please log in."
     c-form-login--failed: "Please check your login data!"

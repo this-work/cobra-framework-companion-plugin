@@ -1,0 +1,63 @@
+<component :is="tag" :class="blockClasses">
+
+    <c-message ref="messageBox" :error="!valid || inputsHaveErrors || showAlreadyRegistered" :message="message">
+        <template v-if="showAlreadyRegistered">
+            <c-heading :headline="$t('c-form-register--error-forgot-password-headline')" headlineTag="h3" headlineType="h4"/>
+            <c-text :text="$t('c-form-register--error-forgot-password-text')" />
+            <div :class="element('message-actions')">
+                <c-button @click.native="resetPasswordClicked" :label="$t('c-form-register--reset-password')" />
+            </div>
+        </template>
+    </c-message>
+
+    <transition-expand>
+        <div v-show="formIsVisible">
+            <form ref="form" accept-charset="UTF-8" @submit.prevent="sendRegistration">
+
+                <c-input-dropdown :class="[element('input'), element('salutation')]" name="salutation" :preselectFirst="true" @change="removeError('salutation')" :valid="!errors.salutation" :label="$t('c-form-register--salutation')" :options="$t('c-form-register--salutation-options')" appearance="boxed" />
+
+                <c-input-text :class="element('input')" name="firstname" data-validate-required @change="removeError('firstname')" :valid="!errors.firstname" type="text" :label="$t('c-form-register--firstname')" appearance="boxed" autocomplete="given-name" />
+
+                <c-input-text :class="element('input')" name="lastname" data-validate-required @change="removeError('lastname')" :valid="!errors.lastname" type="text" :label="$t('c-form-register--lastname')" appearance="boxed" autocomplete="family-name" />
+
+                <c-input-text :class="element('input')" name="email" data-validate-required data-validate-email @change="removeError('email')" :valid="!errors.email" type="email" live="disabled" :label="$t('c-form-register--username')" appearance="boxed" autocomplete="email">
+                    <template v-slot:prefix><c-icon name="alternate-email" /></template>
+                </c-input-text>
+
+                <c-input-text :class="element('input')" name="new-password" data-validate-required data-validate-password data-validate-match="password" @change="removeError('new-password')" :valid="!errors['new-password']" :type="passwordInputType" :label="$t('c-form-register--password')" appearance="boxed" autocomplete="new-password" >
+                    <template #prefix><c-icon name="lock" /></template>
+
+                    <template #suffix>
+                        <div :class="element('visibility-wrapper')" @click.prevent.stop="toggleShowPassword" :title="visibilityTitle">
+                            <c-icon :name="visibilityIcon" />
+                        </div>
+                    </template>
+                </c-input-text>
+
+                <c-input-text :class="element('input')" name="confirm-password" data-validate-required data-validate-match="password" @change="removeError('new-password')" :valid="!errors['new-password']" :type="passwordInputType" :label="$t('c-form-register--confirm-password')" appearance="boxed" autocomplete="new-password" >
+                    <template #prefix><c-icon name="lock" /></template>
+
+                    <template #suffix>
+                        <div :class="element('visibility-wrapper')" @click.prevent.stop="toggleShowPassword" :title="visibilityTitle">
+                            <c-icon  :name="visibilityIcon" />
+                        </div>
+                    </template>
+                </c-input-text>
+
+                <c-input-checkbox :class="element('checkbox')" name="newsletter" data-validate-required @change="removeError('newsletter')" :valid="!errors.newsletter" :label="$t('c-form-register--newsletter')" />
+
+                <c-text :class="element('notice')" :text="$t('c-form-register--notice')" />
+
+                <div :class="element('submit-wrapper')">
+                    <div :class="element('log-in-wrapper')">
+                        <c-text :text="$t('c-form-register--already-registered')" />
+                        <c-link :url="localePath('/login')">{{ $t('c-form-register--button-label-log-in') }}</c-link>
+                    </div>
+                    <c-button type="submit" :loading="loading" :spinner="true" :label="$t('c-form-register--button-label-register')" />
+                </div>
+
+            </form>
+        </div>
+    </transition-expand>
+
+</component>

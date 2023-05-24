@@ -2,16 +2,33 @@ export default ({store}) => {
     store.registerModule('header', {
         namespaced: true,
         state: () => ({
-            type: 'default',
-            playlistNavigationList: {}
+            visible: true,
+            theme: 'light',
+            navigation: true,
+            close: false,
+            closeUrl: '/',
+            back: false
         }),
         mutations: {
-            type: function(state, type) {
-                state.type = type;
+            navigation: (state, payload) => {
+                state.navigation = payload.navigation === undefined ? true : payload.navigation;
             },
-            setPlaylistNavigationList: function(state, navigation) {
-                state.playlistNavigationList = navigation;
+            settings: (state, payload) => {
+                state.visible = payload.visible === undefined ? true : payload.visible;
+                state.theme = payload.theme || 'light';
+                state.navigation = payload.navigation === undefined ? true : payload.navigation;
+                state.close = payload.close === undefined ? false : payload.close;
+                state.closeUrl = payload.close === undefined ? '/' : payload.closeUrl;
+                state.back = payload.back === undefined ? false : payload.back;
             }
+        },
+        getters: {
+            visible: state => state.visible,
+            theme: state => state.theme,
+            navigation: state => state.navigation,
+            close: state => state.close,
+            closeUrl: state => state.closeUrl,
+            back: state => state.back
         }
     })
 }

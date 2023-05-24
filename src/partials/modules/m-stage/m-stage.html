@@ -1,0 +1,58 @@
+<module :class="blockClasses"
+        backgroundPosition="viewport"
+        :backgroundImage="backgroundImage"
+>
+
+    <module-content v-if="heading" :class="element('heading-column')">
+
+        <layout :layout="getLayoutName()">
+
+            <template v-slot:[getSlotName()]>
+
+                <c-heading
+                        v-bind="heading"
+                        :class="element('heading')"
+                        :alignment="alignment"
+                        :headlineTag="heading.headlineTag ? heading.headlineTag : 'h1'"
+                        :headlineType="heading.headlineType ? heading.headlineType : 'h0'"
+                        :sublineTag="heading.sublineTag ? heading.sublineTag : 'h2'"
+                        :sublineType="heading.sublineType ? heading.sublineType : 'h4'"
+                />
+
+                <slot />
+
+
+
+                <c-button
+                        v-if="mode === 'overflow' && video && !video.autoplay"
+                        :label="(video.posterPlayText ? video.posterPlayText : null)"
+                        icon="playCircleOutline"
+                        appearance="pill-dark"
+                        @click.native.prevent="$refs.media.startVideoFromPoster"
+                        :class="element('play-button')"
+                />
+
+            </template>
+
+        </layout>
+
+    </module-content>
+
+    <component v-if="getMediaComponent()" :is="getMediaWidth()" :class="element('media-column')">
+
+        <component :is="getMediaComponent()"
+            ref="media"
+            @startedFromPoster="startedFromPoster"
+            @ended="endVideo"
+            v-bind="getMediaData()"
+            :playsinline="getMediaComponent() === video"
+            objectFit="cover"
+            :skeleton="false"
+            :lazyload="false"
+            :overlay="mode === 'overflow'"
+            :overlayMobileHidden="true">
+        </component>
+
+    </component>
+
+</module>

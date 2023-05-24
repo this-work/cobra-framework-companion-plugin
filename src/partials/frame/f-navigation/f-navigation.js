@@ -3,7 +3,6 @@
  */
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
-import { enablePageScrolling, disablePageScrolling } from '@this/cobra-framework/src/plugins/vanilla/scroll-blocker';
 
 export default {
 
@@ -15,114 +14,136 @@ export default {
 
     data() {
         return {
-            level: 'root',
-            direction: 'left'
+            activePageId: null
         };
     },
 
-    beforeDestroy() {
-        if (this.$store.state.navigation.visible) {
-            this.toggle(false);
+    props: {
+        list: {
+            type: Array,
+            default: () => [
+                {
+                    id: 1,
+                    name: 'index',
+                    icon: 'home',
+                    path: '/'
+                },
+                {
+                    id: 2,
+                    name: 'browse',
+                    icon: 'menu',
+                    path: '/browse'
+                },
+                {
+                    id: 3,
+                    name: 'search',
+                    icon: 'search',
+                    path: '/search'
+                }
+            ]
+        },
+        elasticAnimationDuration: {
+            type: Number,
+            default: 400
+        },
+        elasticAnimationFactor: {
+            type: Number,
+            default: 140
         }
     },
+
+    mounted() {
+        this.moveBackgroundShapeToTarget();
+
+        window.addEventListener('resize', this.moveBackgroundShapeToTarget);
+    },
+
+    destroyed() {
+        window.removeEventListener('resize', this.moveBackgroundShapeToTarget);
+    },
+
 
     watch: {
-        $route() {
-            if (this.$store.state.navigation.visible) {
-                this.toggle(false);
-            }
-        },
-        visible(visible) {
-            if (visible) {
-                this.open();
+        '$route'(to, from) {
+
+            const fromPage = from.name.split('___')[0];
+            const toPage = to.name.split('___')[0];
+
+            if (fromPage === toPage) {
+                let $target;
+                if (this.$refs.hasOwnProperty('navigation' + toPage.charAt(0).toUpperCase() + toPage .slice(1))) {
+                    $target = this.$refs['navigation' + toPage.charAt(0).toUpperCase() + toPage .slice(1)][0].$el;
+                }
+                setTimeout(() => this.moveBackgroundShapeToTarget($target), 600);
             } else {
-                this.close();
+                setTimeout(() => this.animateLinkBackground(toPage), 100);
             }
-        }
-    },
-
-    computed: {
-
-        visible() {
-            return this.$store.state.navigation.visible;
-        },
-
-        sublevel() {
-            return this.level !== 'root';
-        },
-
-        navigation() {
-
-            let navigation = this.$store.state.navigation.list;
-
-            if (this.level) {
-
-                this.level.split('.').forEach(index => {
-
-                    if (index !== 'root') {
-                        navigation = navigation.items[parseInt(index)];
-                    }
-
-                });
-
-            }
-
-            return navigation;
-
         }
     },
 
     methods: {
 
-        toggle(visible) {
-            this.$store.commit('navigation/visible', visible);
-        },
+        animateLinkBackground(targetName) {
 
-        open() {
-
-            document.addEventListener('click', this.checkClickOutside);
-
-            window.setTimeout(() => {
-                disablePageScrolling([
-                    {
-                        element: document.body,
-                        property: 'right'
-                    },
-                    {
-                        element: document.querySelector(`.f-header__module`),
-                        property: 'padding-right'
-                    }
-                ]);
-            }, 0);
-
-        },
-
-        close() {
-
-            this.level = 'root';
-
-            document.removeEventListener('click', this.checkClickOutside);
-
-            setTimeout(() => {
-                enablePageScrolling();
-            }, 0);
-
-        },
-
-        checkClickOutside(event) {
-            if (this.$el === event.target) {
-                this.toggle(false);
+            if (!this.$refs.hasOwnProperty('navigation' + targetName.charAt(0).toUpperCase() + targetName .slice(1))) {
+                this.$refs.elasticShape.style.transition = `opacity ${this.elasticAnimationDuration}ms`;
+                this.$refs.elasticShape.style.opacity = '0';
+                this.activePageId = null;
+                return;
             }
+
+            const target = this.list.find(item => item.name === targetName);
+            const $target = this.$refs['navigation' + targetName.charAt(0).toUpperCase() + targetName .slice(1)][0].$el;
+
+            if (this.activePageId === null) {
+                this.$refs.elasticShape.style.transition = `opacity ${this.elasticAnimationDuration}ms`;
+                this.moveBackgroundShapeToTarget($target);
+                return;
+            }
+
+            if (target.id !== this.activePageId) {
+                let moveDirection = 'flex-start';
+
+                if (target.id > this.activePageId) {
+                    moveDirection = 'flex-end';
+                }
+
+                this.$refs.elasticShape.style.justifyContent = moveDirection;
+                this.$refs.elasticShape.style.transition = `all ${this.elasticAnimationDuration}ms`;
+
+                this.$refs.elasticShapeBackground.style.transition = `width ${this.elasticAnimationDuration / 2}ms`;
+                this.$refs.elasticShapeBackground.style.width = `${this.elasticAnimationFactor}%`;
+                setTimeout(() => {
+                    this.$refs.elasticShapeBackground.style.width = '100%';
+                }, this.elasticAnimationDuration / 2);
+
+                this.moveBackgroundShapeToTarget($target);
+
+            }
+
         },
 
-        navigateLevelUp() {
-            this.direction = 'right';
-            this.level = this.level.substring(0, this.level.length - 2);
-        },
+        moveBackgroundShapeToTarget($target= this.$el.querySelector('.nuxt-link-exact-active')) {
 
-        navigateLevelDown(index) {
-            this.direction = 'left';
-            this.level += '.' + index;
+            if ($target instanceof Event) {
+                $target = this.$el.querySelector('.nuxt-link-exact-active');
+            }
+
+            if (!$target) {
+                this.activePageId = null;
+                this.$refs.elasticShape.style.opacity = '0';
+                return;
+            }
+
+            const targetOffset = $target.getBoundingClientRect().left;
+            const navigationListOffset = this.$refs.navigationList.getBoundingClientRect().left;
+
+            this.$refs.elasticShape.style.opacity = '1';
+            this.$refs.elasticShape.style.left = (targetOffset - navigationListOffset) + 'px';
+            this.$refs.elasticShape.style.width = $target.offsetWidth + 'px';
+
+            this.activePageId = parseInt($target.dataset.index);
+
         }
     }
 };

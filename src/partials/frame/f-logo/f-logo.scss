@@ -1,0 +1,32 @@
+////
+///
+/// f-logo
+///
+/// @group Components
+///
+////
+
+.f-logo {
+    // #region [Block]
+    // #endregion
+
+    // #region [Element]
+    img {
+        display: block;
+        width: inherit;
+        height: inherit;
+        min-height: unitize(44px);
+        max-height: unitize(60px);
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-logo) {
+        @include f-logo;
+    }
+    // #endregion
+
+}

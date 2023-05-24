@@ -1,12 +1,98 @@
 export default ({ store }) => {
+
+    let user = {};
+
+    const slugify = str =>
+        str.replace(/[^a-zA-Z]+/g, '').toLowerCase();
+
+    const checkUserAccess = ({ accessgroups }) => {
+        return Object.keys(user.roles).some(id => accessgroups.includes(parseInt(id)));
+    };
+
+    const isSuperUser = () => {
+        return [
+            'admin',
+            'editor'
+        ].some(groupname => user.groups.indexOf(groupname) !== -1);
+    };
+
+    const prepareTile = (
+        { _source: tile },
+        { lockWhenNoAccess = false }
+    ) => {
+        const userHasAccess = checkUserAccess(tile);
+
+        if (lockWhenNoAccess && !userHasAccess) {
+            tile.locked = true;
+            tile.popup = JSON.parse(tile.accessgroupPopup);
+        }
+
+        delete tile.accessgroupVisibility;
+        delete tile.accessgroupPopup;
+
+        return tile;
+    };
+
+    const getIndex = (categories, { value }) => {
+        const index = categories.indexOf(value.toLowerCase());
+
+        return index !== -1 ? index : Number.MAX_VALUE;
+    };
+
+    const _extractTypes = response =>
+        response?.aggregations?.types?.buckets || [];
+
+    const _extractTags = (response, selectedTags, categories) => {
+        const { buckets } = response?.aggregations?.categories;
+
+        if (!buckets) {
+            return [];
+        }
+
+        return buckets
+            .filter(({ key }) => !selectedTags.includes(key))
+            .map(({ doc_count: count, key }) => ({
+                key: slugify(key),
+                count,
+                value: key
+            }))
+            .sort((a, b) => getIndex(categories, a) - getIndex(categories, b));
+    };
+
+    const _extractSearchResults = (response) => {
+
+        console.log(user);
+
+        const { hits } = response?.hits;
+
+        if (!hits) {
+            return [];
+        }
+
+        if (isSuperUser()) {
+            return hits.map(prepareTile);
+        }
+
+        return hits
+            .filter(({ _source }) => {
+                const { accessgroupVisibility } = _source;
+                const userHasAccess = checkUserAccess(_source);
+
+                return userHasAccess || (!userHasAccess && accessgroupVisibility === 'locked');
+            })
+            .map(hit => prepareTile(hit, { lockWhenNoAccess: true }));
+    };
+
     store.registerModule('search', {
         namespaced: true,
+
         state: () => ({
             tags: [],
             types: [],
             searchCategories: [],
             searchResults: []
         }),
+
         mutations: {
             setTags: function(state, tags) {
                 state.tags = tags;
@@ -14,17 +100,30 @@ export default ({ store }) => {
             setTypes: function(state, types) {
                 state.types = types;
             },
-            setSearchCategories: function(state, results) {
+            searchCategories: function(state, results) {
                 state.searchCategories = results;
             },
             setSearchResults: function(state, results) {
                 state.searchResults = results;
             }
         },
+
+        getters: {
+            getSearchResultsByType: state => filterType =>
+                state.searchResults.filter(({ type }) => type === filterType)
+        },
+
         actions: {
 
-            async fetch({ commit, state }, { query = '*', selectedTags, customFilter, customAggregation } = {}) {
-
+            async fetch(
+                { commit, state },
+                {
+                    query = '*',
+                    selectedTags = [],
+                    customFilter,
+                    customAggregation
+                } = {}
+            ) {
                 const response = await this.$elastic.search(query, {
                     fields: ['*'],
                     index: this.$config.API_ELASTIC_SEARCH_PREFIX + this.$i18n.localeProperties.siteId
@@ -58,85 +157,29 @@ export default ({ store }) => {
                     }
                 });
 
-                if (response && response.aggregations && response.aggregations.categories) {
+                user = this.$auth.user;
 
-                    commit('setTags', response.aggregations.categories.buckets.map(tag => {
-                        return {
-                            'key': tag.key.replace(/[^a-zA-Z]+/g, '').toLowerCase(),
-                            'count': tag.doc_count,
-                            'value': tag.key
-                        };
-                    }).filter(tag => {
-                        if (selectedTags) {
-                            return !selectedTags.map(selectedTag => selectedTag.replace(/[^a-zA-Z]+/g, '').toLowerCase()).includes(tag.key);
-                        }
-                        return true;
-                    }).sort((a, b) => {
+                const tags = _extractTags(response, selectedTags, state.searchCategories);
 
-                        const sortIndexA = state.searchCategories.indexOf(a.value.toLowerCase());
-                        const sortIndexB = state.searchCategories.indexOf(b.value.toLowerCase());
 
-                        return (sortIndexA > -1 ? sortIndexA : Number.MAX_VALUE) - (sortIndexB > -1 ? sortIndexB : Number.MAX_VALUE);
-
-                    }));
+                if (tags) {
+                    commit('setTags', tags);
                 }
 
-                if (response && response.aggregations && response.aggregations.types) {
-                    commit('setTypes', response.aggregations.types.buckets);
+                const types = _extractTypes(response);
+
+                if (types) {
+                    commit('setTypes', types);
                 }
 
-                if (response && response.hits && response.hits.hits) {
+                const searchResults = _extractSearchResults(response);
 
-                    const accessgroups = Object.keys(JSON.parse(sessionStorage.getItem('accessgroups')));
-                    const userGroups = Object.values(JSON.parse(sessionStorage.getItem('usergroups')));
-
-                    let searchResults;
-
-                    if (userGroups.indexOf('admin') >= 0 || userGroups.indexOf('editor') >= 0) {
-
-                        searchResults = response.hits.hits.map(hit => {
-                            const tile = hit._source;
-                            delete tile.accessgroupVisibility;
-                            delete tile.accessgroupPopup;
-                            return tile;
-                        });
-
-                    } else {
-
-                        searchResults = response.hits.hits.filter(hit => {
-                            return accessgroups.some(id => hit._source.accessgroups.includes(parseInt(id)))
-                                || (!accessgroups.some(id => hit._source.accessgroups.includes(parseInt(id)))
-                                    && hit._source.accessgroupVisibility === 'locked');
-                        }).map(hit => {
-                            const tile = hit._source;
-                            if (!accessgroups.some(id => tile.accessgroups.includes(parseInt(id)))) {
-                                tile.locked = true;
-                                tile.popup = JSON.parse(tile.accessgroupPopup);
-                            }
-
-                            delete tile.accessgroupVisibility;
-                            delete tile.accessgroupPopup;
-
-                            return tile;
-                        });
-
-                    };
-
+                if (searchResults) {
                     commit('setSearchResults', searchResults);
-
                 }
 
                 return response;
-
-            },
-
-            async categories({ commit }, endpoint) {
-                const data = await this.$axios.$get(endpoint);
-                commit('setSearchCategories', data.data.map(category => {
-                    return category.title.toLowerCase();
-                }) );
             }
-
         }
     });
 };

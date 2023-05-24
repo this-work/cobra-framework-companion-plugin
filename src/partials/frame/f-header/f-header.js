@@ -2,28 +2,36 @@
  * f-header
  */
 
-import { common, theme } from '@this/cobra-framework/src/plugins/mixins';
+import { common } from '@this/cobra-framework/src/plugins/mixins';
 
 export default {
 
     name: 'f-header',
 
     mixins: [
-        ...common,
-        theme
+        ...common
     ],
 
-    props: {
-    },
-
     computed: {
-        blockClasses() {
-            return {
-                [`${this.$options.name}--search`]: this.$store.state.header.type === 'search'
-            };
+        navigation() {
+            return this.$auth.loggedIn && this.$store.getters['header/navigation'];
+        },
+        close() {
+            return this.$store.getters['header/close'];
+        },
+        back() {
+            return this.$store.getters['header/back'];
         }
     },
 
     methods: {
+        historyBack() {
+            window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/');
+        },
+        closePage() {
+            this.$router.push(this.$store.getters['header/closeUrl']);
+        }
     }
+
+
 };

@@ -2,25 +2,18 @@ export default ({store}) => {
     store.registerModule('footer', {
         namespaced: true,
         state: () => ({
-            list: {},
-            visible: true
+            visible: true,
+            theme: 'light'
         }),
         mutations: {
-            setList(state, navigation) {
-                state.list = navigation;
-            },
-            show(state) {
-                state.visible = true;
-            },
-            hide(state) {
-                state.visible = false;
+            settings: (state, payload) => {
+                state.visible = payload.visible === undefined ? true : payload.visible;
+                state.theme = payload.theme || 'light';
             }
         },
-        actions: {
-            async get({ commit }, endpoint) {
-                const data = await this.$axios.$get(endpoint);
-                commit('setList', data );
-            }
+        getters: {
+            visible: state => state.visible,
+            theme: state => state.theme
         }
     })
 }

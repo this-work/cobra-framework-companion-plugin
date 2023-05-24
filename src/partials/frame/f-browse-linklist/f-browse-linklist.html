@@ -1,0 +1,10 @@
+<nav>
+    <component :is="tag" :class="blockClasses">
+        <li v-for="{ href, key, label } in links" v-bind:key="key">
+            <NuxtLink :to="href" :class="element('link')">
+                <c-icon name="chevron-right" />
+                {{ label }}
+            </NuxtLink>
+        </li>
+    </component>
+</nav>

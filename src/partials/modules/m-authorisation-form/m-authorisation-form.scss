@@ -1,0 +1,85 @@
+////
+///
+/// m-authorisation-form
+///
+/// @group Modules
+///
+////
+
+.m-authorisation-form {
+    // #region [Block]
+    position: absolute!important;
+    top: 0!important;
+    left: 0!important;
+    right: 0!important;
+    min-height: 100%!important;
+    align-content: start!important;
+    grid-template-rows: auto 1fr!important;
+    @include color-theme('background');
+    @include above('m') {
+        align-content: stretch!important;
+        grid-template-rows: 1fr!important;
+    }
+    // #endregion
+
+    // #region [Element]
+    .c-grid {
+        height: 100%;
+    }
+
+    &__intro-heading {
+        padding: spacing('115') 0 spacing('27') 0;
+        @include grid-cell-position(1, 1);
+        @include grid-cell-size(9, 1);
+        @include grid-cell-offset('start', 'page', 'm', 'above');
+        @include above('m') {
+            align-self: center;
+            padding: spacing('115') 0 spacing('71');
+            @include grid-cell-size(4, 1);
+        }
+    }
+
+    &__intro-background {
+        background: url('/images/background-login.png') no-repeat top right;
+        background-size: cover;
+        @include grid-cell-position(1, 1);
+        @include grid-cell-size(12, 1);
+        @include grid-cell-offset('complete', 'viewport', 'm', 'below');
+        @include grid-cell-offset('start', 'viewport', 'm', 'above');
+        @include above('m') {
+            @include grid-cell-size(5, 1);
+        }
+    }
+
+    &__slot.module-viewport {
+        pointer-events: none;
+        @include below('m') {
+            @include grid-cell-row-start(2);
+        }
+    }
+
+    &__slot-content {
+        padding: spacing('27') 0;
+        pointer-events: auto;
+        @include grid-cell-position(1, 1);
+        @include grid-cell-size(12, 1);
+        @include above('m') {
+            align-self: center;
+            padding: spacing('115') 0 spacing('71');
+            @include grid-cell-position(7, 1);
+            @include grid-cell-size(6, 1);
+        }
+
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-authorisation-form) {
+        @include m-authorisation-form;
+    }
+    // #endregion
+
+}

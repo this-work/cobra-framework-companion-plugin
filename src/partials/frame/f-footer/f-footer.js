@@ -2,31 +2,34 @@
  * f-footer
  */
 
-import { common, theme } from '@this/cobra-framework/src/plugins/mixins';
+import { common } from '@this/cobra-framework/src/plugins/mixins';
 
 export default {
 
     name: 'f-footer',
 
     mixins: [
-        ...common,
-        theme
+        ...common
     ],
-
-    props: {
-    },
 
     computed: {
         blockClasses() {
-            return [
-            ];
+            return {
+                [`theme-${this.$store.getters['footer/theme']}`]: this.$store.getters['footer/theme']
+            };
         },
-        list() {
-            return this.$store.state.footer.list;
+        navigation() {
+            const navigation = this.$store.getters['navigations/footer'];
+            if (navigation.length <= 0) {
+                return false;
+            }
+            return navigation;
         }
     },
 
     methods: {
-
+        logout() {
+            this.$auth.logout(this.$config.AUTH_STRATEGY);
+        }
     }
 };

@@ -23,8 +23,16 @@ export default {
         return {
             message: null,
             valid: true,
-            loading: false
+            loading: false,
+            email: ''
         };
+    },
+
+    created() {
+        if (!sessionStorage.getItem('forgot-password-email-address')) return;
+
+        this.email = sessionStorage.getItem('forgot-password-email-address');
+        sessionStorage.removeItem('forgot-password-email-address');
     },
 
     computed: {
@@ -48,7 +56,7 @@ export default {
                     const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
                     await this.$axios.$post('/api/reset-password', {
-                        loginName: this.$refs.loginName.value,
+                        loginName: this.email,
                         'CRAFT_CSRF_TOKEN': csrfTokenValue
                     });
 

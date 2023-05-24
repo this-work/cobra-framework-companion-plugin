@@ -1,0 +1,5 @@
+<transition name="slide-in-fade-out">
+    <component :is="tag" :key="visible" v-if="visible" :class="blockClasses" role="tooltip">
+        <slot></slot>
+    </component>
+</transition>

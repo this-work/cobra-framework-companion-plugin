@@ -1,0 +1,60 @@
+////
+///
+/// f-browse-linklist
+///
+/// @group Frame
+///
+////
+
+$f-browse-linklist-gap: unitize(10px) !default;
+$f-browse-linklist-spacing-top: spacing('27') !default;
+
+$f-browse-linklist-link-border-radius: unitize(5px) !default;
+$f-browse-linklist-link-icon-size: unitize(24px) !default;
+$f-browse-linklist-link-icon-spacing: spacing('10') !default;
+$f-browse-linklist-link-padding: unitize(10px) unitize(16px) unitize(10px) unitize(10px) !default;
+
+.f-browse-linklist {
+    // #region [Block]
+    display: flex;
+    grid-gap: $f-browse-linklist-gap;
+    flex-direction: column;
+    margin: $f-browse-linklist-spacing-top 0 0;
+    padding: 0;
+    list-style: none;
+    // #endregion
+    // #region [Element]
+    &__link {
+        // #region [Block]
+        display: inline-flex;
+        align-items: center;
+        padding: $f-browse-linklist-link-padding;
+        transition: transition(background-color, $default-animation-duration-fade-in);
+        border-radius: $f-browse-linklist-link-border-radius;
+        color: color('white');
+        background-color: color('white:05:alpha');
+        @include responsive-font('browse-link');
+
+        &:hover,
+        &:active
+        &:focus {
+            background-color: color('white:10:alpha');
+            cursor: pointer;
+        }
+
+        > svg {
+            color: color('primary');
+            margin-right: $f-browse-linklist-link-icon-spacing;
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-browse-linklist) {
+        @include f-browse-linklist;
+    }
+    // #endregion
+}

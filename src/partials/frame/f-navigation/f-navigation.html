@@ -1,44 +1,13 @@
-<transition name="transition-f-navigation">
-    <div v-if="visible" :class="[blockClasses, 'theme-dark']">
-
-        <nav :class="[element('wrapper'), 'slide-in']">
-
-            <c-spinner v-if="navigation.length === 0" :visible="true" />
-
-            <transition :name="'slide--' + direction">
-
-                <div :class="element('panel')" :key="level">
-
-                    <simplebar :class="element('scrollbar')" data-simplebar-auto-hide="false">
-
-                        <span :class="element('headline')">
-                            <c-button v-if="sublevel" @click.native="navigateLevelUp()" icon="arrowBack" :class="element('level-up')" appearance="icon" />
-                            <span v-html="navigation.title" />
-                            <c-button icon="close" @click.native="toggle(false)" :class="element('close')" appearance="icon" />
-                        </span>
-
-                        <ul :class="element('list')">
-                            <li :class="element('list-entry')" v-for="(item, index) in navigation.items">
-                                <div :class="element('list-entry-content')">
-
-                                    <c-link :url="item.slug" :externalUrl="item.externalUrl" :class="element('label')">
-                                        <c-image v-if="item.image" v-bind="item.image" objectFit="cover" :aspectRatios="{0: '1:1'}" :skeleton="false" :class="element('label-image')" />
-                                        <span :class="element('label-text')" v-html="item.title" />
-                                    </c-link>
-
-                                    <c-button icon="arrowForward" v-if="item.hasOwnProperty('items')" @click.native="navigateLevelDown(index)" :class="element('level-down')" appearance="icon" />
-                                </div>
-                            </li>
-                        </ul>
-
-                    </simplebar>
-
-                </div>
-
-            </transition>
-
-        </nav>
-
-    </div>
-
-</transition>
+<nav :class="blockClasses" role="navigation" v-if="list.length > 0">
+    <ul :class="element('list')" ref="navigationList">
+        <li :class="element('list-item')"  v-for="item in list" :key="item.id">
+            <nuxt-link :ref="'navigation' + item.name.charAt(0).toUpperCase() + item.name.slice(1)" :class="element('link')" :to="localePath(item.path)" :data-index="item.id">
+                <span>{{ $t('f-navigation--' + item.name) }}</span>
+                <c-icon :aria-label="item.title" :name="item.icon" />
+            </nuxt-link>
+        </li>
+        <li aria-hidden="true" :class="element('elastic-shape')" ref="elasticShape">
+            <div ref="elasticShapeBackground" :class="element('elastic-background')" />
+        </li>
+    </ul>
+</nav>

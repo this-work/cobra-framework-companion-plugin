@@ -1,0 +1,15 @@
+<component :is="tag" :class="getClasses" ref="blockElement">
+    <input
+        v-model="value"
+        v-bind="{ checked }"
+        v-bind:value="true"
+        type="radio"
+        tabindex="0"
+        :name="name"
+        @change="handleChange"
+    />
+
+    <span :class="getLabelClasses">
+        <slot />
+    </span>
+</component>

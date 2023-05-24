@@ -1,0 +1,132 @@
+////
+///
+/// f-sticky-tabs
+///
+/// @group Frame
+///
+////
+
+// $f-sticky-tabs-top-position-mobile: unitize(0);
+// $f-sticky-tabs-top-position-desktop: unitize(84px);
+// $f-sticky-tabs-top-position: unitize(0);
+$f-sticky-tabs-spacing-top: spacing('71');
+$f-sticky-tabs-spacing-bottom: spacing('27');
+
+$f-sticky-tabs-tab-height: unitize(51px);
+$f-sticky-tabs-tab-gap: unitize(20px);
+
+$f-sticky-tabs-selection-marker-height: unitize(4px);
+
+$f-sticky-tabs-totop-size: unitize(44px);
+
+.f-sticky-tabs {
+    // #region [Block]
+    display: flex;
+    position: sticky;
+    z-index: zindex(999);
+    top: 0;
+    align-items: center;
+    margin: $f-sticky-tabs-spacing-top 0 $f-sticky-tabs-spacing-bottom;
+    padding-top: unitize(40px);
+    @include color-theme('sticky-tabs');
+    // #endregion
+
+    // #region [Element]
+    &__tabs {
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__item {
+        display: block;
+
+        & + &  {
+            margin-left: $f-sticky-tabs-tab-gap;
+        }
+    }
+
+    &__radio {
+        position: absolute;
+        opacity: 0;
+    }
+
+    &__label {
+        display: block;
+        transition: transition(color);
+        @include responsive-font('sticky-tab');
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: $f-sticky-tabs-tab-height;
+            color: inherit;
+        }
+
+        svg {
+            @include above('s') {
+                margin-right: 6px;
+            }
+        }
+
+        &:hover,
+        &:active,
+        [type="radio"]:focus + &,
+        [type="radio"]:checked + & {
+            color: _color('primary');
+        }
+
+        /* stylelint-disable no-descending-specificity */
+        &:hover,
+        &:active,
+        [type="radio"]:focus + & {
+            cursor: pointer;
+        }
+        /* stylelint-enable no-descending-specificity */
+    }
+
+    &__label-text {
+        display: none;
+
+        @include above('s') {
+            display: inline;
+        }
+    }
+
+    &__totop {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $f-sticky-tabs-totop-size;
+        height: $f-sticky-tabs-totop-size;
+    }
+
+    &__selection-marker {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 0;
+        height: $f-sticky-tabs-selection-marker-height;
+        transition:
+            left $default-animation-duration $default-animation-easing,
+            width $default-animation-duration $default-animation-easing;
+        background: _color('primary');
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-sticky-tabs) {
+        @include f-sticky-tabs;
+    }
+    // #endregion
+
+}

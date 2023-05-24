@@ -1,27 +1,19 @@
-<header :class="blockClasses">
+<header :class="blockClasses" v-if="this.$store.getters['header/visible']">
 
-    <module :class="element('module')" :background="false">
+    <f-logo :class="element('logo')" />
 
-        <transition-replace affected-element=".f-header" affected-element-height-source=".module">
+    <transition name="navigation">
+        <f-navigation :class="element('navigation')" v-if="$auth.loggedIn && navigation" />
+    </transition>
 
-            <module-content v-if="this.$store.state.header.type === 'search'">
+    <div :class="element('actions')">
 
-                <f-header-search />
+        <f-language-switch />
 
-            </module-content>
+        <c-button appearance="header" icon="navigate-before" v-if="back" iconPosition="left" :label="$t('f-header--back')" @click.native="historyBack()" />
 
-            <div :class="element('wrapper')" v-else-if="this.$store.state.header.type">
+        <c-button appearance="header" icon="close" @click.native="closePage" v-if="close" />
 
-                <nuxt-link :to="localePath('/')" :class="element('logo')">
-                    <c-icon name="logo" />
-                </nuxt-link>
-
-                <f-header-navigation />
-
-            </div>
-
-        </transition-replace>
-
-    </module>
+    </div>
 
 </header>

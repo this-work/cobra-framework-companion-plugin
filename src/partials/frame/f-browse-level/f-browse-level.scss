@@ -1,0 +1,71 @@
+////
+///
+/// f-browse-level
+///
+/// @group Frame
+///
+////
+
+$f-browse-level-item-min-size: unitize(44px) !default;
+$f-browse-level-item-gap: unitize(20px) !default;
+$f-browse-level-vertical-spacing: spacing('27') !default;
+
+@mixin currentLevelWidth($itemCount) {
+    min-width: calc((100% - $f-browse-level-item-gap * ($itemCount - 1)) / $itemCount);
+    max-width: calc((100% - $f-browse-level-item-gap * ($itemCount - 1)) / $itemCount);
+}
+
+
+.f-browse-level {
+    // #region [Block]
+    position: relative;
+    // #endregion
+
+    // #region [Element]
+    &__list {
+        display: flex;
+        gap: $f-browse-level-item-gap;
+        flex-wrap: wrap;
+        padding: $f-browse-level-vertical-spacing 0 0;
+        transition: transition(padding);
+        list-style: none;
+
+        &--hasSelectedChild {
+            padding-bottom: $f-browse-level-vertical-spacing;
+            border-bottom: 1px solid color('white:10:alpha');
+
+        }
+    }
+
+    &__item {
+        min-width: $f-browse-level-item-min-size;
+        max-width: 100%;
+        transition: transition(all);
+
+        @include above('s') {
+            max-width: 50%;
+        }
+
+        &--currentLevel {
+            @include currentLevelWidth(2);
+
+            @include above('s') {
+                @include currentLevelWidth(3);
+            }
+
+            @include above('m') {
+                @include currentLevelWidth(4);
+            }
+        }
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(f-browse-level) {
+        @include f-browse-level;
+    }
+    // #endregion
+}

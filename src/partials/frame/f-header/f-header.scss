@@ -1,84 +1,49 @@
 ////
 ///
-/// Header Styles
+/// f-header
 ///
-/// @group Frame
+/// @group Modules
 ///
 ////
 
-$f-header-logo-margin-vertical-mobile: spacing('16') !default;
-$f-header-logo-margin-horizontal-mobile: spacing('16') !default;
-$f-header-logo-margin-vertical-desktop: spacing('20') !default;
-$f-header-logo-margin-horizontal-desktop: spacing('20') !default;
-$f-header-logo-width: unitize(44px) !default;
-$f-header-logo-height: unitize(44px) !default;
-$f-header-box-shadow: 0 unitize(1px) unitize(3px) 0 rgba(color('black'), .07), 0 unitize(10px) unitize(20px) 0 rgba(color('black'), .07) !default;
-$f-header-box-background-color-theme: 'background' !default;
+$f-header-elements-responsive-spacing: ( 'default': '20', 'm': '27' ) !default;
+$f-header-actions-responsive-spacing: ( 'default': '10', 'm': '16' ) !default;
 
 .f-header {
     // #region [Block]
-    $module: &;
-    $header-height-desktop: $f-header-logo-margin-vertical-desktop + $f-header-logo-margin-vertical-desktop + $f-header-logo-height;
-    @include color-theme('background');
-    @include below('s') {
-        height: auto!important;
-    }
-    @include above('s') {
-        height: $header-height-desktop;
-        min-height: $header-height-desktop;
-        transition: height $default-replace-enter-duration $default-animation-easing-decelerate;
-    }
+    z-index: zindex(500);
     // #endregion
 
     // #region [Element]
-
-    #{$module}__module {
-        position: relative;
-        z-index: zindex(900);
-        @include color-theme($f-header-box-background-color-theme);
-        @include color-theme('copytext');
-        @include above('s') {
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            min-height: inherit;
-            box-shadow: $f-header-box-shadow;
-        }
-    }
-
-    &__wrapper {
-        position: relative;
-        display: flex;
-        min-height: inherit;
-        transform: none!important;
-        perspective: none!important;
-    }
-
     &__logo {
-        display: inline-flex;
-        position: relative;
-        flex-shrink: 0;
-        margin: $f-header-logo-margin-vertical-mobile $f-header-logo-margin-horizontal-mobile;
-        color: inherit;
-        @include above('s') {
-            margin: $f-header-logo-margin-vertical-desktop $f-header-logo-margin-horizontal-desktop;
+        display: block;
+        position: absolute;
+        @include responsive-spacing( false, top left, $f-header-elements-responsive-spacing);
+    }
+    &__navigation {
+        display: block;
+        position: fixed;
+        bottom: spacing(map-get($f-header-elements-responsive-spacing, 'default'));
+        left: 50%;
+        transform: translateX(-50%);
+        @include above('m') {
+            top: spacing(map-get($f-header-elements-responsive-spacing, 'm'));
+            bottom: auto;
         }
 
-        svg, img {
-            display: block;
-            width: $f-header-logo-width;
-            height: $f-header-logo-height;
+    }
+    &__actions {
+        display: flex;
+        position: absolute;
+        @include responsive-spacing( false, top right, $f-header-elements-responsive-spacing);
+        > * + * {
+            @include responsive-spacing( false, margin-left, $f-header-actions-responsive-spacing);
         }
     }
+
     // #endregion
 
     // #region [Modifier]
-    &--search {
-        .module {
-            box-shadow: $f-header-box-shadow;
-        }
-    }
     // #endregion
 
     // #region [Overwrites]

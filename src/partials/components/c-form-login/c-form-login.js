@@ -27,13 +27,6 @@ export default {
         };
     },
 
-    computed: {
-        blockClasses() {
-            return [
-            ];
-        }
-    },
-
     created() {
 
         const password = this.$route.params.password;
@@ -55,13 +48,13 @@ export default {
 
                 try {
 
-                    const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
+                    const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/session-info');
 
-                    await this.$auth.loginWith('local', {
+                    await this.$auth.loginWith(this.$config.AUTH_STRATEGY, {
                         data: {
-                            loginName: this.$refs.loginName.value,
-                            password: this.$refs.password.value,
-                            'CRAFT_CSRF_TOKEN': csrfTokenValue
+                            'loginName': this.$refs.loginName.value,
+                            'password': this.$refs.password.value,
+                            [csrfTokenName]: csrfTokenValue
                         }
                     });
 

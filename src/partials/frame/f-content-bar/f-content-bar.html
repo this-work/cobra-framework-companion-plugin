@@ -1,0 +1,31 @@
+<nav :class="blockClasses" role="navigation">
+    <ul :class="element('list')">
+        <li :class="element('list-item')" v-if="pageShortcuts">
+            <component
+                :is="previousPage ? 'nuxt-link' : 'span'"
+                :to="getAttribute(previousPage, 'href')"
+                :class="buttonClass(previousPage)"
+                :title="getAttribute(previousPage, 'label')"
+            >
+                <c-icon name="arrowLeft" :aria-label="getAttribute(previousPage, 'label')" />
+            </component>
+        </li>
+        <li :class="element('list-item')">
+            <f-content-compass
+                :title="title"
+                :collection="collection"
+                :anchors="anchors"
+            />
+        </li>
+        <li :class="element('list-item')" v-if="pageShortcuts">
+            <component
+                :is="nextPage ? 'nuxt-link' : 'span'"
+                :to="getAttribute(nextPage, 'href')"
+                :class="buttonClass(nextPage)"
+                :title="getAttribute(nextPage, 'label')"
+            >
+                <c-icon name="arrowRight" :aria-label="getAttribute(nextPage, 'label')" />
+            </component>
+        </li>
+    </ul>
+</nav>

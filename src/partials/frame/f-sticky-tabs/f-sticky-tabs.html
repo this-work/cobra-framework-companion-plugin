@@ -1,0 +1,38 @@
+<module :class="blockClasses"
+        :background="false"
+>
+    <module-content>
+        <div :class="element('tabs')" ref="stickyTabs">
+            <ul :class="element('list')">
+                <li
+                    v-for="{ icon, type, label } in tabs"
+                    :key="type"
+                    :class="element('item')"
+                >
+                    <input
+                        :class="element('radio')"
+                        type="radio"
+                        name="sticky-tabs"
+                        :value="type"
+                        :id="`tab-${type}`"
+
+                        :checked="currentTabType === type"
+                    />
+
+                    <label :class="element('label')" :for="`tab-${type}`">
+                        <c-scrollto :target="`#${type}`" :offset="getScrollOffset(type)">
+                            <c-icon :name="icon" />
+                            <span :class="element('label-text')">{{ label }}</span>
+                        </c-scrollto>
+                    </label>
+                </li>
+            </ul>
+
+            <c-scrollto :class="element('totop')">
+                <c-icon name="to-top" />
+            </c-scrollto>
+
+            <span :class="element('selection-marker')" :style="getMarkerStyles" />
+        </div>
+    </module-content>
+</module>

@@ -1,0 +1,22 @@
+<module :class="blockClasses" :background="false">
+
+    <module-viewport :class="element('intro')">
+        <module-content>
+            <c-grid>
+                <div :class="element('intro-background')" />
+                <c-heading :class="element('intro-heading')" v-bind="heading" sublineType="copytext--big" headlineTag="h1" headlineType="h2" />
+            </c-grid>
+        </module-content>
+    </module-viewport>
+
+    <module-viewport :class="element('slot')">
+        <module-content>
+            <c-grid>
+                <div :class="element('slot-content')">
+                    <slot />
+                </div>
+            </c-grid>
+        </module-content>
+    </module-viewport>
+
+</module>
