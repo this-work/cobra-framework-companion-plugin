@@ -79,10 +79,9 @@ export default {
         window.addEventListener('scroll', throttle(this.updateScrollPosition, 1000 / 60));
         this.updateScrollPosition();
 
-        setTimeout(() => {
+        this.$nextTick(() => {
 
-            console.log(this.$el);
-            console.log(this.$refs.stickyTabs);
+            console.log(this.$refs.stickyTabs)
 
             const stickyTabsHeight = this.$refs.stickyTabs.getBoundingClientRect().height;
 
@@ -94,7 +93,8 @@ export default {
                     scrollTop: this.currentScrollTop + top + height - stickyTabsHeight
                 };
             });
-        }, 16);
+        });
+
     },
 
     unmounted() {
