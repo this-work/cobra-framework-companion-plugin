@@ -3,7 +3,7 @@
  */
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
-import { completePlaylist, completedPlaylists } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
+import { completeUnit, completedUnits } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
 import throttle from 'lodash.throttle';
 
 export default {
@@ -111,12 +111,12 @@ export default {
             this.completedOnced = true;
             this.$refs.toast.show();
 
-            completePlaylist(this.id);
+            completeUnit(this.id);
 
             document.dispatchEvent(new CustomEvent('playlist-completed', {
                 detail: {
                     id: this.id,
-                    completed: completedPlaylists()
+                    completed: completedUnits()
                 }
             }));
 

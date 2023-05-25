@@ -4,7 +4,7 @@
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
 import { SwiperSlide } from 'vue-awesome-swiper';
-import { isPlaylistCompleted } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
+import { isUnitCompleted } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
 
 export default {
 
@@ -74,7 +74,7 @@ export default {
             return {};
         },
         completed() {
-            return isPlaylistCompleted(this.id  + '');
+            return isUnitCompleted(this.id);
         }
     },
 

@@ -4,6 +4,7 @@
 
 import { common, background, theme } from '@this/cobra-framework/src/plugins/mixins';
 import { shuffleArray } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/interaction-helper';
+import { completeUnit, completedUnits } from '@this/cobra-framework-companion-plugin/src/plugins/vanilla/status-helper';
 import { spacingClass, spacingProps } from '@this/cobra-framework/src/plugins/mixins/spacing';
 
 export default {
@@ -253,32 +254,29 @@ export default {
         },
 
         reportResult({ id, score, passThreshold, evaluationResult }) {
-            return this.trackAttempt({ id, score, passThreshold, evaluationResult });
-        },
 
-        async trackAttempt({ id, score, passThreshold, evaluationResult }) {
-            try {
-                const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/csrf-token');
-
-                const result = await this.$axios.$post('/api/v1/quiz/track-attempt', {
-                    quizId: id,
+            document.dispatchEvent(new CustomEvent('quiz-attempt', {
+                detail: {
+                    id: id,
                     score: score,
                     threshold: passThreshold,
                     evaluationResult: evaluationResult,
-                    [csrfTokenName]: csrfTokenValue
-                });
+                }
+            }));
 
-                if (!result.success) {
-                    console.log(result.error);
-                }
-            } catch (err) {
-                if (err.response.data.error) {
-                    console.log(err.response.data.error);
-                } else {
-                    console.log(err.message);
-                }
+            if (this.quizPassed) {
+                completeUnit(id);
+
+                document.dispatchEvent(new CustomEvent('quiz-completed', {
+                    detail: {
+                        id: id,
+                        completed: completedUnits()
+                    }
+                }));
             }
+
         }
+
     },
 
     created() {
