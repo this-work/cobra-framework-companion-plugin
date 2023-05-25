@@ -79,21 +79,24 @@ export default {
         window.addEventListener('scroll', throttle(this.updateScrollPosition, 1000 / 60));
         this.updateScrollPosition();
 
-        this.$nextTick(() => {
+        const mountedStickyTabsInstance = setInterval(() => {
+            if (this.$refs.hasOwnProperty('stickyTabs')) {
 
-            console.log(this.$refs.stickyTabs)
+                clearInterval(mountedStickyTabsInstance);
 
-            const stickyTabsHeight = this.$refs.stickyTabs.getBoundingClientRect().height;
+                const stickyTabsHeight = this.$refs.stickyTabs.getBoundingClientRect().height;
 
-            this.tabsScrollTops = this.tabs.map(({ type }) => {
-                const { top, height } = document.querySelector(`#${type}`).getBoundingClientRect();
+                this.tabsScrollTops = this.tabs.map(({ type }) => {
+                    const { top, height } = document.querySelector(`#${type}`).getBoundingClientRect();
 
-                return {
-                    type,
-                    scrollTop: this.currentScrollTop + top + height - stickyTabsHeight
-                };
-            });
-        });
+                    return {
+                        type,
+                        scrollTop: this.currentScrollTop + top + height - stickyTabsHeight
+                    };
+                });
+
+            }
+        }, 3);
 
     },
 
