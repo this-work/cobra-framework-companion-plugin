@@ -79,6 +79,12 @@ export default {
         window.addEventListener('scroll', throttle(this.updateScrollPosition, 1000 / 60));
         this.updateScrollPosition();
 
+        console.log(this.$el.querySelector('.f-sticky-tabs__tabs'));
+
+        this.$nextTick(() => {
+            console.log(this.$el.querySelector('.f-sticky-tabs__tabs'));
+        });
+
         const mountedStickyTabsInstance = setInterval(() => {
             if (this.$refs.hasOwnProperty('stickyTabs')) {
 
