@@ -53,7 +53,7 @@ export default {
         },
         checkClickOutside(event) {
             if (event) {
-                if (event.target.closest('[class*="f-content"]')) {
+                if (event.target.closest('[class*="f-content-navigation"]')) {
                     return;
                 }
                 this.close();
