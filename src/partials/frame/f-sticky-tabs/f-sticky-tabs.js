@@ -50,6 +50,7 @@ export default {
             if (this.tabsScrollTops.length <= 0) {
                 return null;
             }
+
             const selectedTarget = this.tabsScrollTops.find(({ scrollTop }) => scrollTop > this.currentScrollTop);
 
             return (selectedTarget || this.tabs[0]).type;
@@ -72,6 +73,19 @@ export default {
             const { height: headingHeight } = document.querySelector(`#${elementId} > .m-heading`).getBoundingClientRect();
 
             return (stickyTabsHeight + offset - (isDesktop ? headingHeight : 0)) * -1;
+        },
+
+        initTabs() {
+            const stickyTabsHeight = this.$el.querySelector('.f-sticky-tabs__tabs').getBoundingClientRect().height;
+
+            this.tabsScrollTops = this.tabs.map(({ type }) => {
+                const { top, height } = document.querySelector(`#${type}`).getBoundingClientRect();
+
+                return {
+                    type,
+                    scrollTop: this.currentScrollTop + top + height - stickyTabsHeight
+                };
+            });
         }
     },
 
@@ -79,17 +93,11 @@ export default {
         window.addEventListener('scroll', throttle(this.updateScrollPosition, 1000 / 60));
         this.updateScrollPosition();
 
-        const stickyTabsHeight = this.$el.querySelector('.f-sticky-tabs__tabs').getBoundingClientRect().height;
-
-        this.tabsScrollTops = this.tabs.map(({ type }) => {
-            const { top, height } = document.querySelector(`#${type}`).getBoundingClientRect();
-
-            return {
-                type,
-                scrollTop: this.currentScrollTop + top + height - stickyTabsHeight
-            };
+        this.$nuxt.$on('re-init-tabs', () => {
+            this.$nextTick(this.initTabs);
         });
 
+        this.$nextTick(this.initTabs);
     },
 
     unmounted() {

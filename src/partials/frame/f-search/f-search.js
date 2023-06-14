@@ -81,8 +81,9 @@ export default {
                 query: getElasticsearchQueryString(),
                 selectedTags: (getUriParams()['tags'] ? getUriParams()['tags'].split(',') : undefined)
             };
-            await this.$store.dispatch('search/fetch', options);
 
+            await this.$store.dispatch('search/fetch', options);
+            this.$nuxt.$emit('re-init-tabs');
         },
 
         updateQuery() {
