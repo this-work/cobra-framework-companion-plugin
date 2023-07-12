@@ -49,6 +49,14 @@ export default {
 
             this.switchLocalePath(localeCode);
 
+            if (this.$config.FETCH_FRAME) {
+                this.$nextTick(() => {
+                    this.$store.dispatch('navigations/fetch', { name: 'main' } );
+
+                    this.$store.dispatch('navigations/fetch', { name: 'footer' });
+                })
+            }
+
         }
     }
 };

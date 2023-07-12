@@ -31,7 +31,7 @@ export default ({store}) => {
 
             async fetch({ commit, state, dispatch }, { name, force = false }) {
 
-                if (state[name].length <= 0 || force) {
+                if ((state[name] && state[name].length <= 0) || force) {
                     const connection = new Gateway({
                         context: this,
                         process: process,

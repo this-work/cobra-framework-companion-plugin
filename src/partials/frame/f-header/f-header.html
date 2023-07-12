@@ -1,4 +1,4 @@
-<header :class="blockClasses" v-if="this.$store.getters['header/visible']">
+<header :class="blockClasses" v-if="this.$store.getters['header/visible'] && this.$config.MODE !== 'authortool'">
 
     <f-logo :class="element('logo')" />
 

@@ -24,7 +24,7 @@ export default {
 
     data() {
         return {
-            buttonLabelEvaluate: this.$t('interactions--button-evaluate'),
+            buttonLabelEvaluate: this.$t('i--button-evaluate'),
             draggableOptions: {
                 animation: 300,
                 disabled: false,
