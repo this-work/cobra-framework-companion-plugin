@@ -22,7 +22,7 @@
     "vue"
   ],
   "dependencies": {
-    "@this/cobra-framework": "git+https://bitbucket.org/this-work/cobra-framework.git#0.2.39",
+    "@this/cobra-framework": "git+https://bitbucket.org/this-work/cobra-framework.git#master",
     "@this/cobra-framework-elastic-plugin": "git+https://bitbucket.org/this-work/cobra-framework-elastic-plugin.git#master",
     "vuedraggable": "^2.24.3",
     "lodash.chunk": "^4.2.0",
