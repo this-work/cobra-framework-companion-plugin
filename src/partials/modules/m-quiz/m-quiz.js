@@ -107,7 +107,12 @@ export default {
         },
 
         questionSlots() {
-            return this.questions[this.selectedQuestionIndex]?.data.slots;
+
+            if (!this.questions[this.selectedQuestionIndex]) {
+                return false
+            }
+
+            return this.questions[this.selectedQuestionIndex].data.slots;
         },
 
         questionLength() {
