@@ -124,7 +124,12 @@ export default {
         },
 
         score() {
-            return this.quizStates?.filter( question => question.result).length;
+
+            if (!his.quizStates) {
+                return false
+            }
+
+            return this.quizStates.filter( question => question.result).length;
         },
 
         minScore() {
@@ -191,7 +196,18 @@ export default {
 
         questionChange(result) {
             const selectedQuestion = this.questions[this.selectedQuestionIndex] || {};
-            const questionText = selectedQuestion?.data?.props?.heading?.headline;
+
+            let questionText = undefined;
+            if (selectedQuestion.hasOwnProperty('data')) {
+                if (selectedQuestion.hasOwnProperty('props')) {
+                    if (selectedQuestion.hasOwnProperty('heading')) {
+                        if (selectedQuestion.hasOwnProperty('headline')) {
+                            questionText = selectedQuestion.data.props.heading.headline;
+                        }
+                    }
+                }
+            }
+
             const quizState = { questionText, result };
 
             this.quizStates.push(quizState);
