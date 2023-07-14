@@ -63,30 +63,24 @@ export default {
 
             this.observer.observe(this.$el);
 
-            if (this.$refs.questionsWrapper) {
-                setTimeout(() => this.fixAutoScrollBug(this.$refs.questionsWrapper, 200));
-                this.$refs.questionsWrapper.addEventListener('scroll', this.fixAutoScrollBug);
-            }
-
             setTimeout(() => {
                 this.resizeElements();
             }, 200);
 
         }, 20);
 
-        this.resizeFunction = debounce(this.resizeElements, 0);
+        this.resizeFunction = debounce(this.resizeElements, 20);
         window.addEventListener('resize', this.resizeFunction);
     },
 
     updated() {
-        this.resizeElements();
+        setTimeout(() => {
+            this.resizeElements();
+        }, 20);
     },
 
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeFunction);
-        if (this.$refs.questionsWrapper) {
-            this.$refs.questionsWrapper.removeEventListener('scroll', this.fixAutoScrollBug);
-        }
 
         if (this.observer) {
             this.observer.unobserve(this.$el);
@@ -183,31 +177,38 @@ export default {
 
         createDraggableObject(array) {
 
-            const questions = array.map(({ drop, drag }, index) => ({
-                question: [
-                    {
-                        id: index + 1,
-                        text: drop.text,
-                        image: drop.image
-                    }
-                ]
-            }));
+            let questions;
+            let answers;
 
-            if (!this.disableShuffle) {
-                shuffleArray(questions);
-            }
+            do {
 
-            const answers = array.map(({ drop, drag }, index) => ({
-                answer: [
-                    {
-                        id: index + 1,
-                        text: drag.text,
-                        image: drag.image,
-                        type: 'draggable'
-                    }
-                ]
-            }));
-            shuffleArray(answers);
+                questions = array.map(({drop, drag}, index) => ({
+                    question: [
+                        {
+                            id: index + 1,
+                            text: drop.text,
+                            image: drop.image
+                        }
+                    ]
+                }));
+
+                if (!this.disableShuffle) {
+                    shuffleArray(questions);
+                }
+
+                answers = array.map(({drop, drag}, index) => ({
+                    answer: [
+                        {
+                            id: index + 1,
+                            text: drag.text,
+                            image: drag.image,
+                            type: 'draggable'
+                        }
+                    ]
+                }));
+                shuffleArray(answers);
+
+            } while (questions.length > 2 && questions.every(({ question }, index) => parseInt(question[0].id) === parseInt(answers[index].answer[0].id)));
 
             const selectedAnswers = array.map(({ drop, drag }, index) => ({
                 answer: []
@@ -263,8 +264,8 @@ export default {
         },
 
         resetScrollbar() {
-            if (this.$refs.questionsWrapper) {
-                this.$refs.questionsWrapper.scrollTo(0, 0);
+            if (this.$refs.questionsWrapper && this.$refs.questionsWrapper.SimpleBar) {
+                this.$refs.questionsWrapper.SimpleBar.getScrollElement().scrollLeft = 0;
             }
         },
 
@@ -279,11 +280,15 @@ export default {
                 answerlist = this.$refs.answerlists.map( element => element.$el );
             }
 
+            this.$el.style.minHeight = this.$el.clientHeight + 'px';
+
             const elememts = [ ...answerlist, ...this.$refs.answeritems ];
             elememts.forEach(element => element.style.removeProperty('height'));
 
             const highestOffsetHeight = Math.max(...this.$refs.answeritems.map(element => element.offsetHeight));
             elememts.forEach(element => element.style.height = highestOffsetHeight + 'px');
+
+            this.$el.style.removeProperty('min-height');
         }
     },
 

@@ -252,12 +252,19 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
         overflow-x: auto;
         overflow-y: hidden;
 
+        .simplebar-scrollbar::before {
+            background-color: rgba(162, 162, 162, .33);
+        }
+
+        .simplebar-hover::before {
+            background-color: rgba(162, 162, 162, .66);
+        }
+
         @mixin i-assign-table-question-and-answer-addition {
             display: flex;
             align-items: stretch;
             width: 100%;
             padding-bottom: 10px;
-            //justify-content: center;
         }
 
         &-question {

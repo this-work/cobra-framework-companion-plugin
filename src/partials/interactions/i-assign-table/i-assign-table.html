@@ -6,7 +6,7 @@
 
             <component :is="tag" :class="blockClasses">
 
-                <div :class="[element('questions-wrapper')]" ref="questionsWrapper">
+                <simplebar :class="element('questions-wrapper')" ref="questionsWrapper" data-simplebar-auto-hide="false" data-simplebar-click-on-track="false">
 
                     <layout layout="l-12" :class="element('layout')">
 
@@ -138,7 +138,7 @@
 
                     </layout>
 
-                </div>
+                </simplebar>
 
                 <div :class="element('button-wrapper')">
 
