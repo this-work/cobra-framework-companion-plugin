@@ -109,7 +109,7 @@ export default {
         questionSlots() {
 
             if (!this.questions[this.selectedQuestionIndex]) {
-                return false
+                return false;
             }
 
             return this.questions[this.selectedQuestionIndex].data.slots;
@@ -125,8 +125,8 @@ export default {
 
         score() {
 
-            if (!his.quizStates) {
-                return false
+            if (!this.quizStates) {
+                return false;
             }
 
             return this.quizStates.filter( question => question.result).length;
@@ -199,9 +199,9 @@ export default {
 
             let questionText = undefined;
             if (selectedQuestion.hasOwnProperty('data')) {
-                if (selectedQuestion.hasOwnProperty('props')) {
-                    if (selectedQuestion.hasOwnProperty('heading')) {
-                        if (selectedQuestion.hasOwnProperty('headline')) {
+                if (selectedQuestion.data.hasOwnProperty('props')) {
+                    if (selectedQuestion.data.props.hasOwnProperty('heading')) {
+                        if (selectedQuestion.data.props.heading.hasOwnProperty('headline')) {
                             questionText = selectedQuestion.data.props.heading.headline;
                         }
                     }

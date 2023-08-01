@@ -61,7 +61,7 @@
 
                                         <template v-if="feedbackType === 'positive'">
 
-                                            <c-button :class="element('resolve')"
+                                            <c-button :class="element('button-resolve')"
                                                       :label="$t('c-feedback--button-close')"
                                                       @click.native="resolve"/>
 
@@ -69,12 +69,12 @@
 
                                         <template v-if="feedbackType === 'negative'">
 
-                                            <c-button :class="element('retry')"
+                                            <c-button :class="element('button-retry')"
                                                       :label="$t('c-feedback--button-retry')"
                                                       @click.native="retry"/>
 
                                             <c-button v-if="hasSolution"
-                                                      :class="element('solution')"
+                                                      :class="element('button-solution')"
                                                       :label="$t('c-feedback--button-solution')"
                                                       @click.native="solution"/>
 
@@ -82,7 +82,7 @@
 
                                         <template v-if="feedbackType === 'solution'">
 
-                                            <c-button :class="element('resolve')"
+                                            <c-button :class="element('button-resolve')"
                                                       :label="$t('c-feedback--button-close')"
                                                       @click.native="resolve"/>
 

@@ -30,7 +30,8 @@ export default {
     data() {
         return {
             buttonLabelEvaluate: this.$t('interactions--button-evaluate'),
-            shuffledAnswers: this.shuffleAnswers([...this.answers])
+            shuffledAnswers: this.shuffleAnswers([...this.answers]),
+            selectedAnswers: []
         };
     },
 
@@ -51,7 +52,7 @@ export default {
 
         markedAnswers() {
             return this.correctSelection || this.shuffledAnswers.map(answer =>
-                this.$store.getters['quiz/interactionSelection'](this.id).includes(answer)
+                this.selectedAnswers.includes(answer)
             );
         },
 
@@ -64,19 +65,19 @@ export default {
         },
 
         correctAnswersSelected() {
-            return this.$store.getters['quiz/interactionSelection'](this.id).filter(answer => answer.correct);
+            return this.selectedAnswers.filter(answer => answer.correct);
         },
 
         evaluatedResult() {
-            return this.correctAnswersSelected.length === this.$store.getters['quiz/interactionSelection'](this.id).length
+            return this.correctAnswersSelected.length === this.selectedAnswers.length
                 && this.correctAnswersSelected.length === this.correctAnswers.length;
         },
 
         comparedSelection() {
-            if (!this.$store.getters['quiz/interactionSelection'](this.id) || !this.correctSelection) return;
+            if (!this.selectedAnswers || !this.correctSelection) return;
 
             return this.shuffledAnswers.map(answer => {
-                const isSelected = this.$store.getters['quiz/interactionSelection'](this.id).includes(answer);
+                const isSelected = this.selectedAnswers.includes(answer);
                 const isCorrect = answer.correct;
                 return isCorrect && isSelected || !isCorrect && !isSelected;
             });
@@ -93,10 +94,10 @@ export default {
         selectionChanged(answer) {
             let selection;
 
-            if (this.$store.getters['quiz/interactionSelection'](this.id).includes(answer)) {
-                selection = this.$store.getters['quiz/interactionSelection'](this.id).filter(selectionAnswer => selectionAnswer !== answer);
+            if (this.selectedAnswers.includes(answer)) {
+                selection = this.selectedAnswers.filter(selectionAnswer => selectionAnswer !== answer);
             } else {
-                selection = [...this.$store.getters['quiz/interactionSelection'](this.id)];
+                selection = [...this.selectedAnswers];
                 selection.push(answer);
             }
 
@@ -105,6 +106,8 @@ export default {
                 selection
             });
 
+            this.selectedAnswers = selection;
+
             this.evaluationPermitted = this.markedAnswers.filter(selection => selection).length !== 0;
         },
 
@@ -112,6 +115,7 @@ export default {
             this.evaluationPermitted = false;
             this.shuffledAnswers = this.shuffleAnswers([...this.answers]);
             this.$store.commit('quiz/resetInteraction', { id: this.id });
+            this.selectedAnswers = [];
         },
 
         evaluate() {

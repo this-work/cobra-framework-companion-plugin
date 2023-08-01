@@ -67,7 +67,7 @@ export default {
                 this.resizeElements();
             }, 200);
 
-        }, 20);
+        }, 200);
 
         this.resizeFunction = debounce(this.resizeElements, 20);
         window.addEventListener('resize', this.resizeFunction);
@@ -76,7 +76,7 @@ export default {
     updated() {
         setTimeout(() => {
             this.resizeElements();
-        }, 20);
+        }, 200);
     },
 
     beforeDestroy() {
@@ -276,7 +276,7 @@ export default {
             }
 
             let answerlist = this.$refs.answerlists;
-            if (this.$refs.answerlists.length && this.$refs.answerlists[0] instanceof Vue) {
+            if (this.$refs.answerlists.length && (this.$refs.answerlists[0] instanceof Vue || this.$refs.answerlists[0]._isVue)) {
                 answerlist = this.$refs.answerlists.map( element => element.$el );
             }
 
