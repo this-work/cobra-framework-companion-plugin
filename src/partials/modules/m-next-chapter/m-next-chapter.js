@@ -30,7 +30,8 @@ export default {
     computed: {
         blockClasses() {
             return {
-                [`${this.$options.name}--only-back`]: (!this.nextChapter)
+                [`${this.$options.name}--only-back`]: (!this.nextChapter),
+                [`${this.$options.name}--only-next`]: (!this.overview)
             };
         },
         getSlotName() {

@@ -122,6 +122,36 @@
             }
         }
     }
+
+    &--only-next {
+
+        #{$module}__text {
+            @include above('xl') {
+                margin-bottom: spacing('27');
+                text-align: center;
+            }
+        }
+
+        #{$module}__button-next {
+            @include grid-cell-position(1, 2);
+            @include grid-cell-size(12);
+            align-self: center;
+            > * {
+                margin-bottom: 0;
+            }
+            @include above('xs') {
+                @include grid-cell-size(12);
+            }
+            @include above('s') {
+                text-align: center;
+            }
+            @include above('xl') {
+                text-align: right;
+                @include grid-cell-position(10, 1);
+                @include grid-cell-size(3);
+            }
+        }
+    }
     // #endregion
 
     // #region [Overwrites]
