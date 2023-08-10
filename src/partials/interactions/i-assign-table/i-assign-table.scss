@@ -250,7 +250,7 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
             flex: 0 0 auto;
             align-items: center;
             justify-content: center;
-            width: rem(30px);
+            width: unitize(30px);
             margin-right: spacing('10');
             opacity: .35;
             color: $i-assign-table-drag-indicator-color;
