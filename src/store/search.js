@@ -27,6 +27,7 @@ export default ({ store }) => {
 
                 const response = await this.$elastic.search(query, {
                     fields: ['*'],
+                    queryFields: this.$config.API_ELASTIC_SEARCH_QUERY_FIELDS,
                     index: this.$config.API_ELASTIC_SEARCH_PREFIX + this.$i18n.localeProperties.siteId
                 }, {
                     'aggs': {
