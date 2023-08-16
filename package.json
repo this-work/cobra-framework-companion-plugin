@@ -1,6 +1,6 @@
 {
   "name": "@this/cobra-framework-companion-plugin",
-  "version": "1.3.41",
+  "version": "1.3.42",
   "author": "THIS GmbH",
   "repository": "https://bitbucket.org/this-work/this.cobra-framework/src/master/README.md",
   "description": "Component framework plugin for companion for Nuxt 2 or Vue 2",
@@ -22,7 +22,7 @@
     "vue"
   ],
   "dependencies": {
-    "@this/cobra-framework-elastic-plugin": "git+https://bitbucket.org/tthis-work/cobra-framework-elastic-plugin.git#master",
+    "@this/cobra-framework-elastic-plugin": "git+https://bitbucket.org/this-work/cobra-framework-elastic-plugin.git#master",
     "vuedraggable": "^2.24.3",
     "lodash.chunk": "^4.2.0",
     "lodash.debounce": "^4.0.8",
