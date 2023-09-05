@@ -25,6 +25,36 @@ $responsive-font-types: map-merge((
     ),
     'value-slider-current-unit': (
         'default': ( $default-font-family, 'bold', '16' )
+    ),
+    'header-text': (
+        'default': ( 'Arial', 'regular', '14', 1.15 )
+    ),
+    'browse-item': (
+        'default': ( 'Arial', 'light', '14', 1 )
+    ),
+
+    'browse-item--big': (
+        'default': ( 'Arial', 'light', '16', 1.2 ),
+        'xs':      ( 'Arial', 'light', '19', 1.2 )
+    ),
+
+    'browse-link': (
+        'default': ( 'Arial', 'light', '14', 1 )
+    ),
+
+    'contentmenu-collection': (
+        'default': ( 'Arial', 'light', '19', 1.2 )
+    ),
+
+    'contentmenu-chapter': (
+        'default': ( 'Arial', 'light', '16', 1.2 )
+    ),
+
+    'contentmenu-item__label': (
+        'default': ( 'Arial', 'bold', '12', 1.66 )
+    ),
+    'sticky-tab': (
+        'default': ( 'Arial', 'bold', '16', 3.375)
     )
 ), $responsive-font-types);
 

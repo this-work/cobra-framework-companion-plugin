@@ -6,9 +6,9 @@
 ///
 ////
 
-$c-button-header-appearance-background: color('contrasting-dark') !default;
+$c-button-header-appearance-background: color('veil') !default;
 $c-button-header-appearance-color: color('white') !default;
-$c-button-header-appearance-background-hover: color('contrasting-dark:hover') !default;
+$c-button-header-appearance-background-hover: (linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), rgba(0, 0, 0, 0.75)) !default;
 
 @import "@this/cobra-framework/src/partials/components/c-button/c-button";
 

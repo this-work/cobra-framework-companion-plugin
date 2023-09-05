@@ -8,7 +8,6 @@
 
 $c-form-register-input-margin: spacing('27') 0 0 0 !default;
 $c-form-register-submit-margin: spacing('27') 0 0 0 !default;
-$c-form-register-text-color-theme: 'input-boxed-text' !default;
 $c-form-register-responsive-small-font: 'form-label' !default;
 $c-form-register-icon-size: 20px !default;
 $c-form-register-border-radius: $basic-border-radius !default;
@@ -75,9 +74,9 @@ $c-form-register-responsive-font: 'copytext' !default;
 
     &__notice {
         user-select: none;
+        opacity: .33;
         @include responsive-spacing('xsmall', margin-top);
         @include responsive-font('copytext--small');
-        @include color-theme($c-form-register-text-color-theme);
     }
 
     &__checkbox {
@@ -96,7 +95,7 @@ $c-form-register-responsive-font: 'copytext' !default;
             user-select: none;
             display: inline-block;
             margin-right: 6px;
-            @include color-theme($c-form-register-text-color-theme);
+            opacity: .33;
         }
 
         .c-link {

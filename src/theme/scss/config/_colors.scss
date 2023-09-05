@@ -30,7 +30,8 @@
 $color-base: map-merge((
     'light-interaction-background' : #FAFAFA,
     'medium-interaction-background': #F0F0F0,
-    'dark-interaction-background'  : #262626
+    'dark-interaction-background'  : #262626,
+    'veil'                         : (linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), rgba(0, 0, 0, 0.75))
 ), $color-base);
 
 $default-color-map: map-merge($color-base, $color-derivates);
