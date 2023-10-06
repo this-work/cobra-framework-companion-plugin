@@ -6,6 +6,9 @@ export default ({ store }) => {
         str.replace(/[^a-zA-Z]+/g, '').toLowerCase();
 
     const checkUserAccess = ({ accessgroups }) => {
+        if (!user.hasOwnProperty('roles')) {
+            return true;
+        }
         return Object.keys(user.roles).some(id => accessgroups.includes(parseInt(id)));
     };
 

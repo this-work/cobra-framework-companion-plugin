@@ -45,7 +45,7 @@ $f-browse-item--big-responsive-heights: (
         height: inherit;
         padding: 0 $f-browse-item-padding;
         overflow: hidden;
-        transition: transition(all);
+        transition: transition(color), transition(background), transition(font), transition(letter-spacing);
         border-radius: $f-browse-item-border-radius;
         text-align: center;
         color: $f-browse-item-color;
