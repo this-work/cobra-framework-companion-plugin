@@ -80,8 +80,6 @@ export default {
                 id: this.id,
                 selection: [...this.shuffledItems]
             });
-
-            this.evaluationPermitted = true;
         },
 
         evaluate() {
@@ -96,7 +94,6 @@ export default {
         retry() {
             this.shuffledItems = this.createShuffledItems();
             this.$store.commit('quiz/resetInteraction', { id: this.id });
-            this.evaluationPermitted = false;
         }
     }
 

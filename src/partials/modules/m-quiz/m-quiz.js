@@ -233,6 +233,9 @@ export default {
         },
 
         headerHeight() {
+            if (!document.querySelector('.f-header')){
+                return 0;
+            }
             return document.querySelector('.f-header').getBoundingClientRect().height;
         },
 
