@@ -43,13 +43,15 @@ export default {
             this.visible = true;
         },
         close() {
+            this.enablePageScrolling();
+            this.visible = false;
+            this.$emit('close');
+        },
+        enablePageScrolling() {
             document.removeEventListener('click', this.checkClickOutside);
             setTimeout(() => {
                 enablePageScrolling(true);
             }, 0);
-
-            this.visible = false;
-            this.$emit('close');
         },
         checkClickOutside(event) {
             if (event) {

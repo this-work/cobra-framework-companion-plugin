@@ -2,7 +2,7 @@
     <nav :key="visible" v-if="visible" :class="blockClasses">
 
         <div v-if="collection" :class="element('collection')">
-            <nuxt-link :to="collection.href" :class="element('collection-link')">
+            <nuxt-link :to="collection.href" @click.native="enablePageScrolling()" :class="element('collection-link')">
                 <c-icon name="collection" :class="element('collection-icon')" />
                 <span :class="element('collection-label')" v-html="collection.label" />
             </nuxt-link>
