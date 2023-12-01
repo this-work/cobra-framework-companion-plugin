@@ -13,10 +13,11 @@ export default ({ store }) => {
     };
 
     const isSuperUser = () => {
-        return [
+        const superUserGroups = $config.SUPERUSERGROUPS || [
             'admin',
             'editor'
-        ].some(groupname => user.groups.indexOf(groupname) !== -1);
+        ];
+        return superUserGroups.some(groupname => user.groups.indexOf(groupname) !== -1);
     };
 
     const prepareTile = (
