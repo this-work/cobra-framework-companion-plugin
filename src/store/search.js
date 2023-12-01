@@ -1,4 +1,4 @@
-export default ({ store }) => {
+export default ({ store, $config }) => {
 
     let user = {};
 
