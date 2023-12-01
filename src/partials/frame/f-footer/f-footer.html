@@ -20,8 +20,8 @@
                             <nuxt-link v-if="item.hasOwnProperty('to')" :to="localePath(item.to)" >
                                 {{ item.label }}
                             </nuxt-link>
-                            <a :href="link.href" v-else>
-                                {{ link.label }}
+                            <a :href="item.href" :target="item.hasOwnProperty('target') ? '_blank' : '_self'" v-else>
+                                {{ item.label }}
                             </a>
                         </li>
 
