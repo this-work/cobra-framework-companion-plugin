@@ -34,7 +34,7 @@ $f-header-actions-responsive-spacing: ( 'default': '10', 'm': '16' ) !default;
     }
     &__actions {
         display: flex;
-        position: absolute;
+        position: fixed;
         @include responsive-spacing( false, top right, $f-header-elements-responsive-spacing);
         > * + * {
             @include responsive-spacing( false, margin-left, $f-header-actions-responsive-spacing);

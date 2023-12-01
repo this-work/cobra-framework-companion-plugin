@@ -7,7 +7,7 @@
 ////
 
 $m-stage-stacked-text-spacing: 'small' !default;
-$m-stage-stacked-media-spacing: 'xsmall' !default;
+$m-stage-text-first-additional-spacing: spacing('71') !default;
 $m-stage-overflowed-text-color: 'white' !default;
 $m-stage-overflowed-text-spacing: '44' !default;
 $m-stage-overflowed-button-spacing: '44' !default;
@@ -55,11 +55,10 @@ $m-stage-overflowed-button-spacing: '44' !default;
     &--order-media-first.module {
         #{$module}__media-column {
             @include grid-cell-row-start(1);
-            @include responsive-spacing($m-stage-stacked-media-spacing, margin-top);
         }
         #{$module}__heading-column {
             @include grid-cell-row-start(2);
-            @include responsive-spacing($m-stage-stacked-text-spacing, margin-top);
+            @include responsive-spacing($m-stage-stacked-text-spacing, margin-top margin-bottom);
         }
     }
 
@@ -68,6 +67,7 @@ $m-stage-overflowed-button-spacing: '44' !default;
             @include grid-cell-row-start(2);
         }
         #{$module}__heading-column {
+            padding: $m-stage-text-first-additional-spacing 0 0;
             @include grid-cell-row-start(1);
             @include responsive-spacing($m-stage-stacked-text-spacing, margin-top margin-bottom);
         }
@@ -86,6 +86,7 @@ $m-stage-overflowed-button-spacing: '44' !default;
                 }
             }
             #{$module}__heading-column {
+                padding: 0;
                 margin: spacing($m-stage-overflowed-text-spacing) 0;
                 @include grid-cell-row-start(1);
                 .c-heading__overline, .c-heading__headline, .c-heading__subline {
