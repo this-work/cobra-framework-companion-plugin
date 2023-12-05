@@ -98,6 +98,7 @@ $f-content-navigation-collection-icon-color: color('primary');
 
     &__anchor-image {
         display: block;
+        flex-shrink: 0;
         width: spacing('44');
         height: spacing('44');
         margin-right: spacing('10');
