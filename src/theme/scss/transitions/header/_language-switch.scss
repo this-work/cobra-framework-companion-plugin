@@ -1,0 +1,23 @@
+///
+/// Global slide-in-fade-out transition class
+/// slide and fade In on Enter, only fade Out on leave
+///
+/// @group Transitions
+///
+
+.language-switch {
+    &-enter-active, &-leave-active {
+        transition: opacity $default-replace-leave-duration $default-animation-easing-decelerate,
+            transform $default-replace-leave-duration $default-animation-easing-decelerate;
+    }
+    &-enter-to,
+    &-fade-leave {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}

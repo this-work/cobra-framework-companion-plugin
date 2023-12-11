@@ -1,0 +1,47 @@
+$f-browse-pill-responsive-heights: (
+    'default': unitize(120px),
+    'xs':      unitize(140px),
+    's':       unitize(170px),
+    'm':       unitize(180px)
+) !default;
+
+$timing: 250ms !default;
+
+.slide-up {
+    &-enter-active {
+        width: 100%;
+        transition: transition-appear(all, $duration: $timing);
+    }
+
+    &-leave-active {
+        position: absolute !important;
+        width: 100%;
+        transition: transition-disappear(opacity, $duration: $timing);
+    }
+
+    &-enter {
+        $height: map-get($f-browse-pill-responsive-heights, 'default');
+        transform: translateY(calc($height * .8));
+        opacity: .2;
+
+        @each $breakpoint, $height in map-remove($f-browse-pill-responsive-heights, 'default') {
+            @include above($breakpoint) {
+                $height: map-get($f-browse-pill-responsive-heights, 'default');
+                transform: translateY(calc($height * .8));
+            }
+        }
+    }
+
+    &-enter-to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    &-leave {
+        opacity: 1;
+    }
+
+    &-leave-to {
+        opacity: 0;
+    }
+}

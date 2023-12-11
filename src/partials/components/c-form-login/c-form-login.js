@@ -62,9 +62,13 @@ export default {
 
                 } catch (err) {
                     this.loading = false;
-                    if (err.response.data.error) {
-                        this.valid = false;
-                        this.message = this.$i18n.t('c-form-login--failed');
+                    this.valid = false;
+                    if (err.response.data) {
+                        if (err.response.data.hasOwnProperty('errorCode') && err.response.data.errorCode === 'invalid_credentials') {
+                            this.message = this.$i18n.t('c-form-login--failed');
+                        } else {
+                            this.message = err.response.data.message;
+                        }
                     } else {
                         this.message = err.message;
                     }

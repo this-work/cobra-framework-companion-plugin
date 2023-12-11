@@ -1,0 +1,20 @@
+/**
+ * Config SCSS
+ * Theme overwrites
+ */
+
+@import "header/language-switch";
+
+@import "header/navigation";
+
+@import "header/footer";
+
+@import "page/pageSlideLeftOut";
+
+@import "page/pageSlideRightOut";
+
+@import "page/pageFade";
+
+@import "slideUp";
+
+@import 'quiz-slide';

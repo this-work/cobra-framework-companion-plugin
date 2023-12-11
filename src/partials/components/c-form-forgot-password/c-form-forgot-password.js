@@ -65,8 +65,8 @@ export default {
 
                 } catch (err) {
                     this.loading = false;
-                    if (err.response.data.error) {
-                        this.valid = false;
+                    this.valid = false;
+                    if (err.response.data.message) {
                         this.message = this.$i18n.t('c-form-forgot-password--failed');
                     } else {
                         this.message = err.message;

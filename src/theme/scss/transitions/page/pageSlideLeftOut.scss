@@ -1,0 +1,28 @@
+///
+///
+
+.pageSlideLeftOut {
+    &-enter-active, &-leave-active {
+        transition: transform 0.4s linear;
+    }
+    &-enter-active {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 8888;
+    }
+    &-enter {
+        transform: translateX(100%);
+    }
+    &-enter-to {
+        transform: translateX(0%);
+    }
+    &-leave {
+        transform: translateX(0%);
+    }
+    &-leave-to {
+        transform: translateX(-100%);
+    }
+}

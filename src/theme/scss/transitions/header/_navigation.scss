@@ -1,0 +1,33 @@
+///
+/// Global slide-in-fade-out transition class
+/// slide and fade In on Enter, only fade Out on leave
+///
+/// @group Transitions
+///
+
+.f-header__navigation.navigation {
+    &-enter-active {
+        transition: opacity 400ms $default-animation-easing-decelerate,
+        transform 700ms $default-animation-easing-decelerate;
+    }
+    &-leave-active {
+        transition: opacity 400ms $default-animation-easing-decelerate 100ms,
+        transform 700ms $default-animation-easing-decelerate;
+    }
+    &-enter-to,
+    &-leave {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+        @include above('m') {
+            transform: translateX(-50%) translateY(0px);
+        }
+    }
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px);
+        @include above('m') {
+            transform: translateX(-50%) translateY(-50px);
+        }
+    }
+}

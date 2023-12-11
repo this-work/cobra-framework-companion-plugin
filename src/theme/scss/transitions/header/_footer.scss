@@ -1,0 +1,27 @@
+///
+/// Global slide-in-fade-out transition class
+/// slide and fade In on Enter, only fade Out on leave
+///
+/// @group Transitions
+///
+
+.f-footer.footer {
+    &-enter-active {
+        transition: opacity 300ms $default-animation-easing-decelerate 500ms,
+        margin-top 400ms $default-animation-easing-decelerate 400ms;
+    }
+    &-leave-active {
+        transition: opacity 300ms $default-animation-easing-decelerate 100ms,
+        margin-top 400ms $default-animation-easing-decelerate;
+    }
+    &-enter-to,
+    &-leave {
+        opacity: 1;
+        margin-top: 0;
+    }
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+        margin-top:-500px;
+    }
+}

@@ -20,17 +20,6 @@ $c-form-register-responsive-font: 'copytext' !default;
 
     // #region [Element]
     .c-message {
-        &--error {
-            .c-message__box {
-                color: color('error') !important;
-                background: rgba(color('error'), .2) !important;
-                border: 1px solid currentColor;
-                & > .c-heading * {
-                    color: color('error') !important;
-                }
-            }
-        }
-
         & .c-message__box {
             @include responsive-spacing('xsmall', margin-bottom);
         }

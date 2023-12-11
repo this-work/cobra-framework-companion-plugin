@@ -184,6 +184,15 @@ export default {
         },
 
         getResponseErrorMessage(err) {
+
+            setTimeout(() => {
+                const { duration, offset, ...scrollOptions } = this.scrollOptions;
+                this.$scrollTo(
+                    this.$refs.messageBox.$el || this.$refs.messageBox,
+                    duration, { offset: -offset, ...scrollOptions }
+                );
+            });
+
             if (err && err.response && err.response.data && err.response.data.error ) {
                 return this.$t('c-form-register--error-occurred');
             }
@@ -195,14 +204,7 @@ export default {
             if (errors.email) {
                 this.showAlreadyRegistered = true;
                 this.errors.email = this.$t('c-form-register--error-forgot-password-headline');
-                setTimeout(() => {
-                    const { duration, offset, ...scrollOptions } = this.scrollOptions;
-                    this.$scrollTo(
-                        this.$refs.messageBox.$el || this.$refs.messageBox,
-                        duration, { offset: -offset, ...scrollOptions }
-                    );
-                });
-                return `<p>${this.$t('c-form-register--error-forgot-password-headline')}</p>`
+                return `<p>${this.$t('c-form-register--error-forgot-password-headline')}</p>`;
             }
 
             return this.$t('c-form-register--error-occurred');
