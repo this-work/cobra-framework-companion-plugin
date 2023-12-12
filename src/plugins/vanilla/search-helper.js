@@ -46,8 +46,11 @@ export function getElasticsearchQueryString() {
         return '*';
     }
 
-    return '"' + urlQuery.tags.replaceAll(',', '" AND "') + '"';
+    let tagArray = urlQuery.tags.split(",").map((tag) => {
+        return tag.indexOf(" ") >= 0 ? '"' + tag + '"' : tag + '~2'
+    });
 
+    return tagArray.join(' AND ');
 }
 
 /**

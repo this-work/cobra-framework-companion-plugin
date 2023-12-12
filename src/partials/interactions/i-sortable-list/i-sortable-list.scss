@@ -68,7 +68,7 @@ $i-sortable-list-interaction-column-size: _get-grid-data('columns') - $m-interac
         flex: 0 0 auto;
         align-items: center;
         justify-content: center;
-        width: rem(30px);
+        width: unitize(30px);
         margin-right: spacing('10');
         cursor: grab;
         color: $i-sortable-list-drag-indicator-color;

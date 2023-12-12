@@ -108,12 +108,13 @@ export default {
         },
 
         questionSlots() {
+
             if (!this.questions[this.selectedQuestionIndex]) {
-                return;
+                return false;
             }
+
             return this.questions[this.selectedQuestionIndex].data.slots;
         },
-
 
         questionLength() {
             return this.questions.length;
@@ -124,11 +125,12 @@ export default {
         },
 
         score() {
-            if (!this.quizStates) {
-                return;
-            }
-            return this.quizStates.filter( question => question.result).length;
 
+            if (!this.quizStates) {
+                return false;
+            }
+
+            return this.quizStates.filter( question => question.result).length;
         },
 
         minScore() {
@@ -195,10 +197,18 @@ export default {
 
         questionChange(result) {
             const selectedQuestion = this.questions[this.selectedQuestionIndex] || {};
+
             let questionText = undefined;
-            if (selectedQuestion && selectedQuestion.data && selectedQuestion.data.props && selectedQuestion.data.props.heading) {
-                questionText = selectedQuestion.data.props.heading.headline;
+            if (selectedQuestion.hasOwnProperty('data')) {
+                if (selectedQuestion.data.hasOwnProperty('props')) {
+                    if (selectedQuestion.data.props.hasOwnProperty('heading')) {
+                        if (selectedQuestion.data.props.heading.hasOwnProperty('headline')) {
+                            questionText = selectedQuestion.data.props.heading.headline;
+                        }
+                    }
+                }
             }
+
             const quizState = { questionText, result };
 
             this.quizStates.push(quizState);
@@ -233,9 +243,6 @@ export default {
         },
 
         headerHeight() {
-            if (!document.querySelector('.f-header')){
-                return 0;
-            }
             return document.querySelector('.f-header').getBoundingClientRect().height;
         },
 

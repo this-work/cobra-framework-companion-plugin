@@ -10,6 +10,8 @@ $i-assign-table-breakpoint-desktop: 's' !default;
 $i-assign-table-breakpoint--size-smaller: 'm' !default;
 $i-assign-table-drag-indicator-color: color('black') !default;
 $i-assign-table-drag-indicator-color--with-image: color('white') !default;
+$i-assign-table-drag-indicator-gradient-start-color: color('black:33:alpha') !default;
+$i-assign-table-drag-indicator-gradient-width: 33% !default;
 $i-assign-table-item-draggable-box-shadow--readonly: 0px 1px 2px rgb(0 0 0 / 10%) !default;
 $i-assign-table-label-responsive-font: 'copytext--small' !default;
 $i-assign-table-possible-answer-spacing: 'small' !default;
@@ -163,8 +165,8 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
     }
 
     &__item {
-        overflow: hidden;
         height: 100%;
+        overflow: hidden;
         border-radius: 5px;
 
         &#{$module}__item--with-image {
@@ -173,16 +175,16 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
 
             #{$module}__item-handle {
                 position: absolute;
+                z-index: 2;
                 top: 0;
                 bottom: 0;
                 left: 6px;
-                z-index: 2;
-                color: $i-assign-table-drag-indicator-color--with-image !important;
                 opacity: 1;
+                color: $i-assign-table-drag-indicator-color--with-image !important;
 
                 @include rtl() {
-                    left: unset;
                     right: 6px;
+                    left: unset;
                 }
             }
         }
@@ -215,9 +217,22 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
 
         &-content {
             display: flex;
-            align-items: center;
+            position: relative;
             flex-grow: 1;
+            align-items: center;
             height: 100%;
+
+            #{$module}__item--with-image#{$module}__draggable & {
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    width: $i-assign-table-drag-indicator-gradient-width;
+                    background: linear-gradient(to right, $i-assign-table-drag-indicator-gradient-start-color, transparent);
+                }
+            }
         }
 
         &--answer {
@@ -235,11 +250,11 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
             flex: 0 0 auto;
             align-items: center;
             justify-content: center;
-            width: rem(30px);
+            width: unitize(30px);
             margin-right: spacing('10');
-            cursor: grab;
+            opacity: .35;
             color: $i-assign-table-drag-indicator-color;
-            opacity: .15;
+            cursor: grab;
 
             @include rtl() {
                 margin-right: 0;
@@ -252,12 +267,19 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
         overflow-x: auto;
         overflow-y: hidden;
 
+        .simplebar-scrollbar::before {
+            background-color: rgba(162, 162, 162, .33);
+        }
+
+        .simplebar-hover::before {
+            background-color: rgba(162, 162, 162, .66);
+        }
+
         @mixin i-assign-table-question-and-answer-addition {
             display: flex;
             align-items: stretch;
             width: 100%;
             padding-bottom: 10px;
-            //justify-content: center;
         }
 
         &-question {
@@ -271,17 +293,10 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
         &-answer {
             @include i-assign-table-question-and-answer-addition;
 
-
-
-
             #{$module}__list {
                 border-radius: 5px;
 
             }
-
-
-
-
 
             //#{$module}__placeholder {
             //    flex-shrink: 1;
@@ -298,9 +313,9 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
 
     &__answer {
         position: relative;
-        width: grid-column-width-percentage(6);
-        flex-shrink: 0;
         flex-grow: 0;
+        flex-shrink: 0;
+        width: grid-column-width-percentage(6);
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
 
         @include rtl() {
@@ -332,10 +347,10 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
 
     &__list {
         position: relative;
-        padding: 0;
-        width: grid-column-width-percentage(6);
-        flex-shrink: 0;
         flex-grow: 0;
+        flex-shrink: 0;
+        width: grid-column-width-percentage(6);
+        padding: 0;
         @include i-assign-table-add-grid-gutter-spacing(margin-right);
 
         @include rtl() {
@@ -400,8 +415,8 @@ $i-assign-table-columns-breakpoint--3-items: 'xs' !default;
     }
 
     &__item#{$module}__item--selected {
-        box-shadow: unset !important;
         opacity: 1 !important;
+        box-shadow: unset !important;
         @include color-theme('drag-item--selected');
 
         & > * {

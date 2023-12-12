@@ -36,7 +36,7 @@
 
                 <c-button :class="element('button')"
                           :label="buttonLabelEvaluate"
-                          :disabled="resolved"
+                          :disabled="resolved || !evaluationPermitted"
                           @click.native="evaluate"
                           @touchend.native.prevent="evaluate" />
 

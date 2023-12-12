@@ -212,6 +212,18 @@ $c-feedback-interaction-column-size: _get-grid-data('columns') - $m-interaction-
 
             }
         }
+
+        &--type-stacked {
+            #{$module} {
+
+                &__solution {
+                    @include above($c-feedback-breakpoint-desktop) {
+                        width: grid-column-width-percentage(10);
+                    }
+                }
+
+            }
+        }
     }
     // #endregion
 
