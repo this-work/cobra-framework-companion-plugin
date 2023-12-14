@@ -42,8 +42,8 @@ $f-header-tag-spacing: spacing('6') !default;
 .f-search {
     // #region [Block]
     $module: &;
-    position: relative;
-    z-index: zindex(999);
+    position: relative!important;
+    z-index: 920!important;
     min-height: 100%;
     @include above('s') {
         margin-bottom: spacing('44') * -1;

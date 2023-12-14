@@ -76,6 +76,12 @@ export default {
         },
 
         initTabs() {
+
+            if (!this.$el) {
+                setTimeout(this.initTabs(), 1000);
+                return;
+            }
+
             const stickyTabsHeight = this.$el.querySelector('.f-sticky-tabs__tabs').getBoundingClientRect().height;
 
             this.tabsScrollTops = this.tabs.map(({ type }) => {
@@ -98,6 +104,7 @@ export default {
         });
 
         this.$nextTick(this.initTabs);
+        setTimeout(this.initTabs, 3000);
     },
 
     unmounted() {

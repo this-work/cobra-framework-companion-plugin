@@ -13,8 +13,8 @@ $f-sticky-tabs-selection-color: color('primary');
 
 .f-sticky-tabs {
     // #region [Block]
-    position: sticky;
-    z-index: zindex(900);
+    position: sticky!important;
+    z-index: zindex(900)!important;
     top: 0;
     align-items: center;
     // #endregion
