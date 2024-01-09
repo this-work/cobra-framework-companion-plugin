@@ -62,12 +62,7 @@ $m-quiz-interaction-column-size: _get-grid-data('columns') - $m-interaction-ques
         }
     }
 
-
-
     &__image-wrapper {
-        display: flex;
-        align-items: stretch;
-
         @include grid-cell-offset('complete', 'viewport', $m-quiz-breakpoint-desktop, 'below');
 
         & > * {
