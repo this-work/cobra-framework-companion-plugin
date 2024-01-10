@@ -26,7 +26,15 @@ export default {
 
     methods: {
         historyBack() {
-            window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/');
+            const savedBackUrl = this.$store.getters['header/backUrl'];
+            if (savedBackUrl) {
+                this.$store.commit('header/settings', {
+                    backUrl: null
+                });
+                this.$router.push(savedBackUrl);
+            } else {
+                window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/');
+            }
         },
         closePage() {
             this.$router.push(this.$store.getters['header/closeUrl']);

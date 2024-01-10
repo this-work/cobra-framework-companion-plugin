@@ -7,7 +7,8 @@ export default ({store}) => {
             navigation: true,
             close: false,
             closeUrl: '/',
-            back: false
+            back: false,
+            backUrl: null
         }),
         mutations: {
             navigation: (state, payload) => {
@@ -20,6 +21,7 @@ export default ({store}) => {
                 state.close = payload.close === undefined ? false : payload.close;
                 state.closeUrl = payload.close === undefined ? '/' : payload.closeUrl;
                 state.back = payload.back === undefined ? false : payload.back;
+                state.backUrl = payload.backUrl === undefined ? null : payload.backUrl;
             }
         },
         getters: {
@@ -28,7 +30,8 @@ export default ({store}) => {
             navigation: state => state.navigation,
             close: state => state.close,
             closeUrl: state => state.closeUrl,
-            back: state => state.back
+            back: state => state.back,
+            backUrl: state => state.backUrl,
         }
     })
 }
