@@ -60,7 +60,7 @@ export default {
             };
         },
         contentNavigation() {
-            return this.anchors && this.anchors.length > 1
+            return this.anchors && this.anchors.length > 0
         },
         scrollCompleted() {
             const completed = this.completionProgress === 100;
