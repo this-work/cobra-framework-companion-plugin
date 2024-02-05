@@ -97,7 +97,7 @@ export default {
 
             try {
 
-                const { csrfTokenValue } = await this.$axios.$get('/api/session-info');
+                const { csrfTokenValue } = await this.$axios.$get('/api/session-info?cachebuster=' + Date.now());
 
                 await this.$axios.$post('/api/register', {
                     email: this.formData.email,

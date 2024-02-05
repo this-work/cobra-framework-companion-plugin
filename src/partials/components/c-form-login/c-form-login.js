@@ -50,7 +50,7 @@ export default {
 
                     sessionStorage.clear();
 
-                    const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/session-info');
+                    const { csrfTokenName, csrfTokenValue } = await this.$axios.$get('/api/session-info?cachebuster=' + Date.now());
 
                     await this.$auth.loginWith(this.$config.AUTH_STRATEGY, {
                         data: {
