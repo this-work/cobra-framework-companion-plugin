@@ -64,8 +64,10 @@ export default {
                     this.loading = false;
                     this.valid = false;
                     if (err.response.data) {
-                        if (err.response.data.hasOwnProperty('errorCode') && err.response.data.errorCode === 'invalid_credentials') {
+                        if ((err.response.data.hasOwnProperty('errorCode') && err.response.data.errorCode === 'invalid_credentials') || err.response.status === 400) {
                             this.message = this.$i18n.t('c-form-login--failed');
+                        } else if( err.response.status >= 500 && err.response.status < 600) {
+                            this.message = this.$i18n.t('c-form-login--noserver');
                         } else {
                             this.message = err.response.data.message;
                         }

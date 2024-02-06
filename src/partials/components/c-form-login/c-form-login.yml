@@ -6,6 +6,7 @@ deDE:
     c-form-login--label: "Login"
     c-form-login--success-new-password: "Wir haben Ihr Passwort erfolgreich geändert.<br>Bitte loggen Sie sich ein."
     c-form-login--failed: "Bitte überprüfen Sie Ihre Eingaben!"
+    c-form-login--noserver: "Aktuell scheint unser Server ein Problem zu haben. Bitte versuche es später erneut."
 
 enGB:
     c-form-login--username: "Email"
