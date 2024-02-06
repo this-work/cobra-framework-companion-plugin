@@ -1,14 +1,7 @@
 <nav>
     <component :is="tag" :class="blockClasses">
-        <li v-for="link in links" v-bind:key="key">
-            <NuxtLink v-if="link.hasOwnProperty('to')" :to="link.to" :class="element('link')">
-                <c-icon name="chevron-right" />
-                {{ link.label }}
-            </NuxtLink>
-            <a :href="link.href" v-else :class="element('link')">
-                <c-icon name="chevron-right" />
-                {{ link.label }}
-            </a>
+        <li v-for="link in links">
+            <f-browse-link v-bind="link" />
         </li>
     </component>
 </nav>

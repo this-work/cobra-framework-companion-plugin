@@ -55,6 +55,12 @@ export default {
     mounted() {
         this.moveBackgroundShapeToTarget();
 
+        setTimeout(this.moveBackgroundShapeToTarget(), 300);
+
+        setTimeout(this.moveBackgroundShapeToTarget(), 600);
+
+        setTimeout(this.moveBackgroundShapeToTarget(), 1000);
+
         window.addEventListener('resize', this.moveBackgroundShapeToTarget);
     },
 
@@ -123,26 +129,30 @@ export default {
 
         },
 
-        moveBackgroundShapeToTarget($target= this.$el.querySelector('.nuxt-link-exact-active')) {
+        moveBackgroundShapeToTarget($target) {
 
-            if ($target instanceof Event) {
-                $target = this.$el.querySelector('.nuxt-link-exact-active');
+            if (this.$el) {
+
+                if (!$target || $target instanceof Event) {
+                    $target = this.$el.querySelector('.nuxt-link-exact-active');
+                }
+
+                if (!$target) {
+                    this.activePageId = null;
+                    this.$refs.elasticShape.style.opacity = '0';
+                    return;
+                }
+
+                const targetOffset = $target.getBoundingClientRect().left;
+                const navigationListOffset = this.$refs.navigationList.getBoundingClientRect().left;
+
+                this.$refs.elasticShape.style.opacity = '1';
+                this.$refs.elasticShape.style.left = (targetOffset - navigationListOffset) + 'px';
+                this.$refs.elasticShape.style.width = $target.offsetWidth + 'px';
+
+                this.activePageId = parseInt($target.dataset.index);
+
             }
-
-            if (!$target) {
-                this.activePageId = null;
-                this.$refs.elasticShape.style.opacity = '0';
-                return;
-            }
-
-            const targetOffset = $target.getBoundingClientRect().left;
-            const navigationListOffset = this.$refs.navigationList.getBoundingClientRect().left;
-
-            this.$refs.elasticShape.style.opacity = '1';
-            this.$refs.elasticShape.style.left = (targetOffset - navigationListOffset) + 'px';
-            this.$refs.elasticShape.style.width = $target.offsetWidth + 'px';
-
-            this.activePageId = parseInt($target.dataset.index);
 
         }
     }

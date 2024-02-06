@@ -1,5 +1,5 @@
 <transition name="footer">
-    <module tag="footer" :key="this.$store.getters['footer/visible'] + '' + this.$store.getters['footer/theme']" v-if="this.$store.getters['footer/visible']" :background="false" :class="blockClasses">
+    <module tag="footer" :key="this.$store.getters['footer/visible'] + '' + this.$store.getters['footer/theme']" v-if="this.$store.getters['footer/visible'] && this.$config.MODE !== 'authortool'" :background="false" :class="blockClasses">
         <module-content>
 
             <layout layout="l-3-1-8">

@@ -44,8 +44,6 @@
                     </template>
                 </c-input-text>
 
-                <c-input-checkbox :class="element('checkbox')" name="newsletter" data-validate-required @change="removeError('newsletter')" :valid="!errors.newsletter" :label="$t('c-form-register--newsletter')" />
-
                 <c-text :class="element('notice')" :text="$t('c-form-register--notice')" />
 
                 <div :class="element('submit-wrapper')">

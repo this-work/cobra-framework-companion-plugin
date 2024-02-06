@@ -16,7 +16,6 @@ export default {
             type: String,
             default: 'ul'
         },
-
         links: {
             type: Array,
             default: () => []

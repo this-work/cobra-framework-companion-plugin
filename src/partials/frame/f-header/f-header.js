@@ -37,7 +37,13 @@ export default {
             }
         },
         closePage() {
-            this.$router.push(this.$store.getters['header/closeUrl']);
+            if (sessionStorage) {
+                if (sessionStorage.getItem('savedPlaylistStackLink') === 'search') {
+                    this.$router.go(-1);
+                } else {
+                    this.$router.push(this.$store.getters['header/closeUrl']);
+                }
+            }
         }
     }
 

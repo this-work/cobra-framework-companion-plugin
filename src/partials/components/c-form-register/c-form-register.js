@@ -3,7 +3,6 @@
  */
 
 import { common } from '@this/cobra-framework/src/plugins/mixins';
-
 export default {
 
     name: 'c-form-register',
@@ -72,6 +71,7 @@ export default {
 
         async sendRegistration(event) {
             if (this.loading) return;
+
 
             this.loading = true;
             this.valid = true;
@@ -193,15 +193,11 @@ export default {
                 );
             });
 
-            if (err && err.response && err.response.data && err.response.data.error ) {
-                return this.$t('c-form-register--error-occurred');
-            }
-
             const errors = err && err.response && err.response.data
-                ? err.response.data.errors
+                ? err.response.data
                 : {};
 
-            if (errors.email) {
+            if (errors.email || errors.error === 'User already exists') {
                 this.showAlreadyRegistered = true;
                 this.errors.email = this.$t('c-form-register--error-forgot-password-headline');
                 return `<p>${this.$t('c-form-register--error-forgot-password-headline')}</p>`;
@@ -223,7 +219,7 @@ export default {
         getErrorMessages() {
             if (Object.keys(this.errors).length === 0) return;
 
-            let errors = [];
+            const errors = [];
             for (const [key, value] of Object.entries(this.errors)) {
                 if (errors.includes(value)) continue;
 

@@ -1,0 +1,15 @@
+<div>
+
+    <component :is="tag" v-bind="attributes" :class="blockClasses" @click="checkForLocked">
+        <c-icon :class="element('chevron')" name="chevron-right" />
+        {{ label }}
+        <c-icon v-if="locked" :class="element('lock')" name="lock" />
+    </component>
+
+    <c-modal ref="popup" v-if="locked">
+        <div :class="element('popup')">
+            <c-lead-request :popup="popup" :class="element('popup-form')" />
+        </div>
+    </c-modal>
+
+</div>
