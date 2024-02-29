@@ -1,18 +1,27 @@
 <header :class="blockClasses" v-if="this.$store.getters['header/visible']">
 
-    <f-logo :class="element('logo')" />
+    <template v-if="this.$config.MODE === 'companion' && !this.$config.EXPORT">
 
-    <transition name="navigation">
-        <f-navigation :class="element('navigation')" v-if="$auth.loggedIn && navigation" />
-    </transition>
+        <f-logo :class="element('logo')" />
+
+        <transition name="navigation">
+            <f-navigation :class="element('navigation')" v-if="$auth.loggedIn && navigation" />
+        </transition>
+
+    </template>
 
     <div :class="element('actions')">
 
-        <f-language-switch />
+        <f-language-switch v-if="this.$config.MODE === 'companion' && !this.$config.EXPORT" />
 
-        <c-button appearance="header" icon="navigate-before" v-if="back" iconPosition="left" :label="$t('f-header--back')" @click.native="historyBack()" />
+        <template v-if="(this.$config.MODE === 'companion' && !this.$config.EXPORT) ||
+        (this.$config.EXPORTED_ENTRY && parseInt(this.$config.EXPORTED_ENTRY) !== exportEntryId)">
 
-        <c-button appearance="header" icon="close" @click.native="closePage" v-if="close" />
+            <c-button appearance="header" icon="navigate-before" v-if="back" iconPosition="left" :label="$t('f-header--back')" @click.native="historyBack()" />
+
+            <c-button appearance="header" icon="close" @click.native="closePage" v-if="close" />
+
+        </template>
 
     </div>
 

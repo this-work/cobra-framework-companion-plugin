@@ -21,6 +21,9 @@ export default {
         },
         back() {
             return this.$store.getters['header/back'];
+        },
+        entryId() {
+            return this.$store.getters['companion/entryId'];
         }
     },
 
