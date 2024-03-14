@@ -55,11 +55,9 @@ export default {
     mounted() {
         this.moveBackgroundShapeToTarget();
 
-        setTimeout(this.moveBackgroundShapeToTarget(), 300);
+        const moveBackgroundShapeToTargetInterval = setInterval(this.moveBackgroundShapeToTarget, 70);
 
-        setTimeout(this.moveBackgroundShapeToTarget(), 600);
-
-        setTimeout(this.moveBackgroundShapeToTarget(), 1000);
+        setTimeout(() => {clearInterval(moveBackgroundShapeToTargetInterval)}, 1000);
 
         window.addEventListener('resize', this.moveBackgroundShapeToTarget);
     },
