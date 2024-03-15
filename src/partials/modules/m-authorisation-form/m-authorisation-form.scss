@@ -76,6 +76,7 @@
         @include above('m') {
             align-self: center;
             padding: spacing('115') 0 spacing('71');
+            z-index: 50;
             @include grid-cell-position(7, 1);
             @include grid-cell-size(6, 1);
         }
