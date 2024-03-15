@@ -1,7 +1,7 @@
 <module :class="blockClasses" :background="false">
 
     <module-viewport :class="element('intro')">
-        <module-content>
+        <module-content :class="element('sticky-intro')">
             <c-grid>
                 <div :class="element('intro-background')" />
                 <c-heading :class="element('intro-heading')" v-bind="heading" sublineType="copytext--big" headlineTag="h1" headlineType="h2" />
