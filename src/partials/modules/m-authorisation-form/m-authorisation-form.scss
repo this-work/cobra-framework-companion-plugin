@@ -28,11 +28,13 @@
     }
 
     &__sticky-intro {
-        position: sticky;
-        align-items: start;
-        top: 0;
-        height: 100vh;
-        height: 100dvh;
+        @include above('m') {
+            position: sticky;
+            align-items: start;
+            top: 0;
+            height: 100vh;
+            height: 100dvh;
+        }
     }
 
     &__intro-heading {
