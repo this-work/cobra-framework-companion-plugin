@@ -24,7 +24,7 @@ export default {
         },
         profile() {
             return this.$auth.loggedIn &&
-            navigation &&
+            this.navigation &&
             this.$config.MODE === 'companion' &&
             !this.$config.EXPORT &&
             (this.$config.PROFILE_PAGE || false)
