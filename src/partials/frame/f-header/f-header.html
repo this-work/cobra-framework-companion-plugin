@@ -12,7 +12,7 @@
 
     <div :class="element('actions')">
 
-        <c-button appearance="header" tag="nuxt-link" :to="localePath('/profile')" icon="supervisor-account" v-if="this.$config.MODE === 'companion' && !this.$config.EXPORT && this.profile" />
+        <c-button appearance="header" tag="nuxt-link" :to="localePath('/profile')" icon="supervisor-account" v-if="this.profile" />
 
         <f-language-switch v-if="this.$config.MODE === 'companion' && !this.$config.EXPORT" />
 

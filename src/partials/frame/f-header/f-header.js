@@ -23,7 +23,11 @@ export default {
             return this.$store.getters['header/back'];
         },
         profile() {
-            return this.$config.PROFILE_PAGE || false;
+            return this.$auth.loggedIn &&
+            navigation &&
+            this.$config.MODE === 'companion' &&
+            !this.$config.EXPORT &&
+            (this.$config.PROFILE_PAGE || false)
         },
         entryId() {
             return this.$store.getters['companion/entryId'];
