@@ -22,6 +22,9 @@ export default {
         back() {
             return this.$store.getters['header/back'];
         },
+        profile() {
+            return this.$config.PROFILE_PAGE || false;
+        },
         entryId() {
             return this.$store.getters['companion/entryId'];
         }
