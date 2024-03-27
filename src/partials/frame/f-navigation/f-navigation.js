@@ -129,7 +129,7 @@ export default {
 
         moveBackgroundShapeToTarget($target) {
 
-            if (this.$el) {
+            if (this.$el && this.$refs.elasticShape) {
 
                 if (!$target || $target instanceof Event) {
                     $target = this.$el.querySelector('.nuxt-link-exact-active');
