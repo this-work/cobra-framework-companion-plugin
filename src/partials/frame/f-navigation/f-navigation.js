@@ -70,6 +70,10 @@ export default {
     watch: {
         '$route'(to, from) {
 
+            if (!from.hasOwnProperty('name')) {
+                return;
+            }
+
             const fromPage = from.name.split('___')[0];
             const toPage = to.name.split('___')[0];
 

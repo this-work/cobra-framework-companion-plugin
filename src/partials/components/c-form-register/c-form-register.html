@@ -20,7 +20,7 @@
 
                 <c-input-text :class="element('input')" name="lastname" data-validate-required @change="removeError('lastname')" :valid="!errors.lastname" type="text" :label="$t('c-form-register--lastname')" appearance="boxed" autocomplete="family-name" />
 
-                <c-input-text :class="element('input')" name="email" data-validate-required data-validate-email @change="removeError('email')" :valid="!errors.email" type="email" live="disabled" :label="$t('c-form-register--username')" appearance="boxed" autocomplete="email">
+                <c-input-text :class="element('input')" name="email" data-validate-required data-validate-email @change="removeError('email')" :valid="!errors.email" type="email" :label="$t('c-form-register--username')" appearance="boxed" autocomplete="email">
                     <template v-slot:prefix><c-icon name="alternate-email" /></template>
                 </c-input-text>
 

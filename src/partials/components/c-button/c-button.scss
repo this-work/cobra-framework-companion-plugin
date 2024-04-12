@@ -12,8 +12,8 @@ $c-button-header-appearance-background-hover: (linear-gradient(0deg, rgba(255, 2
 
 @import "@this/cobra-framework/src/partials/components/c-button/c-button";
 
-.c-button {
-    $module: &;
+.c-button.c-button {
+    $module: ".c-button";
 
     &--header {
         padding: spacing('6') spacing('10');
