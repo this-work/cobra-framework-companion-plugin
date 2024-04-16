@@ -176,6 +176,7 @@ export default {
                 ...this.questions[index].data.props,
                 isQuiz: true,
                 mode: this.mode,
+                theme: this.theme,
                 backgroundPosition: this.backgroundPosition
             };
         },

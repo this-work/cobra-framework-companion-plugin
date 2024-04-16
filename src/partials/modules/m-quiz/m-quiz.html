@@ -75,7 +75,7 @@
         <template v-if="status === 'end'">
             <component :is="`module-${backgroundPosition}`" key="end" :class="element('end-wrapper')">
                 <module-content>
-                    <div :class="[ element('end-description'), descriptionSpacingClasses ]">
+                    <div :class="[ element('end-description'), descriptionSpacingClasses, `theme-${theme}` ]">
                         <c-quiz-feedback v-bind="feedbackProps" @retry="retry" />
                     </div>
                 </module-content>
@@ -83,7 +83,7 @@
 
             <component :is="`module-${backgroundPosition}`" key="questions" :class="element('questions-wrapper')">
                 <module-content>
-                    <div :class="[ questionSpacingClasses ]">
+                    <div :class="[ questionSpacingClasses, `theme-${theme}` ]">
                         <c-quiz-feedback-questions :questions="quizStates" />
                     </div>
                 </module-content>
