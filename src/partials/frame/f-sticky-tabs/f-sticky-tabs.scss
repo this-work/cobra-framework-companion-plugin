@@ -45,6 +45,10 @@ $f-sticky-tabs-selection-color: color('primary');
         display: block;
         & + &  {
             margin-left: $f-sticky-tabs-tab-margin;
+            @include rtl() {
+                margin-left: 0;
+                margin-right: $f-sticky-tabs-tab-margin;
+            }
         }
     }
 
@@ -68,6 +72,10 @@ $f-sticky-tabs-selection-color: color('primary');
         svg {
             @include above('s') {
                 margin-right: 6px;
+                @include rtl() {
+                    margin-right: 0;
+                    margin-left: 6px;
+                }
             }
         }
 

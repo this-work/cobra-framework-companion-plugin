@@ -25,6 +25,11 @@ $f-content-bar-background: color('veil') !default;
     background: $f-content-bar-background;
     border-radius: $f-content-bar-border-radius;
     @include responsive-spacing('xsmall', margin-top margin-bottom);
+    @include rtl() {
+        left: 0;
+        right: 50%;
+        transform: translate(50%, 0);
+    }
     // #endregion
 
     // #region [Element]
@@ -35,6 +40,23 @@ $f-content-bar-background: color('veil') !default;
             list-style: none;
             & + & {
                 margin-left: spacing('10');
+            }
+        }
+        @include rtl() {
+            &-item {
+                &:nth-child(1) {
+                    order: 3;
+                }
+                &:nth-child(2) {
+                    order: 2;
+                }
+                &:nth-child(3) {
+                    order: 1;
+                }
+                & + & {
+                    margin-left: 0;
+                    margin-right: spacing('10');
+                }
             }
         }
     }

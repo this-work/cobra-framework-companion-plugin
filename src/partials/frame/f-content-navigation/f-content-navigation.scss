@@ -104,6 +104,10 @@ $f-content-navigation-collection-icon-color: color('primary');
         margin-right: spacing('10');
         border-radius: unitize(3px);
         overflow: hidden;
+        @include rtl() {
+            margin-right: 0;
+            margin-left: spacing('10');
+        }
     }
 
     // #endregion

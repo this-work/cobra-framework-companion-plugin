@@ -32,6 +32,10 @@ $f-navigation-background: color('veil') !default;
         mix-blend-mode: difference;
         & + & {
             margin-left: spacing('10');
+            @include rtl() {
+                margin-left: 0;
+                margin-right: spacing('10');
+            }
         }
     }
     &__link {
