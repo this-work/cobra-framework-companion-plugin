@@ -1,0 +1,28 @@
+////
+///
+/// m-form-profile
+///
+/// @group Modules
+///
+////
+
+.m-form-profile {
+    // #region [Block]
+    // #endregion
+
+    // #region [Element]
+    &__heading {
+        @include responsive-heading-spacing();
+    }
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(m-form-profile) {
+        @include m-form-profile;
+    }
+    // #endregion
+
+}

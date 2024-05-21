@@ -49,7 +49,7 @@ export default {
 
             this.switchLocalePath(localeCode);
 
-            if (this.$config.MODE != 'authortool' && this.$auth.loggedIn) {
+            if (this.$config.MODE != 'authortool') {
                 this.$nextTick(() => {
                     this.$store.dispatch('navigations/fetch', { name: 'main' } );
 

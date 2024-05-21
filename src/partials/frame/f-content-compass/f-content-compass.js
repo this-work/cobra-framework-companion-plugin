@@ -45,7 +45,7 @@ export default {
 
         return {
             showContentNavigation: false,
-            completedOncedTemporary: false,
+            completedOnced: false,
             completionProgress: 0,
             circumference,
             normalizedRadius,
@@ -65,7 +65,7 @@ export default {
         scrollCompleted() {
             const completed = this.completionProgress === 100;
             if (completed) {
-                if (!this.completedOncedTemporary) {
+                if (!this.completedOnced) {
                     this.completePlaylist();
                 }
             }
@@ -108,11 +108,7 @@ export default {
     methods: {
         completePlaylist() {
 
-            this.completedOncedTemporary = true;
-
-            if (!this.$auth.user.completed.includes(this.id)) {
-                this.$refs.toast.show();
-            }
+            this.completedOnced = true;
 
             completeUnit(this.id);
 

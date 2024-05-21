@@ -1,0 +1,26 @@
+<module :class="blockClasses"
+        :backgroundPosition="backgroundPosition"
+        :backgroundImage="backgroundImage"
+>
+
+    <module-page>
+
+        <module-content>
+
+            <form ref="form" @submit.prevent="submitForm" accept-charset="UTF-8">
+
+                <c-heading :class="element('heading')" v-if="heading && (heading.overline || heading.headline || heading.subline)" v-bind="heading" />
+
+                <c-form-profile />
+
+                <div :class="[element('submit'), 'spacing-margin-top-small']">
+                    <c-button type="submit" :loading="loading" :spinner="true" :label="$t('f-profile--save-text')" />
+                </div>
+
+            </form>
+
+        </module-content>
+
+    </module-page>
+
+</module>

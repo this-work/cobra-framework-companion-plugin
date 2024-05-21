@@ -1,0 +1,20 @@
+<component :is="tag" :class="blockClasses">
+    <layout layout="l-6-6">
+        <template v-slot:column-1>
+            <c-input-text :class="element('input')" name="salutation" type="text" :label="$t('c-form-profile--salutation')" :value="$auth.user.salutation" :placeholder="$t('c-form-profile--salutation')" appearance="boxed" autocomplete="honorific-prefix" />
+        </template>
+    </layout>
+    <layout layout="l-6-6">
+        <template v-slot:column-1>
+            <c-input-text :class="element('input')" name="firstname" type="text" :label="$t('c-form-profile--firstname')" :value="$auth.user.firstName" :placeholder="$t('c-form-profile--firstname')" appearance="boxed" autocomplete="given-name" />
+        </template>
+        <template v-slot:column-2>
+            <c-input-text :class="element('input')" name="lastname" type="text" :label="$t('c-form-profile--lastname')" :value="$auth.user.lastName" :placeholder="$t('c-form-profile--lastname')" appearance="boxed" autocomplete="family-name" />
+        </template>
+    </layout>
+    <layout layout="l-12">
+        <template v-slot:column-1>
+            <c-input-text :class="element('input')" name="email" type="email" :label="$t('c-form-profile--email')" :value="$auth.user.email" disabled="disabled" :placeholder="$t('c-form-profile--email')" appearance="boxed" autocomplete="email" />
+        </template>
+    </layout>
+</component>

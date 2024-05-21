@@ -1,0 +1,44 @@
+////
+///
+/// c-form-profile
+///
+/// @group Components
+///
+////
+
+$c-form-profile-input-margin: spacing('16') 0 0 0 !default;
+$c-form-profile-border-radius: $basic-border-radius !default;
+
+.c-form-profile {
+    // #region [Block]
+    // #endregion
+
+    // #region [Element]
+    &__input,
+    &__checkbox {
+        margin: $c-form-profile-input-margin;
+    }
+
+    &__input {
+        &.c-input-dropdown--boxed .c-input-dropdown__dropdown {
+            border-radius: $c-form-profile-border-radius;
+            @include color-theme('input-boxed');
+        }
+
+        &.c-input-text--boxed .c-input-text__form-element {
+            transition: color, border-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        }
+    }
+
+    // #endregion
+
+    // #region [Modifier]
+    // #endregion
+
+    // #region [Overwrites]
+    @if mixin-exists(c-form-profile) {
+        @include c-form-profile;
+    }
+    // #endregion
+
+}

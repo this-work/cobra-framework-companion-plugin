@@ -102,10 +102,12 @@ export default {
                 await this.$axios.$post('/api/register', {
                     email: this.formData.email,
                     password: this.formData['new-password'],
-                    fullName: `${this.formData.firstname} ${this.formData.lastname}`,
-                    fields: {
-                        salutation: this.formData.salutation
-                    },
+                    name: `${this.formData.firstname} ${this.formData.lastname}`,
+                    salutation: this.formData.salutation,
+                    interest: this.formData.interests || '',
+                    position: this.formData.position || '',
+                    role: emailCheckResult.result ? 'Exklusiv' : 'Standard',
+                    companySize: this.formData.companySize || '',
                     CRAFT_CSRF_TOKEN: csrfTokenValue
                 });
 
