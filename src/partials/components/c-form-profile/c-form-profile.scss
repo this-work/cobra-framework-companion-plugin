@@ -11,9 +11,11 @@ $c-form-profile-border-radius: $basic-border-radius !default;
 
 .c-form-profile {
     // #region [Block]
+    $module: &;
     // #endregion
 
     // #region [Element]
+
     &__input,
     &__checkbox {
         margin: $c-form-profile-input-margin;
@@ -30,6 +32,11 @@ $c-form-profile-border-radius: $basic-border-radius !default;
         }
     }
 
+    &:first-child {
+        #{$module}__input{
+            margin-top: 0;
+        }
+    }
     // #endregion
 
     // #region [Modifier]
