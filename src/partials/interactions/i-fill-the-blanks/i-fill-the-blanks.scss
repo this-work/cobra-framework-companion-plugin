@@ -52,6 +52,12 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
             margin-left: $i-fill-the-blanks-spacing;
             margin-right: 0;
         }
+        p {
+            display: inline;
+            &:empty {
+                display: block;
+            }
+        }
     }
 
     &__dropdown {
