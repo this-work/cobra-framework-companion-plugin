@@ -31,15 +31,10 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
     // #endregion
 
     // #region [Element]
-
-
     &__interaction-wrapper {
         z-index: zindex(700);
         pointer-events: none;
     }
-
-
-
 
     &__heading {
         margin-bottom: spacing('20');
@@ -51,6 +46,12 @@ $i-fill-the-blanks-interaction-column-size: _get-grid-data('columns') - $m-inter
         @include rtl() {
             margin-left: $i-fill-the-blanks-spacing;
             margin-right: 0;
+        }
+        p {
+            display: inline;
+            &:empty {
+                display: block;
+            }
         }
     }
 
