@@ -113,7 +113,7 @@ export default {
                 return false;
             }
 
-            return this.questions[this.selectedQuestionIndex].data.slots;
+            return this.questions[this.selectedQuestionIndex].slots;
         },
 
         questionLength() {
@@ -244,7 +244,13 @@ export default {
         },
 
         headerHeight() {
-            return document.querySelector('.f-header').getBoundingClientRect().height;
+
+            if (document.querySelector('.f-header')) {
+                return document.querySelector('.f-header').getBoundingClientRect().height;
+            }
+
+            return 0;
+
         },
 
         scrollToTop() {
