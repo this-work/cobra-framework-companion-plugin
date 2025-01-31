@@ -129,7 +129,8 @@ export default ({ store, $config }) => {
                     query = '*',
                     selectedTags = [],
                     customFilter,
-                    customAggregation
+                    customAggregation,
+                    customSearchResultManipulator
                 } = {}
             ) {
                 const response = await this.$elastic.search(query, {
@@ -180,7 +181,15 @@ export default ({ store, $config }) => {
                     commit('setTypes', types);
                 }
 
-                const searchResults = _extractSearchResults(response);
+                let rawSearchResult;
+                if (customSearchResultManipulator) {
+                    rawSearchResult = await customSearchResultManipulator(this, response)
+                } else {
+                    rawSearchResult = response
+                }
+
+                const searchResults = _extractSearchResults(rawSearchResult);
+
 
                 if (searchResults) {
                     commit('setSearchResults', searchResults);
